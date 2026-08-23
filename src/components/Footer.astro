@@ -1,0 +1,144 @@
+---
+// Footer.astro
+// Placeholder contact links — swap these for your real email and profiles.
+const socials = [
+  { label: "email", href: "mailto:hello@example.com" },
+  { label: "instagram", href: "#" },
+  { label: "linkedin", href: "#" },
+  { label: "behance", href: "#" },
+];
+---
+
+<footer class="cta-footer" id="contact">
+  <div class="cta-main">
+    <div class="cta-heading-group">
+      <h2 class="cta-heading">is it a<br />match?</h2>
+      <p class="cta-subheading">Let's build something new together.</p>
+    </div>
+
+    <div class="footer-contents">
+      <div class="cta-actions">
+        <a href="mailto:hello@example.com" class="cta-link">
+          get in touch
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M7 17L17 7M17 7H7M17 7V17" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+
+      <ul class="cta-socials">
+        {socials.map((s) => (
+          <li><a href={s.href}>{s.label}</a></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .cta-footer {
+    padding: clamp(3rem, 8vw, 6rem) clamp(1.25rem, 5vw, 4rem);
+    text-align: center;
+  }
+
+  .cta-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .cta-heading {
+    font-family: "Bodoni 72", "Bodoni MT", Didot, serif;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.1;
+    margin: 0 0 1.5rem;
+    font-size: clamp(4rem, 2.75rem + 5vw, 7.75rem);
+    letter-spacing: clamp(0.1em, 4vw, 3em);
+  }
+
+  .cta-subheading {
+    font-weight: 700;
+    margin: 0;
+    font-size: clamp(1.5rem, 1.33rem + 0.67vw, 2rem);
+  }
+
+  .footer-contents {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 3rem;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #241414;
+    text-decoration: underline;
+    font-weight: 600;
+  }
+
+  .cta-link .icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .cta-socials {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .cta-socials a {
+    color: #241414;
+    text-decoration: underline;
+    font-size: 0.95rem;
+  }
+
+  /* Desktop — heading pinned top, footer-contents pinned bottom, full width row */
+  @media (min-width: 900px) {
+    .cta-footer {
+      display: flex;
+    }
+
+    .cta-main {
+      width: 100%;
+      align-items: stretch;
+      justify-content: space-between;
+      text-align: left;
+    }
+
+    .cta-heading-group {
+      max-width: 700px;
+    }
+
+    .footer-contents {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 0;
+    }
+
+    .cta-actions {
+      align-items: flex-start;
+    }
+
+    .cta-socials {
+      align-items: flex-end;
+    }
+  }
+</style>

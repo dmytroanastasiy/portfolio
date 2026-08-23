@@ -1,0 +1,38 @@
+---
+---
+<header>
+  <nav>
+    <a href={`${import.meta.env.BASE_URL}#about`}>about</a>
+    <a href={`${import.meta.env.BASE_URL}#works`}>works</a>
+    <a href={`${import.meta.env.BASE_URL}#experiments`}>experiments</a>
+    <a href={`${import.meta.env.BASE_URL}#contact`}>contact</a>
+  </nav>
+</header>
+
+
+<style>
+  header {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0F0F0F;
+    z-index: 9999;
+  }
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.25rem clamp(1.5rem, 5vw, 4rem);
+    padding: clamp(2rem, 4vw, 3.5rem) 1.5rem 1.25rem;
+  }
+  nav a {
+  color: #F3F3F3;
+  font-family: Helvetica;
+  font-size: 1.25rem;
+  font-style: normal;
+  text-decoration: none;
+  }
+  
+</style>

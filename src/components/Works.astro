@@ -1,0 +1,215 @@
+---
+import type { ImageMetadata } from 'astro';
+
+// Dynamically import all images from src/assets/ at build time
+const globImages = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/*.{jpeg,jpg,png,gif,webp}',
+  { eager: true }
+);
+
+const works = [
+  {
+    title: "Water faucet",
+    category: "industrial design",
+    tags: ["Siemens NX", "3D printing", "Prototyping"],
+    slug: "water-faucet",
+    imageName: "faucet-1.png",
+  },
+  {
+    title: "Cup",
+    category: "product design",
+    tags: ["Ceramics", "Clay Modeling", "Glazing"],
+    slug: "cup",
+    imageName: "cup1-final.png",
+  },
+  {
+    title: "Table timer",
+    category: "industrial design",
+    tags: ["Adobe Illustrator", "Laser Cutting", "MDF"],
+    slug: "table-timer",
+    imageName: "timer-1.png",
+  },
+  {
+    title: "Shaving razor",
+    category: "personal care",
+    tags: ["PU Foam", "Sculptural Modeling", "Prototyping"],
+    slug: "shaving-razor",
+    imageName: "razor-2.png",
+  },
+  {
+    title: "Phone belt",
+    category: "wearable design",
+    tags: ["Fluorescent Material", "Metal Cutting", "Soft Goods"],
+    slug: "phone-belt",
+    imageName: "belt-1.png",
+  },
+  {
+    title: "Stool",
+    category: "furniture design",
+    tags: ["Siemens NX", "Blender", "Metal Fabrication"],
+    slug: "stool",
+    imageName: "stool-1.png",
+  },
+];
+
+// Helper function to resolve the bundled asset URL
+function getImageUrl(imageName: string) {
+  const assetPath = `/src/assets/${imageName}`;
+  return globImages[assetPath] ? globImages[assetPath].default.src : '';
+}
+---
+
+<section class="works" id="works">
+  <div class="works-header">
+    <h2 class="works-heading">Selected works</h2>
+    <span class="works-tag">#works</span>
+  </div>
+
+  <div class="works-list">
+    {
+      works.map((item) => (
+        <a
+          href={`${import.meta.env.BASE_URL}work/${item.slug}`}
+          class="work-row"
+        >
+          <div class="work-left">
+            <h3 class="work-title">{item.title}</h3>
+            <span class="work-category">{item.category}</span>
+          </div>
+
+          <div class="work-right">
+            {item.tags.length > 0 && (
+              <div class="pills">
+                {item.tags.map((tag) => (
+                  <span class="pill">{tag}</span>
+                ))}
+              </div>
+            )}
+            <svg
+              class="arrow-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                d="M7 17L17 7M17 7H7M17 7V17"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .works {
+    background: #0d0d0d;
+    color: #ffffff;
+    padding: clamp(2.5rem, 6vw, 5rem) clamp(1.25rem, 5vw, 4rem);
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+
+  .works-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  .works-heading {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .works-tag {
+    color: #444;
+    font-size: 0.9rem;
+    font-family: monospace;
+  }
+
+  .works-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .work-row {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1.75rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    text-decoration: none;
+    color: inherit;
+    gap: 1rem;
+  }
+
+  .work-left {
+    display: flex;
+    align-items: baseline;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .work-title {
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  .work-category {
+    font-size: 0.95rem;
+    color: #777;
+    font-weight: 400;
+  }
+
+  .work-right {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1.5rem;
+  }
+
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .pill {
+    background: #1c1c1c;
+    color: #d1d1d1;
+    border-radius: 999px;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .arrow-icon {
+    width: 28px;
+    height: 28px;
+    color: #ffffff;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 768px) {
+    .work-row {
+      flex-direction: row;
+      align-items: center;
+      padding: 2.25rem 0;
+    }
+
+    .work-right {
+      width: auto;
+      justify-content: flex-end;
+    }
+  }
+</style>

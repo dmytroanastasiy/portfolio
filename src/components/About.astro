@@ -1,0 +1,177 @@
+---
+// About.astro
+const education = [
+  { years: "2024 – 2027", title: "Industrial Product Design", place: "Howest (Kortrijk)" },
+  { years: "2018 – 2022", title: "Art & Design", place: "Riga Maras Muiznieces Art School" },
+  { years: "2016 – 2024", title: "Fine Arts", place: "Jurmala art school" },
+];
+
+const skillGroups = [
+  {
+    label: "Software & skills",
+    items: ["Autodesk Fusion", "Siemens NX", "Adobe Ps / Ai / Id", "Blender", "Sketching", "Prototyping"],
+  },
+  {
+    label: "Materials",
+    items: ["Metal", "Plastic", "Wood", "Wood", "Clay", "Textile"],
+  },
+  {
+    label: "Languages",
+    items: ["English (C1)", "French (B2)", "Latvian (native)", "Russian (Native)"],
+  },
+];
+---
+
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="card bio-card">
+      <p>
+        I'm a digital designer and developer — I move between both sides
+        on purpose, because the interesting decisions in a product usually
+        live right at the seam between how something looks and how it's
+        actually built. My focus is experience design in the broadest
+        sense: interaction, interface, motion, and the structural choices
+        underneath that decide whether something works the way it looks
+        like it should.
+      </p>
+      <p>
+        Typography and experimentation are where most of that thinking
+        gets tested. I treat type as a design problem in its own right,
+        not a settings panel, and I keep a running set of experiments —
+        small studies in layout, motion, and interaction — alongside the
+        finished work below.
+      </p>
+
+      <span class="card-label">Education</span>
+      <ul class="timeline">
+        {education.map((entry) => (
+          <li>
+            <span class="timeline-years">{entry.years}</span>
+            <span class="timeline-content">
+              <strong>{entry.title}</strong>
+              <span class="timeline-place">{entry.place}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="skills-column">
+      {skillGroups.map((group) => (
+        <div class="card">
+          <span class="card-label">{group.label}</span>
+          <div class="pills">
+            {group.items.map((item) => <span class="pill">{item}</span>)}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    background: #f1efeb;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.25rem, 5vw, 4rem);
+    font-family: system-ui, -apple-system, sans-serif; /* swap for your body font */
+    color: #1a1a1a;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: none;
+    padding: 1.75rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  }
+
+  .bio-card p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #333;
+    margin: 0 0 1.25rem;
+  }
+
+  .card-label {
+    display: block;
+    font-size: 0.8rem;
+    color: #999;
+    margin-bottom: 1rem;
+  }
+
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .timeline li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.75rem 0;
+  }
+
+  .timeline-years {
+    font-weight: 700;
+    color: #888;
+    font-size: 0.9rem;
+  }
+
+  .timeline-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .timeline-content strong {
+    font-size: 1rem;
+  }
+
+  .timeline-place {
+    color: #888;
+    font-size: 0.85rem;
+  }
+
+  .skills-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .pill {
+    background: #ececea;
+    border-radius: none;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  /* Desktop — two-column layout, timeline goes side-by-side */
+  @media (min-width: 900px) {
+    .about-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .timeline li {
+      flex-direction: row;
+      align-items: baseline;
+      gap: 1.5rem;
+    }
+
+    .timeline-years {
+      flex: 0 0 100px;
+    }
+  }
+</style>

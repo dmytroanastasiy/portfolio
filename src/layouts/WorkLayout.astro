@@ -1,0 +1,39 @@
+---
+// A second, purpose-built layout that wraps BaseLayout instead of
+// duplicating it — this is the fix for "only 1 layout file." Every page
+// type that needs its own shared structure (blog posts, case studies,
+// etc.) gets its own layout like this one, nested inside BaseLayout.
+import BaseLayout from "./BaseLayout.astro";
+import { Image } from "astro:assets";
+
+interface Props {
+  title: string;
+  thumbnail: ImageMetadata;
+}
+
+const { title, thumbnail } = Astro.props;
+---
+
+<BaseLayout pageTitle={title}>
+  <article class="work-detail">
+    <a href={`${import.meta.env.BASE_URL}`} class="back-link">&larr; back to works</a>
+    <h1>{title}</h1>
+    <Image src={thumbnail} alt={title} widths={[400, 800, 1200]} sizes="100vw" />
+    <div class="work-body">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .work-detail {
+    max-width: 65ch;
+    margin: 0 auto;
+    padding: 2rem;
+    margin-top: 2rem;
+  }
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+  }
+</style>

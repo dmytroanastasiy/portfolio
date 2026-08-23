@@ -1,0 +1,619 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const imageModules = import.meta.glob("/src/assets/*.{png,jpg,jpeg,webp}", {
+  eager: true,
+  import: "default",
+});
+
+function resolveImage(filename) {
+  return imageModules[`/src/assets/${filename}`];
+}
+
+
+export async function getStaticPaths() {
+  const projects = [
+    {
+      slug: "water-faucet",
+      number: "01",
+      title: "Water Faucet",
+      category: "Industrial Design",
+      year: "2026",
+      concept:
+        "Inspired by organic coral structures, this faucet reinterprets traditional sanitary archetypes into a vibrant architectural accent for modern bathroom layouts.",
+      focus: [
+        "Questioning conventional tap archetypes and water delivery mechanisms.",
+        "Referencing natural water origins through biomimetic form-giving.",
+        "Functional integration of internal ceramic cartridges and a custom mixing unit.",
+      ],
+      development: "Designed in Siemens NX, 3D printed, coated, colored.",
+      tools: ["Siemens NX", "3D Printing", "Prototyping", "Surface Coating"],
+      photos: [
+  {
+    src: "faucet-1.png",
+    position: "50% 50%"
+  },
+  {
+    src: "faucet-2.png",
+    position: "50% 33%"
+  },
+  {
+    src: "faucet-3.png",
+    position: "50% 50%"
+  }
+],
+    },
+    {
+  slug: "cup",
+  number: "02",
+  title: "Cup",
+  category: "Product Design",
+  year: "2026",
+  concept:
+    "Inspired by conceptualism art, the cup remains functional yet examines familiar cup design.",
+  focus: [
+    "Exploring geometrical shapes",
+    "Ergonomic handle",
+  ],
+  development: "Made out of clay, baked, glazed, coloured",
+  tools: ["Ceramics", "Clay Modeling", "Glazing", "Kiln Baking"],
+photos: [
+  {
+    src: "cup1-final.png",
+    position: "center center"
+  },
+  {
+    src: "cup2-final.png",
+    position: "50% 70%"
+  },
+  {
+    src: "cup3-final.png",
+    position: "50% 50%"
+  },
+  {
+    src: "cup-process.png",
+    position: "50% 90%"
+  }
+],
+},
+    {
+      slug: "table-timer",
+      number: "03",
+      title: "Table Timer",
+      category: "Industrial Design",
+      year: "2025",
+      concept:
+        "An analog table timer designed to control time without the distraction of a digital screen. A calm, comforting design that functions as a small rotating table accessory.",
+      focus: [
+        "Distraction-free interaction",
+        "Soft, circular form language",
+        "Tactile engagement",
+      ],
+      development: "Designed in Adobe Illustrator, lasercut in MDF, coated, coloured",
+      tools: ["Adobe Illustrator", "Laser Cutting", "MDF", "Surface Coating"],
+      photos: [
+  {
+    src: "timer-1.png",
+    position: "50% 50%",
+    scale: "1.5"
+  },
+  {
+    src: "timer-2.png",
+    position: "50% 33%"
+  },
+  {
+    src: "timer-3.png",
+    position: "50% 50%"
+  }
+],
+    },
+    {
+      slug: "shaving-razor",
+      number: "04",
+      title: "Shaving Razor",
+      category: "Personal Care",
+      year: "2025",
+      concept:
+        "A shaving razor inspired by the design language of Ross Lovegrove, exploring ergonomic flow, balance, and continuous form.",
+      focus: [
+        "Translating movement into sculptural form",
+        "Exploring sophisticated transitions",
+      ],
+      development: "Designed in PU foam, coated, coloured",
+      tools: ["PU Foam", "Sculptural Modeling", "Prototyping", "Surface Coating"],
+       photos: [
+  {
+    src: "razor-1.png",
+    position: "50% 50%",
+  },
+  {
+    src: "razor-2.png",
+    position: "50% 50%"
+  },
+  {
+    src: "razor-3.png",
+    position: "50% 40%"
+  }
+],
+    },
+    {
+      slug: "phone-belt",
+      number: "05",
+      title: "Phone Belt",
+      category: "Wearable Design",
+      year: "2025",
+      concept:
+        "Accessory designed to catch car drivers attention in dark surrounding.",
+      focus: [
+        "Making visibility intuitive and wearable",
+        "Exploring light as a functional material",
+        "Increasing awareness without added complexity",
+      ],
+      development: "Sewed in fluroescent material, metal cutting connection parts",
+      tools: ["Fluorescent Material", "Metal Cutting", "Soft Goods", "Textiles"],
+       photos: [
+  {
+    src: "belt-1.png",
+    position: "50% 30%",
+  },
+  {
+    src: "belt-2.png",
+    position: "50% 20%"
+  },
+  {
+    src: "belt-3.png",
+    position: "50% 50%"
+  }
+],
+    },
+    {
+      slug: "stool",
+      number: "06",
+      title: "Stool",
+      category: "Furniture Design",
+      year: "2026",
+      concept:
+        "A metal stool that can be also used as a coffee table.",
+      focus: [
+        "Continuous surfacing in CAD",
+        "Smooth transitions between functional elements",
+        "Practising in product rendering",
+      ],
+      development: "Designed in Siemens NX, rendered in Blender",
+      tools: ["Siemens NX", "Blender", "Metal Fabrication", "3D Rendering"],
+         photos: [
+  {
+    src: "stool-1.png",
+    position: "50% 10%",
+  },
+  {
+    src: "stool-2.png",
+    position: "50% 20%"
+  }
+],
+    },
+  ];
+
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const photos = (project.photos || []).map((photo) => ({
+  image: resolveImage(photo.src),
+  position: photo.position || "center center",
+}));
+---
+
+<BaseLayout pageTitle={project.title}>
+  <article class="project-page">
+    <!-- Header / Navigation Back -->
+    <header class="project-header">
+      <a href={`${import.meta.env.BASE_URL}#works`} class="back-link">
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Back to works
+      </a>
+      <span class="project-num">{project.number}</span>
+    </header>
+
+    <!-- Main Title & Intro -->
+    <section class="project-hero">
+      <div class="title-meta">
+        <h1 class="project-title">{project.title}</h1>
+        <div class="meta-row">
+          <span class="meta-badge">{project.category}</span>
+          <span class="meta-year">{project.year}</span>
+        </div>
+      </div>
+      <p class="project-concept">{project.concept}</p>
+      <h2 class="section-label tools-label">Tools & Materials</h2>
+        <div class="pills">
+          {project.tools.map((tool) => (
+            <span class="pill">{tool}</span>
+          ))}
+        </div>
+    </section>
+
+    {photos.length > 0 && (
+      <section class="photos-section">
+        <!-- Mobile: main image + thumbnail carousel -->
+        <button class="gallery-main" id="galleryMain" aria-label="Open full screen">
+  <img
+    id="galleryMainImg"
+    src={photos[0].image?.src ?? photos[0].image}
+    style={`object-position:${photos[0].position};`}
+    alt=""
+  />
+</button>
+       <div class="gallery-thumbs" id="galleryThumbs">
+  {photos.map((photo, i) => (
+    <button class={`gallery-thumb ${i === 0 ? "active" : ""}`} data-index={i}>
+      <img
+        src={photo.image?.src ?? photo.image}
+        style={`object-position:${photo.position};`}
+        alt={`${project.title} thumbnail ${i + 1}`}
+      />
+    </button>
+  ))}
+</div>
+
+        <!-- Desktop: row -->
+        <div class="gallery-row">
+  {photos.map((photo, i) => (
+    <button class="gallery-row-item" data-index={i}>
+      <img
+        src={photo.image?.src ?? photo.image}
+        style={`object-position:${photo.position};`}
+        alt={`${project.title} photo ${i + 1}`}
+      />
+    </button>
+  ))}
+</div>
+      </section>
+    )}
+
+    <!-- Fullscreen lightbox -->
+    <div class="lightbox" id="lightbox">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+      <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous">&#8249;</button>
+      <img id="lightboxImg" src="" alt="" />
+      <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next">&#8250;</button>
+    </div>
+
+    <!-- Details Grid -->
+    <section class="project-grid">
+      <div class="grid-col">
+        <h2 class="section-label">Key Focus Areas</h2>
+        <ul class="focus-list">
+          {project.focus.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="grid-col">
+        <h2 class="section-label">Development & Process</h2>
+        <p class="development-text">{project.development}</p>
+
+        
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .project-page {
+    background: #0d0d0d;
+    color: #ffffff;
+    min-height: 100vh;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.25rem, 5vw, 6rem);
+    font-family: system-ui, -apple-system, sans-serif;
+    margin-top: -0.1rem;
+  }
+
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #888;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+  }
+
+  .back-link:hover {
+    color: #ffffff;
+  }
+
+  .arrow {
+    width: 18px;
+    height: 18px;
+  }
+
+  .project-num {
+    font-family: monospace;
+    color: #444;
+    font-size: 1.1rem;
+  }
+
+  .project-hero {
+    margin-bottom: 3rem;
+  }
+
+  .project-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+
+  .meta-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .meta-badge {
+    background: #1c1c1c;
+    color: #a3a3a3;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .meta-year {
+    color: #666;
+    font-size: 0.9rem;
+  }
+
+  .project-concept {
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    line-height: 1.5;
+    color: #d1d1d1;
+    max-width: 800px;
+    margin: 0;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    margin: 3rem 0;
+  }
+
+  .project-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .section-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #666;
+    margin: 0 0 1rem 0;
+  }
+
+  .tools-label {
+    margin-top: 2rem;
+  }
+
+  .focus-list {
+    list-style: disc;
+    padding-left: 1.25rem;
+    margin: 0;
+    color: #cccccc;
+  }
+
+  .focus-list li {
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+    font-size: 1rem;
+  }
+
+  .development-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #cccccc;
+    margin: 0;
+  }
+
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .pill {
+    background: #1c1c1c;
+    color: #e5e5e5;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.8rem;
+  }
+
+  @media (min-width: 768px) {
+    .project-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+  }
+  /* ---- Photos section ---- */
+  .photos-section { margin: 3rem 0; }
+
+  .gallery-main img,
+.gallery-thumb img,
+.gallery-row-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+  .gallery-main {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4:5;
+    overflow: hidden;
+    padding: 0;
+    border: none;
+    cursor: zoom-in;
+    margin-bottom: 0.75rem;
+  }
+  .gallery-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .gallery-thumbs {
+    display: flex;
+    gap: 0.6rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+    scrollbar-width: none;
+  }
+  .gallery-thumbs::-webkit-scrollbar { display: none; }
+  .gallery-thumb {
+    flex: 0 0 auto;
+    width: 70px;
+    height: 70px;
+    padding: 0;
+    border: 2px solid transparent;
+    background: #1c1c1c;
+    cursor: pointer;
+    overflow: hidden;
+    opacity: 0.6;
+    transition: opacity .2s ease, border-color .2s ease;
+  }
+  .gallery-thumb.active { opacity: 1; border-color: #fff; }
+  .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .gallery-row { display: none; }
+
+  @media (min-width: 768px) {
+    .gallery-main, .gallery-thumbs { display: none; }
+    .gallery-row {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+    }
+    .gallery-row-item {
+      flex: 1;
+      aspect-ratio: 4/3;
+      padding: 0;
+      border: none;
+      background: #1c1c1c;
+      cursor: zoom-in;
+      overflow: hidden;
+    }
+    .gallery-row-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s ease; }
+    .gallery-row-item:hover img { transform: scale(1.04); }
+  }
+
+  /* ---- Fullscreen lightbox ---- */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    padding: 2rem;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .lightbox-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+  }
+  .lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2.5rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    opacity: 0.7;
+  }
+  .lightbox-nav:hover { opacity: 1; }
+  .lightbox-prev { left: 0.5rem; }
+  .lightbox-next { right: 0.5rem; }
+</style>
+<script>
+  function initGallery() {
+    const mainImg = document.getElementById("galleryMainImg");
+    const mainBtn = document.getElementById("galleryMain");
+    const thumbs = document.querySelectorAll(".gallery-thumb");
+    const rowItems = document.querySelectorAll(".gallery-row-item");
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightboxImg");
+    if (!lightbox) return;
+
+    const sources = [...thumbs].map((btn) => btn.querySelector("img").src);
+    let activeIndex = 0;
+
+    function setActive(i) {
+      activeIndex = i;
+      if (mainImg) mainImg.src = sources[i];
+      thumbs.forEach((btn, idx) => btn.classList.toggle("active", idx === i));
+    }
+
+    thumbs.forEach((btn, i) => btn.addEventListener("click", () => setActive(i)));
+    rowItems.forEach((btn, i) => btn.addEventListener("click", () => openLightbox(i)));
+    mainBtn?.addEventListener("click", () => openLightbox(activeIndex));
+
+    function openLightbox(i) {
+      activeIndex = i;
+      lightboxImg.src = sources[i];
+      lightbox.classList.add("open");
+    }
+    function closeLightbox() {
+      lightbox.classList.remove("open");
+    }
+
+    document.getElementById("lightboxClose")?.addEventListener("click", closeLightbox);
+    lightbox.addEventListener("click", (e) => { if (e.target === lightbox) closeLightbox(); });
+    document.getElementById("lightboxPrev")?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      activeIndex = (activeIndex - 1 + sources.length) % sources.length;
+      lightboxImg.src = sources[activeIndex];
+    });
+    document.getElementById("lightboxNext")?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      activeIndex = (activeIndex + 1) % sources.length;
+      lightboxImg.src = sources[activeIndex];
+    });
+    document.addEventListener("keydown", (e) => {
+      if (!lightbox.classList.contains("open")) return;
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowRight") document.getElementById("lightboxNext")?.click();
+      if (e.key === "ArrowLeft") document.getElementById("lightboxPrev")?.click();
+    });
+  }
+
+  document.addEventListener("astro:page-load", initGallery);
+if (document.readyState !== "loading") {
+  initGallery();
+} else {
+  document.addEventListener("DOMContentLoaded", initGallery);
+}
+</script>

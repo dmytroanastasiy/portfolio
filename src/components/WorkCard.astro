@@ -1,29 +1,27 @@
 ---
 import { Image } from "astro:assets";
-import type { CollectionEntry } from "astro:content";
 
-interface Props {
-  work: CollectionEntry<"works">;
-}
+const {
+  title,
+  description,
+  thumbnail,
+  id
+} = Astro.props;
 
-const { work } = Astro.props;
+const base = import.meta.env.BASE_URL;
 ---
 
-<a href={`${import.meta.env.BASE_URL}works/${work.id}`} class="work-card">
-  <Image src={work.data.thumbnail} alt={work.data.title} width={400} height={300} />
-  <h3>{work.data.title}</h3>
-  <p>{work.data.description}</p>
-</a>
+<a
+  class="work-card"
+  href={`${base}work/${id}`}
+>
+  <Image
+    src={thumbnail}
+    alt={title}
+  />
 
-<style>
-  .work-card {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-  }
-  .work-card img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-  }
-</style>
+  <div class="work-card-content">
+    <h3>{title}</h3>
+    <p>{description}</p>
+  </div>
+</a>

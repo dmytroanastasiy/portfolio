@@ -1,23 +1,73 @@
 ---
 // About.astro
 const education = [
-  { years: "2024 – 2027", title: "Industrial Product Design", place: "Howest (Kortrijk)" },
-  { years: "2018 – 2022", title: "Art & Design", place: "Riga Maras Muiznieces Art School" },
-  { years: "2016 – 2024", title: "Fine Arts", place: "Jurmala art school" },
+  { years: "2024 – 2027", title: "DEVINE", place: "Howest (Kortrijk)" },
+  { years: "2023", title: "Typo logo design", place: "PROJECTOR online institute" },
+  { years: "2022 – 2023", title: "Graphic design", place: "PROJECTOR online institute" },
 ];
 
 const skillGroups = [
   {
-    label: "Software & skills",
-    items: ["Autodesk Fusion", "Siemens NX", "Adobe Ps / Ai / Id", "Blender", "Sketching", "Prototyping"],
+    label: "Design & Experience",
+    items: [
+      "UI Design",
+      "UX Research",
+      "Interaction Design",
+      "Visual Design",
+      "Prototyping",
+      "Design Systems",
+      "Visual Storytelling",
+      "Motion design",
+    ],
   },
+
   {
-    label: "Materials",
-    items: ["Metal", "Plastic", "Wood", "Wood", "Clay", "Textile"],
+    label: "Development & Creative Tech",
+    items: [
+      "HTML / CSS",
+      "JavaScript",
+      "Responsive Web",
+      "Creative Coding",
+      "Interactive Prototyping",
+      "Data Visualisation",
+      "AI-assisted Workflows",
+    ],
   },
+
+  {
+    label: "Process",
+    items: [
+      "Concepting",
+      "User Research",
+      "Ideation",
+      "Testing & Iteration",
+      "Presenting",
+      "Teamwork",
+      "Project Planning",
+    ],
+  },
+
+  {
+    label: "Tools",
+    items: [
+      "Figma",
+      "Adobe Ps / Ai / Id / Ae",
+      "Git / GitHub",
+      "VS Code",
+      "Blender",
+    ],
+  },
+
   {
     label: "Languages",
-    items: ["English (C1)", "French (B2)", "Latvian (native)", "Russian (Native)"],
+    items: [
+      "English — C1",
+      "Ukranian — Native",
+      "Russian — Native",
+      "French — A2 (in progress)",
+      "Dutch — A1 (in progress)",
+      "German — A1"
+    ],
   },
 ];
 ---
@@ -73,7 +123,7 @@ const skillGroups = [
   .about {
     background: #f1efeb;
     padding: clamp(2rem, 5vw, 4rem) clamp(1.25rem, 5vw, 4rem);
-    font-family: system-ui, -apple-system, sans-serif; /* swap for your body font */
+    font-family: system-ui, -apple-system, sans-serif; 
     color: #1a1a1a;
   }
 
@@ -89,7 +139,9 @@ const skillGroups = [
     padding: 1.75rem;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   }
-
+  .bio-card {
+  align-self: start;
+}
   .bio-card p {
     font-size: 0.95rem;
     line-height: 1.6;
@@ -141,7 +193,7 @@ const skillGroups = [
   .skills-column {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
   }
 
   .pills {

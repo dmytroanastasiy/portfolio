@@ -5,17 +5,113 @@ import About from "../components/About.astro";
 import Works from "../components/Works.astro";
 import Experiments from "../components/Experiments.astro";
 import Counter from "../components/Counter.jsx";
+
 import { getCollection } from "astro:content";
 
 const works = (await getCollection("works")).sort((a, b) => a.data.order - b.data.order);
 const skills = (await getCollection("skills")).sort((a, b) => a.data.order - b.data.order);
----
 
+const base = import.meta.env.BASE_URL;
+---
 <BaseLayout pageTitle="Home">
   <section class="hero" id="hero-section">
-    <p class="hero-eyebrow">Digital Designer &amp; Developer</p>
-    <h1 class="hero-title">Dmytro Anastasiy</h1>
-    <p class="hero-tagline">Building &amp; shaping digital experiences.</p>
+    <div class="hero-top">
+      <p class="hero-eyebrow">
+        Digital Designer
+        <span>&amp; Developer</span>
+      </p>
+
+      <p class="hero-year">© 2026</p>
+    </div>
+
+    <div class="hero-main">
+     <h1 class="hero-title">
+  <span class="title-line title-line--physics">
+    <span class="sr-only">Dmytro</span>
+
+    <span
+      class="dmytro-physics"
+      id="dmytro-physics"
+      aria-hidden="true"
+    >
+      <img
+  class="physics-letter"
+  src={`${base}hero-letters/d.svg`}
+  alt=""
+  draggable="false"
+/>
+
+<img
+  class="physics-letter"
+  src={`${base}hero-letters/m.svg`}
+  alt=""
+  draggable="false"
+/>
+
+<img
+  class="physics-letter"
+  src={`${base}hero-letters/y.svg`}
+  alt=""
+  draggable="false"
+/>
+
+<img
+  class="physics-letter"
+  src={`${base}hero-letters/t.svg`}
+  alt=""
+  draggable="false"
+/>
+
+<img
+  class="physics-letter"
+  src={`${base}hero-letters/r.svg`}
+  alt=""
+  draggable="false"
+/>
+
+<img
+  class="physics-letter"
+  src={`${base}hero-letters/o.svg`}
+  alt=""
+  draggable="false"
+/>
+    </span>
+  </span>
+
+  <span class="title-line title-line--surname">
+    <span>Anastasiy</span>
+  </span>
+</h1>
+
+      <div class="hero-description">
+        <p>
+          Building digital experiences
+          <br />
+          with clarity, character,
+          <br />
+          and purpose.
+        </p>
+      </div>
+    </div>
+
+    <div class="hero-bottom">
+      <p class="hero-location">Designer / Developer</p>
+
+      <a href="#about" class="hero-scroll" aria-label="Scroll to about section">
+        <span>Explore</span>
+
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          fill="none"
+        >
+          <path d="M12 5V19" />
+          <path d="M7 14L12 19L17 14" />
+        </svg>
+      </a>
+    </div>
+
+    <div class="hero-glow" aria-hidden="true"></div>
   </section>
 
   <About />
@@ -25,45 +121,1318 @@ const skills = (await getCollection("skills")).sort((a, b) => a.data.order - b.d
 
 <style>
   .hero {
-    min-height: 70dvh;
-    width: 100vw;
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+
+  /*
+    Desktop:
+    roughly the upper-left cell of a 3 × 2 composition.
+
+    Width and height are ALWAYS identical.
+  */
+  --physics-width: min(48vw, 45rem);
+--physics-height: min(46svh, 30rem);
+
+  position: relative;
+  isolation: isolate;
+
+  min-height: 100svh;
+  width: 100%;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+
+  /* changed from space-between */
+  justify-content: flex-start;
+
+  padding:
+    clamp(1.5rem, 3vw, 2.75rem)
+    clamp(1.25rem, 4vw, 4.5rem);
+
+  background:
+    radial-gradient(
+      circle at var(--mouse-x) var(--mouse-y),
+      rgba(255, 255, 255, 0.055),
+      transparent 28rem
+    ),
+    #0a0a0a;
+
+  color: #f5f5f5;
+}
+
+  .hero-top,
+  .hero-bottom {
+    position: relative;
+    z-index: 2;
+
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #0f0f0f;
-    margin-top: -0.1rem;
-    padding: clamp(2rem, 6vw, 4rem) clamp(1.25rem, 5vw, 4rem);
-    text-align: center;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    width: 100%;
+  }
+
+  .hero-eyebrow,
+  .hero-year,
+  .hero-location,
+  .hero-scroll {
+    font-family:
+      Inter,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif;
   }
 
   .hero-eyebrow {
-    color: #a3a3a3;
-    font-family: system-ui, -apple-system, sans-serif;
-    font-size: clamp(0.85rem, 1.2vw, 1rem);
+    display: flex;
+    flex-direction: column;
+
+    margin: 0;
+
+    color: #c5c5c5;
+    font-size: clamp(0.7rem, 0.8vw, 0.82rem);
     font-weight: 500;
+    line-height: 1.45;
+
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    letter-spacing: 0.2em;
-    margin: 0 0 1.25rem;
+
+    opacity: 0;
+    animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+  }
+
+  .hero-year {
+    margin: 0;
+
+    color: #656565;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+
+    opacity: 0;
+    animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+  }
+
+  .hero-main {
+  position: relative;
+  z-index: 2;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: clamp(2rem, 5vw, 6rem);
+
+  /*
+    Dmytro now lives toward the upper-left
+    instead of around the vertical center.
+  */
+  margin-top: clamp(2rem, 4vh, 3.5rem);
+  margin-bottom: clamp(2rem, 5vh, 4rem);
+}
+
+.hero-bottom {
+  margin-top: auto;
+}
+
+  .hero-title {
+    margin: 0;
+    margin-left: -0.06em;
+
+    font-family:
+      Inter,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif;
+
+    font-size: clamp(4rem, 10.8vw, 10.5rem);
+    font-weight: 550;
+    line-height: 0.81;
+
+    letter-spacing: -0.075em;
   }
 
   .hero-title {
-    color: #fff;
-    font-family: system-ui, -apple-system, sans-serif;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.05;
-    margin: 0 0 1.25rem;
-    font-size: clamp(2.75rem, 8vw, 6.5rem);
+  margin: 0;
+  margin-left: -0.06em;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: clamp(0.75rem, 2vh, 1.5rem);
+
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  font-size: clamp(4rem, 10.8vw, 10.5rem);
+  font-weight: 550;
+  line-height: 0.81;
+  letter-spacing: -0.075em;
+}
+
+
+/* ========================================
+   DMYTRO PHYSICS CELL
+======================================== */
+
+.title-line--physics {
+  position: relative;
+  display: block;
+
+  width: var(--physics-width);
+  height: var(--physics-height);
+  flex: 0 0 var(--physics-height);
+
+  overflow: hidden;
+
+  padding: 0;
+  margin: 0;
+
+  line-height: 0;
+}
+
+
+/*
+  This is THE Matter.js world.
+
+  Gravity exists nowhere outside this box.
+*/
+.dmytro-physics {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  pointer-events: auto;
+  touch-action: none;
+
+  /*
+    Needed so the edge effect stays
+    visually isolated to this container.
+  */
+  isolation: isolate;
+}
+
+
+/*
+  Slight blur only around the outer
+  ~10px of the physics container.
+*/
+.dmytro-physics::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  z-index: 10;
+
+  /*
+    Starting state:
+    almost the whole container is blurred.
+  */
+  padding: 1rem;
+
+  pointer-events: none;
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+
+  mask-composite: exclude;
+
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+
+  -webkit-mask-composite: xor;
+}
+
+
+/* .dmytro-physics.is-running::after {
+  animation: physics-blur-reveal 5s
+    forwards;
+}
+
+
+@keyframes physics-blur-reveal {
+  0% {
+  
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   }
 
-  .hero-tagline {
-    color: #d1d1d1;
-    font-family: system-ui, -apple-system, sans-serif;
+  100% {
+    
+
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  } 
+/* } */
+.physics-letter {
+  position: relative;
+
+  display: block;
+
+  flex: 0 0 auto;
+
+
+  width: auto;
+  height: 40%;
+
+  
+
+  object-fit: contain;
+
+  user-select: none;
+  pointer-events: auto;
+
+  -webkit-user-drag: none;
+
+  cursor: grab;
+
+  transform-origin: center;
+  will-change: transform;
+}
+
+.dmytro-physics.is-running {
+  display: block;
+}
+
+.dmytro-physics.is-running .physics-letter {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  margin: 0;
+}
+
+
+/* ========================================
+   ANASTASIY
+======================================== */
+
+.title-line--surname {
+  display: block;
+
+  overflow: hidden;
+
+  padding-block: 0.08em;
+}
+
+
+.title-line--surname > span {
+  display: block;
+
+  transform: translateY(115%);
+
+  animation:
+    title-reveal
+    1.1s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    0.22s
+    forwards;
+}
+
+
+/* Accessibility */
+.sr-only {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  padding: 0;
+  margin: -1px;
+
+  overflow: hidden;
+
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+
+  border: 0;
+}
+
+  .hero-description {
+    margin-bottom: clamp(0.5rem, 1.5vw, 1.5rem);
+
+    color: #9d9d9d;
+
+    font-family:
+      Inter,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif;
+
+    font-size: clamp(0.95rem, 1.3vw, 1.15rem);
     font-weight: 400;
-    line-height: 1.4;
-    max-width: 40ch;
-    margin: 0;
-    font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+    line-height: 1.55;
+
+    opacity: 0;
+
+    animation: fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.55s forwards;
   }
+
+  .hero-description p {
+    margin: 0;
+  }
+
+  .hero-bottom {
+    align-items: flex-end;
+
+    opacity: 0;
+    animation: fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.7s forwards;
+  }
+
+  .hero-location {
+    margin: 0;
+
+    color: #626262;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+
+  .hero-scroll {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+
+    color: #d6d6d6;
+
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    transition:
+      color 250ms ease,
+      transform 250ms ease;
+  }
+
+  .hero-scroll svg {
+    width: 1rem;
+    height: 1rem;
+
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    transition: transform 250ms ease;
+  }
+
+  .hero-scroll:hover {
+    color: #fff;
+  }
+
+  .hero-scroll:hover svg {
+    transform: translateY(0.25rem);
+  }
+
+  .hero-glow {
+    position: absolute;
+    z-index: 0;
+
+    left: var(--mouse-x);
+    top: var(--mouse-y);
+
+    width: clamp(16rem, 30vw, 30rem);
+    aspect-ratio: 1;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.02);
+    filter: blur(50px);
+
+    pointer-events: none;
+
+    transform: translate(-50%, -50%);
+    transition:
+      left 300ms ease-out,
+      top 300ms ease-out;
+  }
+
+  @keyframes title-reveal {
+    from {
+      transform: translateY(115%);
+    }
+
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(1rem);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+@media (max-width: 800px) {
+  .hero {
+    /*
+      Portrait changes conceptually from
+      3 × 2 to roughly 2 × 3.
+
+      Still a perfect square.
+    */
+   .hero {
+  --physics-width: min(48vw, 45rem);
+  --physics-height: min(46svh, 30rem);
+
+
+    min-height: 100svh;
+
+    padding:
+      1.5rem
+      clamp(1rem, 5vw, 1.5rem)
+      1.75rem;
+  }
+
+  .hero-main {
+    grid-template-columns: 1fr;
+
+    align-items: start;
+
+    gap: 2rem;
+
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-title {
+    font-size: clamp(4rem, 18vw, 7rem);
+
+    line-height: 0.85;
+    letter-spacing: -0.07em;
+
+    gap: 1.25rem;
+  }
+
+  .hero-description {
+    margin: 0;
+
+    max-width: 22rem;
+
+    font-size: 1rem;
+  }
+
+  .hero-description br {
+    display: none;
+  }
+
+  .physics-letter {
+    /*
+      Slightly larger relative letters
+      inside the smaller mobile world.
+    */
+    width: 15%;
+  }
+}
+
+  @media (max-width: 480px) {
+    .hero-year {
+      display: none;
+    }
+
+    .hero-title {
+      font-size: clamp(3.7rem, 18.5vw, 5.5rem);
+    }
+
+    .hero-bottom {
+      gap: 1rem;
+    }
+
+    .hero-location {
+      max-width: 8rem;
+      line-height: 1.45;
+    }
+  }
+
+
+
+  .hero,
+  .hero-glow,
+  .hero-scroll,
+  .hero-scroll svg {
+    transition: none;
+  }
+
+  /*
+    Physics JS deliberately doesn't start
+    for reduced-motion users.
+
+    The letters remain as normal DMYTRO.
+  */
+  .dmytro-physics {
+    display: flex;
+  }
+
+  .physics-letter {
+    position: relative;
+
+  }
+}
 </style>
+
+<script>
+  import Matter from "matter-js";
+
+  /* =========================================
+     HERO CURSOR GLOW
+  ========================================= */
+
+  function initHeroGlow() {
+    const hero = document.querySelector("#hero-section");
+
+    if (
+      !(hero instanceof HTMLElement) ||
+      !window.matchMedia("(pointer: fine)").matches
+    ) {
+      return;
+    }
+
+    hero.addEventListener("pointermove", (event) => {
+      const rect = hero.getBoundingClientRect();
+
+      const x =
+        ((event.clientX - rect.left) / rect.width) * 100;
+
+      const y =
+        ((event.clientY - rect.top) / rect.height) * 100;
+
+      hero.style.setProperty("--mouse-x", `${x}%`);
+      hero.style.setProperty("--mouse-y", `${y}%`);
+    });
+
+    hero.addEventListener("pointerleave", () => {
+      hero.style.setProperty("--mouse-x", "50%");
+      hero.style.setProperty("--mouse-y", "50%");
+    });
+  }
+
+
+  /* =========================================
+     DMYTRO PHYSICS
+  ========================================= */
+
+  async function initDmytroPhysics() {
+    const container =
+      document.querySelector("#dmytro-physics");
+
+    if (!(container instanceof HTMLElement)) {
+      console.warn("[Dmytro] Physics container not found.");
+      return;
+    }
+
+
+    /*
+      Prevent duplicate Matter worlds during Astro HMR.
+    */
+    if (container.dataset.physicsRunning === "true") {
+      return;
+    }
+
+
+    const images = Array.from(
+      container.querySelectorAll(".physics-letter")
+    ).filter(
+      (item) => item instanceof HTMLImageElement
+    );
+
+
+    if (images.length !== 6) {
+      console.error(
+        `[Dmytro] Expected 6 images, found ${images.length}.`
+      );
+
+      return;
+    }
+
+
+    /* =========================================
+       WAIT FOR THE IMAGES
+    ========================================= */
+
+    await Promise.all(
+      images.map(async (image) => {
+        /*
+          decode() works even if the image finished
+          loading before this script executed.
+        */
+        try {
+          await image.decode();
+        } catch {
+          /*
+            decode() can reject for SVGs in some
+            situations even though they're usable.
+          */
+        }
+      })
+    );
+
+
+    /*
+      Give the browser one frame to finish layout.
+    */
+    await new Promise((resolve) =>
+      requestAnimationFrame(resolve)
+    );
+
+
+    const containerRect =
+      container.getBoundingClientRect();
+
+
+    if (
+      containerRect.width <= 0 ||
+      containerRect.height <= 0
+    ) {
+      console.error(
+        "[Dmytro] Physics container has no size.",
+        containerRect
+      );
+
+      return;
+    }
+
+
+    /*
+      Make sure every asset actually has dimensions.
+    */
+    for (const image of images) {
+      const rect = image.getBoundingClientRect();
+
+      if (rect.width <= 0 || rect.height <= 0) {
+        console.error(
+          "[Dmytro] Letter has no dimensions:",
+          image.src,
+          rect
+        );
+
+        return;
+      }
+    }
+
+
+    console.info(
+      "[Dmytro] Starting Matter.js:",
+      Math.round(containerRect.width),
+      "×",
+      Math.round(containerRect.height)
+    );
+
+
+    container.dataset.physicsRunning = "true";
+
+
+    /* =========================================
+       MATTER SETUP
+    ========================================= */
+
+    const {
+      Engine,
+      Runner,
+      Bodies,
+      Body,
+      Composite,
+      Mouse,
+      MouseConstraint,
+      Events,
+      Sleeping,
+    } = Matter;
+
+
+    const engine = Engine.create();
+
+    const world = engine.world;
+
+
+    /*
+      Same gravity as your working old project.
+    */
+    engine.gravity.x = 0;
+    engine.gravity.y = 0.8;
+    engine.gravity.scale = 0.001;
+
+
+    /* =========================================
+       WORLD SIZE
+    ========================================= */
+
+    let worldWidth =
+      container.getBoundingClientRect().width;
+
+    let worldHeight =
+      container.getBoundingClientRect().height;
+
+
+    /* =========================================
+       WALLS
+    ========================================= */
+
+    const wallThickness = 500;
+
+    let floor;
+    let ceiling;
+    let leftWall;
+    let rightWall;
+
+
+    const wallOptions = {
+      isStatic: true,
+
+      friction: 0.5,
+
+      restitution: 0.35,
+
+      render: {
+        visible: false,
+      },
+    };
+
+
+    function buildWalls() {
+      if (floor) {
+        Composite.remove(world, [
+          floor,
+          ceiling,
+          leftWall,
+          rightWall,
+        ]);
+      }
+
+
+      worldWidth =
+        container.getBoundingClientRect().width;
+
+      worldHeight =
+        container.getBoundingClientRect().height;
+
+
+      floor = Bodies.rectangle(
+        worldWidth / 2,
+        worldHeight + wallThickness / 2,
+
+        worldWidth + wallThickness * 2,
+        wallThickness,
+
+        wallOptions
+      );
+
+
+      ceiling = Bodies.rectangle(
+        worldWidth / 2,
+        -wallThickness / 2,
+
+        worldWidth + wallThickness * 2,
+        wallThickness,
+
+        wallOptions
+      );
+
+
+      leftWall = Bodies.rectangle(
+        -wallThickness / 2,
+        worldHeight / 2,
+
+        wallThickness,
+        worldHeight + wallThickness * 2,
+
+        wallOptions
+      );
+
+
+      rightWall = Bodies.rectangle(
+        worldWidth + wallThickness / 2,
+        worldHeight / 2,
+
+        wallThickness,
+        worldHeight + wallThickness * 2,
+
+        wallOptions
+      );
+
+
+      Composite.add(world, [
+        floor,
+        ceiling,
+        leftWall,
+        rightWall,
+      ]);
+    }
+
+
+    buildWalls();
+
+
+    /* =========================================
+       CREATE LETTER BODIES
+    ========================================= */
+
+    const initialRects =
+      images.map((image) =>
+        image.getBoundingClientRect()
+      );
+
+
+    /*
+      Map a Matter body back to its IMG.
+    */
+    const visuals = new Map();
+
+
+    const bodies = images.map(
+      (image, index) => {
+        const rect =
+          initialRects[index];
+
+
+        /*
+          Spawn the letters approximately where their
+          normal flex layout currently puts them.
+
+          This gives us:
+
+          D M Y T R O
+          ↓ ↓ ↓ ↓ ↓ ↓
+
+          and then gravity immediately takes over.
+        */
+        const x =
+          rect.left -
+          containerRect.left +
+          rect.width / 2;
+
+
+        const y =
+          rect.top -
+          containerRect.top +
+          rect.height / 2;
+
+
+        const body =
+          Bodies.rectangle(
+            x,
+            y,
+
+            rect.width,
+            rect.height,
+
+            {
+              restitution: 0.55,
+
+              friction: 0.1,
+
+              frictionStatic: 0.15,
+
+              frictionAir: 0.015,
+
+              density: 0.001,
+
+              angle:
+                (Math.random() - 0.5) * 0.12,
+            }
+          );
+
+
+        visuals.set(body, {
+          element: image,
+
+          width: rect.width,
+          height: rect.height,
+        });
+
+
+        return body;
+      }
+    );
+
+
+    /* =========================================
+       POSITION DOM IMAGES
+    ========================================= */
+
+    function renderBodies() {
+      for (const body of bodies) {
+        const visual =
+          visuals.get(body);
+
+        if (!visual) continue;
+
+
+        const x =
+          body.position.x -
+          visual.width / 2;
+
+
+        const y =
+          body.position.y -
+          visual.height / 2;
+
+
+        visual.element.style.transform =
+          `translate3d(${x}px, ${y}px, 0) ` +
+          `rotate(${body.angle}rad)`;
+      }
+    }
+
+
+    /*
+      Render first position before changing
+      the images to absolute positioning.
+    */
+    renderBodies();
+
+
+    /*
+      CSS:
+      .dmytro-physics.is-running .physics-letter {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    */
+    container.classList.add("is-running");
+
+
+    Composite.add(
+      world,
+      bodies
+    );
+
+
+    /* =========================================
+       MOUSE / DRAG
+    ========================================= */
+
+    const mouse =
+      Mouse.create(container);
+
+
+    const mouseConstraint =
+      MouseConstraint.create(
+        engine,
+        {
+          mouse,
+
+          constraint: {
+            stiffness: 0.14,
+
+            damping: 0.08,
+
+            render: {
+              visible: false,
+            },
+          },
+        }
+      );
+
+
+    Composite.add(
+      world,
+      mouseConstraint
+    );
+
+
+    /*
+      Matter adds wheel listeners by default.
+
+      Remove them so this little physics square
+      doesn't steal page scrolling.
+    */
+    if (mouse.mousewheel) {
+      mouse.element.removeEventListener(
+        "mousewheel",
+        mouse.mousewheel
+      );
+
+      mouse.element.removeEventListener(
+        "DOMMouseScroll",
+        mouse.mousewheel
+      );
+    }
+
+
+    /* =========================================
+       ENGINE -> DOM
+    ========================================= */
+
+    Events.on(
+      engine,
+      "afterUpdate",
+      renderBodies
+    );
+
+
+    const runner =
+      Runner.create();
+
+
+    Runner.run(
+      runner,
+      engine
+    );
+
+
+    /*
+      A tiny initial kick makes it immediately obvious
+      that physics is alive.
+
+      Gravity itself would work without this.
+    */
+    bodies.forEach((body, index) => {
+      Body.setVelocity(
+        body,
+        {
+          x: (index - 2.5) * 0.08,
+          y: 0.1,
+        }
+      );
+
+      Sleeping.set(
+        body,
+        false
+      );
+    });
+
+
+    /* =========================================
+       RESPONSIVE RESIZE
+    ========================================= */
+
+    let previousWidth =
+      worldWidth;
+
+    let previousHeight =
+      worldHeight;
+
+
+    let resizeFrame;
+
+
+    const resizeObserver =
+      new ResizeObserver(() => {
+        cancelAnimationFrame(
+          resizeFrame
+        );
+
+
+        resizeFrame =
+          requestAnimationFrame(() => {
+            const nextRect =
+              container.getBoundingClientRect();
+
+
+            const nextWidth =
+              nextRect.width;
+
+            const nextHeight =
+              nextRect.height;
+
+
+            /*
+              ResizeObserver fires once immediately.
+              Ignore that first identical measurement.
+
+              This is important: we do NOT want to
+              continually zero the physics velocities.
+            */
+            if (
+              Math.abs(nextWidth - previousWidth) < 0.5 &&
+              Math.abs(nextHeight - previousHeight) < 0.5
+            ) {
+              return;
+            }
+
+
+            const scaleX =
+              nextWidth / previousWidth;
+
+            const scaleY =
+              nextHeight / previousHeight;
+
+
+            buildWalls();
+
+
+            bodies.forEach((body) => {
+              const visual =
+                visuals.get(body);
+
+              if (!visual) return;
+
+
+              /*
+                Reposition proportionally inside
+                the new responsive square.
+              */
+              Body.setPosition(
+                body,
+                {
+                  x:
+                    body.position.x *
+                    scaleX,
+
+                  y:
+                    body.position.y *
+                    scaleY,
+                }
+              );
+
+
+              const newLetterWidth =
+                visual.element.offsetWidth;
+
+              const newLetterHeight =
+                visual.element.offsetHeight;
+
+
+              if (
+                newLetterWidth > 0 &&
+                newLetterHeight > 0
+              ) {
+                const bodyScaleX =
+                  newLetterWidth /
+                  visual.width;
+
+                const bodyScaleY =
+                  newLetterHeight /
+                  visual.height;
+
+
+                Body.scale(
+                  body,
+                  bodyScaleX,
+                  bodyScaleY
+                );
+
+
+                visual.width =
+                  newLetterWidth;
+
+                visual.height =
+                  newLetterHeight;
+              }
+
+
+              /*
+                Keep body center within world bounds.
+              */
+              const halfW =
+                visual.width / 2;
+
+              const halfH =
+                visual.height / 2;
+
+
+              const safeX =
+                Math.max(
+                  halfW,
+                  Math.min(
+                    nextWidth - halfW,
+                    body.position.x
+                  )
+                );
+
+
+              const safeY =
+                Math.max(
+                  halfH,
+                  Math.min(
+                    nextHeight - halfH,
+                    body.position.y
+                  )
+                );
+
+
+              Body.setPosition(
+                body,
+                {
+                  x: safeX,
+                  y: safeY,
+                }
+              );
+
+
+              Sleeping.set(
+                body,
+                false
+              );
+            });
+
+
+            previousWidth =
+              nextWidth;
+
+            previousHeight =
+              nextHeight;
+
+
+            renderBodies();
+          });
+      });
+
+
+    resizeObserver.observe(
+      container
+    );
+  }
+
+
+  /* =========================================
+     START
+  ========================================= */
+
+  function initializeHero() {
+    initHeroGlow();
+    initDmytroPhysics();
+  }
+
+
+  /*
+    Initial normal page load.
+  */
+  initializeHero();
+
+
+  /*
+    Also works if you're using Astro's
+    client-side page navigation.
+  */
+  document.addEventListener(
+    "astro:page-load",
+    initializeHero
+  );
+</script>

@@ -1,30 +1,79 @@
-import { defineCollection, z } from 'astro:content';
-import { glob, file } from 'astro/loaders';
+import { defineCollection, z } from "astro:content";
+import { glob, file } from "astro/loaders";
 
-// WORKS — one markdown file per project, real body content used for the
-// long description (not crammed into frontmatter like the old project did).
+
+/* =========================================
+   WORKS
+========================================= */
+
 const works = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/works' }),
+  loader: glob({
+    pattern: "**/*.md",
+    base: "./src/content/works",
+  }),
+
   schema: ({ image }) =>
     z.object({
+      /* Existing fields */
       title: z.string(),
-      description: z.string(), // short card blurb
-      thumbnail: image(), // validated at build time — no more "missing image" surprises
+
+      description: z.string(),
+
+      thumbnail: image(),
+
       link: z.string().url().optional(),
+
       order: z.number(),
+
+
+      /* Project page type */
+      template: z
+        .enum([
+          "default",
+          "research",
+        ])
+        .default("default"),
+
+
+      /* Optional case-study metadata */
+      year: z.string().optional(),
+
+      type: z.string().optional(),
+
+      role: z.string().optional(),
+
+      figjamUrl: z
+        .string()
+        .url()
+        .optional(),
+
+      tags: z
+        .array(z.string())
+        .optional(),
     }),
 });
 
-// SKILLS — this is data, not page-like content, so it lives in a JSON file
-// and uses the file() loader instead of glob(). This is the direct fix for
-// "Skills content collection should have been a JSON file."
+
+/* =========================================
+   SKILLS
+========================================= */
+
 const skills = defineCollection({
-  loader: file('src/content/skills/skills.json'),
+  loader: file(
+    "src/content/skills/skills.json"
+  ),
+
   schema: z.object({
     id: z.string(),
+
     name: z.string(),
+
     order: z.number(),
   }),
 });
 
-export const collections = { works, skills };
+
+export const collections = {
+  works,
+  skills,
+};

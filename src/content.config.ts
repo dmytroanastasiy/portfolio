@@ -14,14 +14,17 @@ const works = defineCollection({
 
   schema: ({ image }) =>
     z.object({
-      /* Existing fields */
+      /* Required work fields */
       title: z.string(),
 
       description: z.string(),
 
       thumbnail: image(),
 
-      link: z.string().url().optional(),
+      link: z
+        .string()
+        .url()
+        .optional(),
 
       order: z.number(),
 
@@ -31,16 +34,24 @@ const works = defineCollection({
         .enum([
           "default",
           "research",
+          "generation-ship",
+          "miles-and-meals",
         ])
         .default("default"),
 
 
       /* Optional case-study metadata */
-      year: z.string().optional(),
+      year: z
+        .string()
+        .optional(),
 
-      type: z.string().optional(),
+      type: z
+        .string()
+        .optional(),
 
-      role: z.string().optional(),
+      role: z
+        .string()
+        .optional(),
 
       figjamUrl: z
         .string()
@@ -72,6 +83,10 @@ const skills = defineCollection({
   }),
 });
 
+
+/* =========================================
+   EXPORT COLLECTIONS
+========================================= */
 
 export const collections = {
   works,

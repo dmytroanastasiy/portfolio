@@ -1,0 +1,201 @@
+<nav
+  class="case-progress"
+  aria-label="Project progress"
+  data-case-progress
+>
+  <ol data-case-progress-list></ol>
+</nav>
+
+<script>
+  const nav = document.querySelector("[data-case-progress]");
+  const list = document.querySelector("[data-case-progress-list]");
+
+  const allSections = Array.from(
+    document.querySelectorAll(
+      "[data-progress-section][id]"
+    )
+  );
+
+  let sectionObserver;
+
+  function getVisibleSections() {
+    return allSections.filter((section) => {
+      return (
+        !section.classList.contains("is-hidden") &&
+        getComputedStyle(section).display !== "none"
+      );
+    });
+  }
+
+  function buildProgressNav() {
+    if (!nav || !list) return;
+
+    // Stop the previous section observer
+    sectionObserver?.disconnect();
+
+    // Clear old dots
+    list.replaceChildren();
+
+    const sections = getVisibleSections();
+
+    if (!sections.length) {
+      nav.hidden = true;
+      return;
+    }
+
+    nav.hidden = false;
+
+    // Build dots only for currently visible sections
+    sections.forEach((section, index) => {
+      const id = section.id;
+
+      const label =
+        section.getAttribute("data-progress-label") ||
+        section.querySelector("h2")?.textContent?.trim() ||
+        `Section ${index + 1}`;
+
+      const li = document.createElement("li");
+      const link = document.createElement("a");
+
+      link.href = `#${id}`;
+      link.setAttribute("aria-label", label);
+
+      link.innerHTML = `
+        <span class="case-progress__number">
+          ${String(index + 1).padStart(2, "0")}
+        </span>
+
+        <span class="case-progress__label">
+          ${label}
+        </span>
+      `;
+
+      li.appendChild(link);
+      list.appendChild(li);
+    });
+
+    const links = list.querySelectorAll("a");
+
+    // Track which visible section is currently being read
+    sectionObserver = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort(
+            (a, b) =>
+              b.intersectionRatio -
+              a.intersectionRatio
+          );
+
+        if (!visible.length) return;
+
+        const activeId = visible[0].target.id;
+
+        links.forEach((link) => {
+          link.classList.toggle(
+            "is-active",
+            link.getAttribute("href") ===
+              `#${activeId}`
+          );
+        });
+      },
+      {
+        rootMargin: "-35% 0px -50% 0px",
+        threshold: [0, 0.1, 0.25, 0.5],
+      }
+    );
+
+    sections.forEach((section) => {
+      sectionObserver.observe(section);
+    });
+  }
+
+  // Initial build
+  buildProgressNav();
+
+  // Watch sections for Quick / Full changes
+  const modeObserver = new MutationObserver(() => {
+    buildProgressNav();
+  });
+
+  allSections.forEach((section) => {
+    modeObserver.observe(section, {
+      attributes: true,
+      attributeFilter: ["class", "hidden"],
+    });
+  });
+</script>
+
+<style is:global>
+  .case-progress {
+    position: fixed;
+
+    top: 50%;
+    right: 1.5rem;
+
+    z-index: 50;
+
+    transform: translateY(-50%);
+  }
+
+  .case-progress ol {
+    display: grid;
+    gap: 0.7rem;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+  }
+
+  .case-progress a {
+    width: 0.65rem;
+    height: 0.65rem;
+
+    display: block;
+
+    border-radius: 999px;
+
+    background: rgb(195, 195, 195, 50%);
+
+    transition:
+      width 250ms ease,
+      background 250ms ease,
+      transform 250ms ease;
+  }
+
+  .case-progress a:hover {
+    transform: scale(1.25);
+  }
+
+  .case-progress a.is-active {
+    width: 2rem;
+    background: #1999f3;
+    opacity: 90%;
+  }
+
+  .case-progress__number,
+  .case-progress__label {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    overflow: hidden;
+
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 800px) {
+    .case-progress {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .case-progress a {
+      transition: none;
+    }
+  }
+</style>

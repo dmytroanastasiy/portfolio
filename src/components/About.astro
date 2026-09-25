@@ -73,23 +73,21 @@ const skillGroups = [
 ---
 
 <section class="about" id="about">
+  <div class="about-header">
+    <h2 class="about-heading">About me</h2>
+    <span class="about-tag">#about</span>
+  </div>
+
   <div class="about-grid">
     <div class="card bio-card">
       <p>
-        I'm a digital designer and developer — I move between both sides
-        on purpose, because the interesting decisions in a product usually
-        live right at the seam between how something looks and how it's
-        actually built. My focus is experience design in the broadest
-        sense: interaction, interface, motion, and the structural choices
-        underneath that decide whether something works the way it looks
-        like it should.
+        I'm a digital designer and developer with a background in graphic and type design, currently in my third year of Digital Design and Development (Devine) at Howest.
       </p>
       <p>
-        Typography and experimentation are where most of that thinking
-        gets tested. I treat type as a design problem in its own right,
-        not a settings panel, and I keep a running set of experiments —
-        small studies in layout, motion, and interaction — alongside the
-        finished work below.
+        My focus is experience and visual design: interfaces, interaction, motion and visual systems. I'm most excited by projects where research, identity and product come together, and by typography, which I keep exploring through smaller experiments.
+      </p>
+      <p>
+        I care about quality, both in how a project looks and in how it's made. I want every project to be 100% good for the client, and something I'm proud of myself. That means paying attention to the details, testing ideas early and not stopping at “good enough”.
       </p>
 
       <span class="card-label">Education</span>
@@ -121,10 +119,29 @@ const skillGroups = [
 
 <style>
   .about {
-    background: #f1efeb;
-    padding: clamp(2rem, 5vw, 4rem) clamp(1.25rem, 5vw, 4rem);
+    background: #ffffff;
+    padding: clamp(2.5rem, 6vw, 5rem) clamp(1.25rem, 5vw, 4rem);
     font-family: system-ui, -apple-system, sans-serif; 
     color: #1a1a1a;
+  }
+
+  .about-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  .about-heading {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .about-tag {
+    color: #9a9a9a;
+    font-size: 0.9rem;
+    font-family: monospace;
   }
 
   .about-grid {
@@ -134,10 +151,9 @@ const skillGroups = [
   }
 
   .card {
-    background: #fff;
-    border-radius: none;
+    background: #f4f4f4;
+    border-radius: 1.5rem;
     padding: 1.75rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   }
   .bio-card {
   align-self: start;
@@ -203,8 +219,9 @@ const skillGroups = [
   }
 
   .pill {
-    background: #ececea;
-    border-radius: none;
+    background: #e9e9e9;
+    color: #333;
+    border-radius: 999px;
     padding: 0.5rem 1rem;
     font-size: 0.85rem;
     white-space: nowrap;

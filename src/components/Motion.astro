@@ -1,0 +1,160 @@
+---
+// Motion.astro — smooth scrolling (Lenis) + reveal-on-scroll for the whole site.
+---
+
+<script>
+  import Lenis from "../lib/lenis/lenis.mjs";
+  import "../lib/lenis/lenis.css";
+
+  // People who turned on "Reduce motion" in their OS still get the content
+  // fading in, but no smooth-scroll inertia and no sliding/bouncing.
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion) {
+    document.documentElement.classList.add("motion-reduced");
+    console.info("[motion] reduced motion is ON in this OS — smooth scroll off, soft fades only");
+  }
+
+  /* ==========================================
+     SMOOTH SCROLL
+  ========================================== */
+
+  // Areas that scroll on their own (phone screens, modals, drag/zoom
+  // viewports, the physics letters) keep their native behaviour.
+  const NATIVE_SCROLL = [
+    "dialog",
+    ".phone-screen",
+    ".screens__scroll",
+    ".screens__phone-scroll",
+    "[data-drag-scroll]",
+  ].join(",");
+
+  const markNative = () =>
+    document.querySelectorAll(NATIVE_SCROLL).forEach((el) => el.setAttribute("data-lenis-prevent", ""));
+  markNative();
+
+  if (!reduceMotion) {
+    const lenis = new Lenis({
+      // lerp: how much of the remaining distance is covered each frame.
+      // Lower = floatier. 0.075 is clearly noticeable, also on a trackpad.
+      lerp: 0.075,
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      anchors: { duration: 1.4 },
+      allowNestedScroll: true,
+      autoRaf: false,
+    });
+    console.info("[motion] smooth scroll on");
+
+    const raf = (time) => {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    };
+    requestAnimationFrame(raf);
+
+    // Pause page scrolling while a modal is open.
+    document.addEventListener(
+      "toggle",
+      (event) => {
+        const el = event.target;
+        if (el instanceof HTMLDialogElement) el.open ? lenis.stop() : lenis.start();
+      },
+      true
+    );
+    new MutationObserver(() => {
+      const anyOpen = document.querySelector("dialog[open]");
+      anyOpen ? lenis.stop() : lenis.start();
+    }).observe(document.body, { subtree: true, attributes: true, attributeFilter: ["open"] });
+
+    // Page height changes (Quick read / Full process) need a re-measure.
+    new ResizeObserver(() => lenis.resize()).observe(document.body);
+
+    (window as any).__lenis = lenis;
+  }
+
+  /* ==========================================
+     REVEAL ON SCROLL
+     - content is only hidden once JS is running (no blank page without JS)
+     - things already on screen at load appear straight away
+     - each element animates once; siblings get a small stagger
+  ========================================== */
+
+  const REVEAL = [
+    // home
+    ".works-tag", ".experiments-tag", ".about-tag", ".work-row",
+    ".experiments-header", ".experiments-grid > li",
+    ".about-grid > *", ".skills-column > *",
+    ".contact-top", ".contact-big", ".contact-link", ".contact-bottom",
+    // case studies
+    ".case-section > *", ".screen-row > *", ".board-grid > *", ".logo-row > *",
+    ".quick-grid > *", ".pillars-grid > *", ".font-list > *", ".brand-block",
+    ".artifact", ".project-link-block",
+  ].join(",");
+
+  if ("IntersectionObserver" in window) {
+    const items = [...document.querySelectorAll<HTMLElement>(REVEAL)].filter(
+      // don't double-animate nested matches
+      (el) => !el.parentElement?.closest("[data-reveal]") && !el.closest("dialog")
+    );
+
+    // stagger siblings in the same parent
+    const counters = new Map();
+    items.forEach((el) => {
+      el.setAttribute("data-reveal", "");
+      const n = counters.get(el.parentElement) ?? 0;
+      counters.set(el.parentElement, n + 1);
+      el.style.setProperty("--reveal-delay", `${Math.min(n, 6) * 70}ms`);
+    });
+
+    document.documentElement.classList.add("reveal-ready");
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-revealed");
+          io.unobserve(entry.target);
+        });
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
+    );
+
+    items.forEach((el) => io.observe(el));
+
+    // safety net: never leave anything hidden
+    window.addEventListener("load", () =>
+      setTimeout(() => {
+        items.forEach((el) => {
+          const r = el.getBoundingClientRect();
+          if (r.top < window.innerHeight) el.classList.add("is-revealed");
+        });
+      }, 400)
+    );
+  }
+</script>
+
+<style is:global>
+  html.reveal-ready [data-reveal] {
+    opacity: 0;
+    translate: 0 28px;
+    transition:
+      opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+      translate 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  html.reveal-ready [data-reveal].is-revealed {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  /* Reduced motion: fade only, no movement */
+  html.motion-reduced.reveal-ready [data-reveal] {
+    translate: none;
+    transition: opacity 0.6s ease;
+    transition-delay: 0ms;
+  }
+
+  html.lenis {
+    scroll-behavior: auto !important;
+  }
+</style>

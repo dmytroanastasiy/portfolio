@@ -1,144 +1,222 @@
 ---
-// Footer.astro
-// Placeholder contact links — swap these for your real email and profiles.
-const socials = [
-  { label: "email", href: "mailto:hello@example.com" },
-  { label: "instagram", href: "#" },
-  { label: "linkedin", href: "#" },
-  { label: "behance", href: "#" },
+// Footer.astro — contact block + footer line.
+const email = "dmytro.anastasiy@student.howest.be";
+const base = import.meta.env.BASE_URL;
+
+const links = [
+  { label: "Email", value: email, href: `mailto:${email}` },
+  {
+    label: "LinkedIn",
+    value: "linkedin.com/in/dmytro-anastasiy",
+    href: "https://www.linkedin.com/in/dmytro-anastasiy-b14a24386/",
+  },
+  {
+    label: "Behance",
+    value: "behance.net/dmytroanastasiy",
+    href: "https://www.behance.net/dmytroanastasiy",
+  },
+  {
+    label: "Résumé",
+    value: "Download CV (PDF)",
+    href: `${base}Dmytro_Anastasiy-CV.pdf`,
+    download: "Dmytro Anastasiy — CV.pdf",
+  },
 ];
+
+const year = new Date().getFullYear();
 ---
 
-<footer class="cta-footer" id="contact">
-  <div class="cta-main">
-    <div class="cta-heading-group">
-      <h2 class="cta-heading">is it a<br />match?</h2>
-      <p class="cta-subheading">Let's build something new together.</p>
-    </div>
+<footer class="contact" id="contact">
+  <div class="contact-top">
+    <span class="mono">Contact</span>
+    <span class="mono contact-status"><i aria-hidden="true"></i>Open to work</span>
+  </div>
 
-    <div class="footer-contents">
-      <div class="cta-actions">
-        <a href="mailto:hello@example.com" class="cta-link">
-          get in touch
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M7 17L17 7M17 7H7M17 7V17" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
+  <a class="contact-big" href={`mailto:${email}`}>
+    <span class="contact-big__line">Let’s work</span>
+    <span class="contact-big__line contact-big__line--accent">together.</span>
+    <span class="contact-big__cta mono">Get in touch ↗</span>
+  </a>
+
+  <ul class="contact-links">
+    {links.map((link) => (
+      <li>
+        <a
+          class="contact-link"
+          href={link.href}
+          target={link.href.startsWith("mailto:") ? undefined : "_blank"}
+          rel={link.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+          download={link.download}
+        >
+          <span class="contact-link__label mono">{link.label}</span>
+          <span class="contact-link__value">{link.value}</span>
+          <span class="contact-link__arrow" aria-hidden="true">{link.download ? "↓" : "↗"}</span>
         </a>
-      </div>
+      </li>
+    ))}
+  </ul>
 
-      <ul class="cta-socials">
-        {socials.map((s) => (
-          <li><a href={s.href}>{s.label}</a></li>
-        ))}
-      </ul>
-    </div>
+  <div class="contact-bottom">
+    <span class="mono">Dmytro Anastasiy — Digital Designer &amp; Developer</span>
+    <span class="mono">Designed &amp; built by me · © {year}</span>
   </div>
 </footer>
 
 <style>
-  .cta-footer {
-    padding: clamp(3rem, 8vw, 6rem) clamp(1.25rem, 5vw, 4rem);
-    text-align: center;
+  .contact {
+    background: #0a0a0a;
+    color: #f5f5f5;
+    padding: clamp(3rem, 8vw, 6rem) clamp(1.25rem, 5vw, 4rem) clamp(1.5rem, 3vw, 2.5rem);
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
 
-  .cta-main {
+  .mono {
+    font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    color: #6f6f78;
+  }
+
+  .contact-top {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3rem;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  .cta-heading {
-    font-family: "Bodoni 72", "Bodoni MT", Didot, serif;
-    font-style: italic;
-    font-weight: 400;
-    line-height: 1.1;
-    margin: 0 0 1.5rem;
-    font-size: clamp(4rem, 2.75rem + 5vw, 7.75rem);
-    letter-spacing: clamp(0.1em, 4vw, 3em);
-  }
-
-  .cta-subheading {
-    font-weight: 700;
-    margin: 0;
-    font-size: clamp(1.5rem, 1.33rem + 0.67vw, 2rem);
-  }
-
-  .footer-contents {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    gap: 3rem;
-  }
-
-  .cta-actions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .cta-link {
+  .contact-status {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: #241414;
-    text-decoration: underline;
-    font-weight: 600;
   }
 
-  .cta-link .icon {
-    width: 16px;
-    height: 16px;
+  .contact-status i {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: #3ddc84;
+    box-shadow: 0 0 0 0 rgba(61, 220, 132, 0.5);
+    animation: pulse 2s infinite;
   }
 
-  .cta-socials {
+  @keyframes pulse {
+    70% { box-shadow: 0 0 0 0.45rem rgba(61, 220, 132, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(61, 220, 132, 0); }
+  }
+
+  /* Big headline — same type as the hero (Inter, tight tracking) */
+  .contact-big {
+    position: relative;
+    display: block;
+    padding: clamp(3rem, 8vw, 6rem) 0 clamp(2.5rem, 6vw, 4.5rem);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .contact-big__line {
+    display: block;
+    font-size: clamp(3.5rem, 10.5vw, 10rem);
+    font-weight: 550;
+    line-height: 0.9;
+    letter-spacing: -0.075em;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .contact-big__line--accent {
+    color: #6f6f78;
+    transition: color 0.4s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .contact-big:hover .contact-big__line {
+    transform: translateX(0.6rem);
+  }
+
+  .contact-big:hover .contact-big__line--accent {
+    color: #ffffff;
+  }
+
+  .contact-big__cta {
+    position: absolute;
+    right: 0;
+    bottom: clamp(2.5rem, 6vw, 4.5rem);
+    color: #d6d6d6;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+  }
+
+  /* Link rows */
+  .contact-links {
     list-style: none;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .contact-link {
+    display: grid;
+    grid-template-columns: 8rem minmax(0, 1fr) auto;
     align-items: center;
-    gap: 0.6rem;
+    gap: 1.5rem;
+    padding: 1.4rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: inherit;
+    text-decoration: none;
   }
 
-  .cta-socials a {
-    color: #241414;
-    text-decoration: underline;
-    font-size: 0.95rem;
+  .contact-link__value {
+    font-size: clamp(1.1rem, 2vw, 1.6rem);
+    letter-spacing: -0.02em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: transform 0.35s ease;
   }
 
-  /* Desktop — heading pinned top, footer-contents pinned bottom, full width row */
-  @media (min-width: 900px) {
-    .cta-footer {
-      display: flex;
+  .contact-link__arrow {
+    font-size: 1.2rem;
+    color: #6f6f78;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+
+  .contact-link:hover .contact-link__value {
+    transform: translateX(0.5rem);
+  }
+
+  .contact-link:hover .contact-link__arrow {
+    color: #ffffff;
+    transform: translate(0.2rem, -0.2rem);
+  }
+
+  .contact-bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  @media (max-width: 700px) {
+    .contact-big__cta {
+      position: static;
+      display: inline-block;
+      margin-top: 1.5rem;
     }
 
-    .cta-main {
-      width: 100%;
-      align-items: stretch;
-      justify-content: space-between;
-      text-align: left;
+    .contact-link {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 0.4rem 1rem;
     }
 
-    .cta-heading-group {
-      max-width: 700px;
+    .contact-link__label {
+      grid-column: 1 / -1;
     }
 
-    .footer-contents {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 0;
+    .contact-bottom {
+      flex-direction: column;
     }
+  }
 
-    .cta-actions {
-      align-items: flex-start;
-    }
-
-    .cta-socials {
-      align-items: flex-end;
-    }
+  @media (prefers-reduced-motion: reduce) {
+    .contact-status i { animation: none; }
   }
 </style>

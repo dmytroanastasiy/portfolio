@@ -1,5 +1,7 @@
 ---
 
+import CaseProgressNav from "./CaseProgressNav.astro";
+
 const {
   title = "From Scrolling to Watching",
   year = "2026",
@@ -12,39 +14,37 @@ const {
 const methods = [
   {
     number: "01",
-    label: "Survey",
-    title: "Breadth",
+    title: "Survey",
     text:
-      "The survey gave us a broader view of recurring behaviours, preferences and friction around content discovery.",
+      "The survey gave us a broader view of recurring behaviours, preferences and friction during content discovery.",
 
     insights: [
       {
         number: "01",
         title: "Discovery often starts elsewhere",
         text:
-          "Short-form and social platforms play an important role in discovering what to watch. The journey often begins before users even open a streaming platform.",
+          "Social media platforms play an important role in discovering what to watch. The journey often begins earlier than users even open a streaming platform.",
       },
 
       {
         number: "02",
         title: "People want help narrowing the choice",
         text:
-          "Participants value recommendations when they reduce effort and feel relevant to their interests, rather than simply presenting more content.",
+          "Participants value their recommendations when they feel relevant to their interests, rather than simply presenting more content. it reduces the effort, which may be very important for the user in the moment.",
       },
 
       {
         number: "03",
         title: "More choice can create more friction",
         text:
-          "Large catalogues do not automatically make choosing easier. Too many options can extend the browsing process and make commitment more difficult.",
+          "Huge variety of content do not automatically make choosing easier. Too many options can extend the browsing process and make choice more difficult.",
       },
     ],
   },
 
   {
     number: "02",
-    label: "Interviews",
-    title: "Depth",
+    title: "Interviews",
     text:
       "Interviews helped us move from what people do toward understanding why they do it.",
 
@@ -53,29 +53,28 @@ const methods = [
         number: "01",
         title: "The right choice depends on the moment",
         text:
-          "What people want to watch changes with mood, energy and situation. A technically relevant recommendation is not always contextually relevant.",
+          "What people want to watch often changes with mood, energy and situation around the user. A technically \"right\" recommendation is not always contextually relevant.",
       },
 
       {
         number: "02",
         title: "Value influences the decision",
         text:
-          "Availability, subscriptions and the perceived value of a piece of content affect whether people continue searching, switch services or abandon a choice.",
+          "Availability, subscriptions and the perceived value of a piece of content influence whether people want to continue searching, switch services or abandon a choice.",
       },
 
       {
         number: "03",
         title: "Recommendations are a shortcut",
         text:
-          "People rely on platform recommendations and familiar discovery patterns to reduce the work of searching, especially when they do not already know what they want.",
+          "People rely on platform recommendations and familiar discovery patterns to reduce the work and effort of searching, especially when they do not already know what they exactly want.",
       },
     ],
   },
 
   {
     number: "03",
-    label: "Cultural Probe",
-    title: "Context",
+    title: "Cultural Probe",
     text:
       "The cultural probe brought the research closer to the real moment of choice and revealed behaviours that are difficult to reconstruct afterward.",
 
@@ -84,21 +83,21 @@ const methods = [
         number: "01",
         title: "Choosing is often social",
         text:
-          "Friends, family and shared viewing situations influence what gets considered and what eventually gets selected.",
+          "Friends, family and people around the user do influence what gets considered and what eventually gets selected.",
       },
 
       {
         number: "02",
         title: "Searching has an emotional cost",
         text:
-          "Long browsing sessions can shift from curiosity into frustration, especially when nothing immediately feels right.",
+          "Long browsing sessions can change from curiosity into frustration, especially when nothing immediately feels \"right\".",
       },
 
       {
         number: "03",
         title: "Context changes priorities",
         text:
-          "Time, mood, company and the situation around the viewer can matter as much as genre or previous viewing history.",
+          "Time, mood, company and the situation around the viewer can matter as much as genre or evenpersonal preferences.",
       },
 
       {
@@ -110,9 +109,9 @@ const methods = [
 
       {
         number: "05",
-        title: "Decision fatigue builds over time",
+        title: "Decision fatigue develops over time",
         text:
-          "The longer users remain undecided, the more effort the process requires — sometimes making a familiar or easy option more attractive than continued exploration.",
+          "The longer users remain undecided, the more effort the process requires — sometimes makes a familiar or easy option more attractive than continueing exploration.",
       },
     ],
   },
@@ -132,6 +131,15 @@ const processSteps = [
 
 
 <article class="case-study">
+
+  <a
+    class="back-home"
+    href={import.meta.env.BASE_URL}
+    aria-label="Back to main page"
+  >
+    <span aria-hidden="true">←</span>
+    <span>Back</span>
+  </a>
 
   <!-- ============================================
        HERO
@@ -174,7 +182,7 @@ const processSteps = [
       <span>
          <video
   class="case-video"
-  src={`${import.meta.env.BASE_URL}/AdobeStock_577572810.mov`}
+  src={`${import.meta.env.BASE_URL}research-case-study/research-hero.mp4`}
   autoplay
   muted
   loop
@@ -220,6 +228,7 @@ const processSteps = [
       </a>
     ))}
   </div>
+ <CaseProgressNav />
 
 
   <!-- ============================================
@@ -229,6 +238,8 @@ const processSteps = [
   <section
     class="case-section case-section--intro"
     id="section-1"
+    data-progress-section
+    data-progress-label="Problem"
   >
     <div class="section-number">01</div>
 
@@ -249,17 +260,17 @@ const processSteps = [
       </p>
 
       <p>
-        Instead of immediately designing another interface, we wanted
+        We, a team of researchers, wanted
         to understand what happens during that decision: what people
         look for, what makes them hesitate, what they trust, and what
-        eventually makes them stop scrolling.
+        eventually makes them stop scrolling. We wanted to build a DNA of the content-discovery experience, with all its details.
       </p>
     </div>
 
     <!-- <div class="media-placeholder"> -->
       <video
   class="case-video"
-  src={`${import.meta.env.BASE_URL}/AdobeStock_577572810.mov`}
+  src={`${import.meta.env.BASE_URL}research-case-study/research-hero.mp4`}
   autoplay
   muted
   loop
@@ -277,6 +288,8 @@ const processSteps = [
   <section
     class="case-section full-process"
     id="section-2"
+    data-progress-section
+    data-progress-label="Research question"
   >
     <div class="section-number">02</div>
 
@@ -292,7 +305,7 @@ const processSteps = [
     <div class="section-body">
       <p class="large-copy">
         Our initial problem was broad: how might we improve the
-        experience of searching for content?
+        experience of searching for content and what are the triggers that lead to a decision?
       </p>
 
       <p>
@@ -316,8 +329,25 @@ const processSteps = [
           </p>
         </div>
 
-        <div class="media-placeholder">
-          <span>Ishikawa image</span>
+        <div class="media-frame">
+        <span class="drag-hint drag-hint--overlay" aria-label="This image can be dragged and zoomed" title="Drag / zoom image">
+          <img class="drag-hint__icon" src={`${import.meta.env.BASE_URL}icons/drag-black.svg`} alt="" aria-hidden="true" />
+        </span>
+        <div
+          class="media-placeholder media-pan"
+          data-drag-scroll
+          aria-label="Ishikawa diagram. Drag horizontally to explore the full image."
+        >
+          <div class="media-pan__canvas">
+            <img
+              class="media-pan__image img-ishikawa"
+              src={`${import.meta.env.BASE_URL}research-case-study/ishikawa.png`}
+              alt="Ishikawa diagram used to break the broad content-discovery problem into possible causes"
+              loading="lazy"
+              draggable="false"
+            />
+          </div>
+        </div>
         </div>
       </article>
 
@@ -332,8 +362,25 @@ const processSteps = [
           </p>
         </div>
 
-        <div class="media-placeholder">
-          <span>Issue tree image</span>
+        <div class="media-frame">
+        <span class="drag-hint drag-hint--overlay" aria-label="This image can be dragged and zoomed" title="Drag / zoom image">
+          <img class="drag-hint__icon" src={`${import.meta.env.BASE_URL}icons/drag-black.svg`} alt="" aria-hidden="true" />
+        </span>
+        <div
+          class="media-placeholder media-pan"
+          data-drag-scroll
+          aria-label="Issue tree. Drag horizontally to explore the full image."
+        >
+          <div class="media-pan__canvas">
+            <img
+              class="media-pan__image img-issue-tree"
+              src={`${import.meta.env.BASE_URL}research-case-study/issue-tree.png`}
+              alt="Issue tree turning possible causes into researchable branches"
+              loading="lazy"
+              draggable="false"
+            />
+          </div>
+        </div>
         </div>
       </article>
 
@@ -349,8 +396,25 @@ const processSteps = [
           </p>
         </div>
 
-        <div class="media-placeholder">
-          <span>Research question artefact</span>
+        <div class="media-frame">
+        <span class="drag-hint drag-hint--overlay" aria-label="This image can be dragged and zoomed" title="Drag / zoom image">
+          <img class="drag-hint__icon" src={`${import.meta.env.BASE_URL}icons/drag-black.svg`} alt="" aria-hidden="true" />
+        </span>
+        <div
+          class="media-placeholder media-pan"
+          data-drag-scroll
+          aria-label="Refined research question. Drag horizontally to explore the full image."
+        >
+          <div class="media-pan__canvas">
+            <img
+              class="media-pan__image img-research-question"
+              src={`${import.meta.env.BASE_URL}research-case-study/research-question.png`}
+              alt="Refined research question artefact"
+              loading="lazy"
+              draggable="false"
+            />
+          </div>
+        </div>
         </div>
       </article>
     </div>
@@ -364,6 +428,8 @@ const processSteps = [
   <section
     class="case-section full-process"
     id="section-3"
+    data-progress-section
+    data-progress-label="Audience"
   >
     <div class="section-number">03</div>
 
@@ -387,31 +453,67 @@ const processSteps = [
 
     <div class="audience-grid">
       <article>
-        <span class="eyebrow">Archetype 01</span>
+        <span class="eyebrow">Extreme 01</span>
         <h3>Noob</h3>
 
         <p>
-          Draft description of the more casual / less structured
-          discovery behaviour.
+          The Noob lets the feed decide. One or two devices, a few
+          bloggers, free content and the platforms everyone already uses.
+          Whatever is trending is usually what ends up on the screen.
         </p>
 
-        <div class="media-placeholder">
-          <span>Noob visual</span>
+        <div class="media-frame">
+        <span class="drag-hint drag-hint--overlay" aria-label="This image can be dragged and zoomed" title="Drag / zoom image">
+          <img class="drag-hint__icon" src={`${import.meta.env.BASE_URL}icons/drag-black.svg`} alt="" aria-hidden="true" />
+        </span>
+        <div
+          class="media-placeholder media-pan"
+          data-drag-scroll
+          aria-label="Noob archetype visual. Drag horizontally to explore the full image."
+        >
+          <div class="media-pan__canvas">
+            <img
+              class="media-pan__image img-noob"
+              src={`${import.meta.env.BASE_URL}research-case-study/noob.png`}
+              alt="Noob audience archetype visual"
+              loading="lazy"
+              draggable="false"
+            />
+          </div>
+        </div>
         </div>
       </article>
 
 
       <article>
-        <span class="eyebrow">Archetype 02</span>
+        <span class="eyebrow">Extreme 02</span>
         <h3>Nerd</h3>
 
         <p>
-          Draft description of the highly engaged / more established
-          discovery behaviour.
+          The Nerd is always searching. Multiple devices, many bloggers,
+          ad blockers and new platforms to try. Hours online every day,
+          and often the first signs of digital fatigue.
         </p>
 
-        <div class="media-placeholder">
-          <span>Nerd visual</span>
+        <div class="media-frame">
+        <span class="drag-hint drag-hint--overlay" aria-label="This image can be dragged and zoomed" title="Drag / zoom image">
+          <img class="drag-hint__icon" src={`${import.meta.env.BASE_URL}icons/drag-black.svg`} alt="" aria-hidden="true" />
+        </span>
+        <div
+          class="media-placeholder media-pan"
+          data-drag-scroll
+          aria-label="Nerd archetype visual. Drag horizontally to explore the full image."
+        >
+          <div class="media-pan__canvas">
+            <img
+              class="media-pan__image img-nerd"
+              src={`${import.meta.env.BASE_URL}research-case-study/nerd.png`}
+              alt="Nerd audience archetype visual"
+              loading="lazy"
+              draggable="false"
+            />
+          </div>
+        </div>
         </div>
       </article>
     </div>
@@ -425,6 +527,8 @@ const processSteps = [
   <section
     class="case-section full-process"
     id="section-4"
+    data-progress-section
+    data-progress-label="Assumptions"
   >
     <div class="section-number">04</div>
 
@@ -445,30 +549,105 @@ const processSteps = [
     </div>
 
 
-    <div class="artifact-grid">
-      <article>
-        <h3>Ecosystem map</h3>
+    <div class="artifact-story">
+      <article class="artifact artifact--reverse">
+        <div class="media-frame">
+        <span class="drag-hint drag-hint--overlay" aria-label="This image can be dragged and zoomed" title="Drag / zoom image">
+          <img class="drag-hint__icon" src={`${import.meta.env.BASE_URL}icons/drag-black.svg`} alt="" aria-hidden="true" />
+        </span>
+        <div
+          class="media-placeholder media-pan"
+          data-drag-scroll
+          aria-label="Ecosystem map. Drag horizontally to explore the full image."
+        >
+          <div class="media-pan__canvas">
+            <img
+              class="media-pan__image img-ecosystem-map"
+              src={`${import.meta.env.BASE_URL}research-case-study/ecosystem-map.png`}
+              alt="Ecosystem map of the content-discovery space"
+              loading="lazy"
+              draggable="false"
+            />
+          </div>
+        </div>
+        </div>
 
-        <div class="media-placeholder">
-          <span>Ecosystem map</span>
+        <div>
+          <span class="eyebrow">01</span>
+          <h3>Ecosystem map</h3>
+
+          <p>
+            Mapping the people, platforms and systems that shape content
+            discovery — and how influence moves between them.
+          </p>
         </div>
       </article>
 
 
-      <article>
-        <h3>Assumption matrix</h3>
+      <article class="artifact artifact--reverse">
+        <div class="media-frame">
+        <span class="drag-hint drag-hint--overlay" aria-label="This image can be dragged and zoomed" title="Drag / zoom image">
+          <img class="drag-hint__icon" src={`${import.meta.env.BASE_URL}icons/drag-black.svg`} alt="" aria-hidden="true" />
+        </span>
+        <div
+          class="media-placeholder media-pan"
+          data-drag-scroll
+          aria-label="Assumption matrix. Drag horizontally to explore the full image."
+        >
+          <div class="media-pan__canvas">
+            <img
+              class="media-pan__image img-assumption-matrix"
+              src={`${import.meta.env.BASE_URL}research-case-study/assumption-matrix.png`}
+              alt="Assumption matrix separating what was known from what still needed evidence"
+              loading="lazy"
+              draggable="false"
+            />
+          </div>
+        </div>
+        </div>
 
-        <div class="media-placeholder">
-          <span>Assumption matrix</span>
+        <div>
+          <span class="eyebrow">02</span>
+          <h3>Assumption matrix</h3>
+
+          <p>
+            Prioritising what we believed by impact and uncertainty, so the
+            riskiest assumptions could become research priorities.
+          </p>
         </div>
       </article>
 
 
-      <article>
-        <h3>Stakeholder matrix</h3>
+      <article class="artifact artifact--reverse">
+        <div class="media-frame">
+        <span class="drag-hint drag-hint--overlay" aria-label="This image can be dragged and zoomed" title="Drag / zoom image">
+          <img class="drag-hint__icon" src={`${import.meta.env.BASE_URL}icons/drag-black.svg`} alt="" aria-hidden="true" />
+        </span>
+        <div
+          class="media-placeholder media-pan"
+          data-drag-scroll
+          aria-label="Stakeholder matrix. Drag horizontally to explore the full image."
+        >
+          <div class="media-pan__canvas">
+            <img
+              class="media-pan__image img-stakeholders"
+              src={`${import.meta.env.BASE_URL}research-case-study/stakeholders.png`}
+              alt="Stakeholder matrix for the content-discovery research"
+              loading="lazy"
+              draggable="false"
+            />
+          </div>
+        </div>
+        </div>
 
-        <div class="media-placeholder">
-          <span>Stakeholder matrix</span>
+        <div>
+          <span class="eyebrow">03</span>
+          <h3>Stakeholder matrix</h3>
+
+          <p>
+            Identifying who affects the discovery experience, what they need,
+            and where their interests overlap or pull in different directions.
+          </p>
         </div>
       </article>
     </div>
@@ -479,48 +658,49 @@ const processSteps = [
        RESEARCH PLAN
   ============================================= -->
 
-  <section class="case-section full-process">
+  <section class="case-section full-process research-questions-section">
     <div class="section-heading">
-      <span class="eyebrow">Research plan</span>
+      <span class="eyebrow">Research questions</span>
 
       <h2>
-        Every assumption needed
-        a way to fail.
+        Questions that challenged
+        what we thought we knew.
       </h2>
     </div>
 
     <div class="section-body">
+      <p class="large-copy">
+        The research questions became the backbone of the study.
+      </p>
+
       <p>
-        Broad hypotheses were translated into test cards and then
-        into questions that could challenge them through research.
+        Rather than treating our assumptions as facts, we turned them into a
+        focused set of questions about discovery, choice, trust and context.
+        These questions kept the survey, interviews and cultural probe tied to
+        what we actually needed to learn.
       </p>
     </div>
 
-
-    <div class="flow">
-      <div>
-        <span>01</span>
-        <strong>Hypothesis</strong>
-      </div>
-
-      <span class="flow-arrow">→</span>
-
-      <div>
-        <span>02</span>
-        <strong>Test card</strong>
-      </div>
-
-      <span class="flow-arrow">→</span>
-
-      <div>
-        <span>03</span>
-        <strong>Research question</strong>
+    <div class="media-frame">
+        <span class="drag-hint drag-hint--overlay" aria-label="This image can be dragged and zoomed" title="Drag / zoom image">
+          <img class="drag-hint__icon" src={`${import.meta.env.BASE_URL}icons/drag-black.svg`} alt="" aria-hidden="true" />
+        </span>
+        <div
+      class="media-placeholder media-pan research-questions-media"
+      data-drag-scroll
+      aria-label="Research questions. Drag horizontally to explore the full image."
+    >
+      <div class="media-pan__canvas">
+        <img
+          class="media-pan__image img-research-questions"
+          src={`${import.meta.env.BASE_URL}research-case-study/research-questions.png`}
+          alt="Group of research questions that guided the study"
+          loading="lazy"
+          draggable="false"
+        />
       </div>
     </div>
-
-    <div class="media-placeholder">
-      <span>Sticky notes → Test cards → Questions</span>
-    </div>
+        </div>
   </section>
 
 
@@ -531,6 +711,8 @@ const processSteps = [
   <section
     class="case-section"
     id="section-5"
+    data-progress-section
+    data-progress-label="Research"
   >
     <div class="section-number">05</div>
 
@@ -626,6 +808,8 @@ const processSteps = [
   <section
     class="case-section"
     id="section-6"
+    data-progress-section
+    data-progress-label="Synthesis"
   >
     <div class="section-number">06</div>
 
@@ -690,6 +874,8 @@ const processSteps = [
   <section
   class="main-insight"
   id="section-7"
+  data-progress-section
+  data-progress-label="Main insight"
 >
   <span class="eyebrow">Our main insight</span>
 
@@ -701,8 +887,8 @@ const processSteps = [
   <p>
     Across the Cultural Probe, users consistently gravitated toward
     experiences that felt familiar, simple and emotionally aligned.
-    Overwhelming choices, trend-driven content and algorithmic
-    recommendations often created friction rather than confidence.
+    Overwhelming variety, trend-driven content and algorithmic
+    recommendations often created friction instead of confidence.
     The easier it was to maintain a sense of control and emotional
     safety, the easier it became to decide what to watch.
   </p>
@@ -750,74 +936,35 @@ const processSteps = [
 </section>
 
 
-  <!-- ============================================
-       NEXT STEPS / REFLECTION
-  ============================================= -->
-
-  <section class="case-section reflection">
-    
-
-
-    <div class="reflection-copy">
-      <span class="eyebrow">Reflection</span>
-
-      <h2>
-        Research changed the way I think
-        about “the problem”.
-      </h2>
-
-      <p>
-        This project changed the way I look at problems before trying to solve
-  them. I usually enjoy moving quickly into ideas and making, but this time
-  I spent much more time observing, questioning assumptions and going deeper
-  into the reasons behind people's behaviour. I really enjoyed that process.
-  Seeing how survey data, interviews and contextual research could reveal
-  different parts of the same problem made me more patient and intentional
-  as a designer. I feel that I grew through this project, especially in
-  learning that good research does not simply confirm an idea — it can
-  completely change the direction you thought you were heading in.
-      </p>
-    </div>
-  </section>
+  
 
 
   <!-- ============================================
        FIGJAM
   ============================================= -->
 
-  <section class="figjam">
+  <section class="project-link-block project-link-block--figjam">
     <div>
       <span class="eyebrow">Full process</span>
 
-      <h2>
-        Want the messy version?
-      </h2>
+      <h3>Explore the complete FigJam.</h3>
 
       <p>
-        The case study above is the edited story. The complete
-        workspace contains diagrams, assumptions, test cards,
-        sources, analysis, experiments and iterations.
+        Open the working board to see the research, diagrams,
+        assumptions, synthesis and the less polished process behind
+        the final case study.
       </p>
-
-      <a
-        href={figjamUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="figjam-link"
-      >
-        Explore the complete FigJam
-        <span aria-hidden="true">↗</span>
-      </a>
     </div>
 
-   <div class="figjam-image-wrap">
-  <img
-    class="figjam-image"
-    src={`${import.meta.env.BASE_URL}figjam-screenshot.png`}
-    alt="Overview of the FigJam research workspace"
-    loading="lazy"
-  />
-</div>
+    <a
+      class="project-link-block__link"
+      href={figjamUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Explore FigJam
+      <span aria-hidden="true">↗</span>
+    </a>
   </section>
 
 </article>
@@ -900,8 +1047,312 @@ const processSteps = [
         ?.classList.add("is-active");
     });
   });
+
+
+  /* ==========================================
+     DRAGGABLE + ZOOMABLE RESEARCH ARTEFACTS
+  ========================================== */
+
+  const draggableMedia =
+    document.querySelectorAll<HTMLElement>("[data-drag-scroll]");
+
+
+  draggableMedia.forEach((viewport) => {
+    const image =
+      viewport.querySelector<HTMLImageElement>(".media-pan__image");
+
+    if (!image) return;
+
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let startScrollLeft = 0;
+    let startScrollTop = 0;
+
+    let zoom = 1;
+    let baseWidth = 0;
+    let baseHeight = 0;
+
+    const MIN_ZOOM = 1;
+    const MAX_ZOOM = 3;
+
+
+    const captureBaseSize = () => {
+      if (!baseWidth || !baseHeight) {
+        /*
+          offsetWidth / offsetHeight use the image's layout size and do
+          not overwrite any transform / positioning you set in the
+          individual .img-* classes below.
+        */
+        baseWidth = image.offsetWidth;
+        baseHeight = image.offsetHeight;
+      }
+    };
+
+
+    const centerViewportOnMobile = () => {
+      if (!window.matchMedia("(max-width: 800px)").matches) return;
+
+      requestAnimationFrame(() => {
+        viewport.scrollLeft = Math.max(
+          0,
+          (viewport.scrollWidth - viewport.clientWidth) / 2
+        );
+
+        viewport.scrollTop = Math.max(
+          0,
+          (viewport.scrollHeight - viewport.clientHeight) / 2
+        );
+      });
+    };
+
+
+    if (image.complete) {
+      captureBaseSize();
+      centerViewportOnMobile();
+    } else {
+      image.addEventListener(
+        "load",
+        () => {
+          captureBaseSize();
+          centerViewportOnMobile();
+        },
+        { once: true }
+      );
+    }
+
+
+    window.addEventListener("resize", centerViewportOnMobile);
+
+
+    const applyZoom = (
+      nextZoom: number,
+      clientX?: number,
+      clientY?: number
+    ) => {
+      captureBaseSize();
+
+      if (!baseWidth || !baseHeight) return;
+
+      const previousZoom = zoom;
+
+      zoom = Math.min(
+        MAX_ZOOM,
+        Math.max(MIN_ZOOM, nextZoom)
+      );
+
+      if (zoom === previousZoom) return;
+
+      const rect = viewport.getBoundingClientRect();
+
+      const anchorX =
+        clientX ?? rect.left + rect.width / 2;
+
+      const anchorY =
+        clientY ?? rect.top + rect.height / 2;
+
+      const localX = anchorX - rect.left;
+      const localY = anchorY - rect.top;
+
+      const contentX = viewport.scrollLeft + localX;
+      const contentY = viewport.scrollTop + localY;
+
+
+      if (zoom === 1) {
+        /*
+          Removing these inline values restores your exact manually
+          configured image sizing from the CSS at the bottom of the file.
+        */
+        image.style.removeProperty("width");
+        image.style.removeProperty("height");
+        viewport.classList.remove("is-zoomed");
+      } else {
+        image.style.width = `${baseWidth * zoom}px`;
+        image.style.height = `${baseHeight * zoom}px`;
+        viewport.classList.add("is-zoomed");
+      }
+
+
+      const ratio = zoom / previousZoom;
+
+      requestAnimationFrame(() => {
+        viewport.scrollLeft =
+          contentX * ratio - localX;
+
+        if (zoom > 1) {
+          viewport.scrollTop =
+            contentY * ratio - localY;
+        } else {
+          viewport.scrollTop = 0;
+        }
+      });
+    };
+
+
+    /* ------------------------------------------
+       DRAG / PAN
+    ------------------------------------------ */
+
+    viewport.addEventListener("pointerdown", (event) => {
+      if (event.pointerType === "mouse" && event.button !== 0) return;
+
+      isDragging = true;
+
+      startX = event.clientX;
+      startY = event.clientY;
+
+      startScrollLeft = viewport.scrollLeft;
+      startScrollTop = viewport.scrollTop;
+
+      viewport.classList.add("is-dragging");
+      viewport.setPointerCapture?.(event.pointerId);
+    });
+
+
+    viewport.addEventListener("pointermove", (event) => {
+      if (!isDragging) return;
+
+      const distanceX = event.clientX - startX;
+      const distanceY = event.clientY - startY;
+
+      viewport.scrollLeft = startScrollLeft - distanceX;
+
+      if (zoom > 1) {
+        viewport.scrollTop = startScrollTop - distanceY;
+      }
+    });
+
+
+    const stopDragging = (event) => {
+      if (!isDragging) return;
+
+      isDragging = false;
+      viewport.classList.remove("is-dragging");
+
+      if (viewport.hasPointerCapture?.(event.pointerId)) {
+        viewport.releasePointerCapture(event.pointerId);
+      }
+    };
+
+
+    viewport.addEventListener("pointerup", stopDragging);
+    viewport.addEventListener("pointercancel", stopDragging);
+
+    viewport.addEventListener("lostpointercapture", () => {
+      isDragging = false;
+      viewport.classList.remove("is-dragging");
+    });
+
+
+    /* ------------------------------------------
+       ZOOM
+
+       Mac trackpad pinch works automatically in Chrome.
+       You can also hold Command / Control / Option while
+       scrolling over an image.
+    ------------------------------------------ */
+
+    viewport.addEventListener(
+      "wheel",
+      (event) => {
+        const wantsZoom =
+          event.ctrlKey ||
+          event.metaKey ||
+          event.altKey;
+
+        if (!wantsZoom) return;
+
+        event.preventDefault();
+
+        /* Smooth zoom works better with Mac trackpad pinch gestures. */
+        const factor = Math.exp(-event.deltaY * 0.01);
+
+        applyZoom(
+          zoom * factor,
+          event.clientX,
+          event.clientY
+        );
+      },
+      { passive: false }
+    );
+
+
+    /* Double-click: zoom in / reset. */
+    viewport.addEventListener("dblclick", (event) => {
+      event.preventDefault();
+
+      applyZoom(
+        zoom > 1 ? 1 : 1.5,
+        event.clientX,
+        event.clientY
+      );
+    });
+
+
+    /* Keyboard support when the image viewport is focused. */
+    if (!viewport.hasAttribute("tabindex")) {
+      viewport.tabIndex = 0;
+    }
+
+
+    viewport.addEventListener("keydown", (event) => {
+      if (event.key === "+" || event.key === "=") {
+        event.preventDefault();
+        applyZoom(zoom * 1.2);
+      }
+
+      if (event.key === "-") {
+        event.preventDefault();
+        applyZoom(zoom / 1.2);
+      }
+
+      if (event.key === "0") {
+        event.preventDefault();
+        applyZoom(1);
+      }
+    });
+  });
 </script>
 
+
+<script>
+  /* Process index adapts to Quick read / Full process:
+     hides links to sections that are hidden and renumbers the rest
+     (index card + section number stay in sync). */
+  const indexLinks = [...document.querySelectorAll(".process-index a")];
+
+  indexLinks.forEach((link) => {
+    const target = document.querySelector(link.getAttribute("href"));
+    const num = link.querySelector("span");
+    const secNum = target?.querySelector(":scope > .section-number");
+    link._target = target;
+    link._num = num;
+    link._secNum = secNum;
+    link._orig = num?.textContent;
+    if (secNum) secNum.dataset.orig = secNum.textContent;
+  });
+
+  function syncProcessIndex() {
+    let n = 0;
+    indexLinks.forEach((link) => {
+      const hidden = !link._target || link._target.classList.contains("is-hidden");
+      link.hidden = hidden;
+      if (hidden) return;
+      n += 1;
+      const label = String(n).padStart(2, "0");
+      if (link._num) link._num.textContent = label;
+      if (link._secNum) link._secNum.textContent = label;
+    });
+  }
+
+  // Re-sync whenever a section is shown/hidden by the reading-mode toggle
+  const indexObserver = new MutationObserver(syncProcessIndex);
+  indexLinks.forEach((link) => {
+    if (link._target) indexObserver.observe(link._target, { attributes: true, attributeFilter: ["class"] });
+  });
+
+  syncProcessIndex();
+</script>
 
 <style>
   .case-video {
@@ -923,7 +1374,7 @@ const processSteps = [
   }
 }
   .case-study {
-    --page-bg: #f4f2ee;
+    --page-bg: #f4f4f4;
     --text: #121212;
     --muted: #777;
     --green: #72b36b;
@@ -938,26 +1389,6 @@ const processSteps = [
       -apple-system,
       sans-serif;
   }
-
-  .figjam-image-wrap {
-  width: 100%;
-  min-height: 40rem;
-
-  overflow: hidden;
-
-  background: #222;
-}
-
-.figjam-image {
-  display: block;
-
-  width: 100%;
-  height: 40rem;
-  object-fit: cover;
- transform: scale(1.3);
-  transform-origin: 50% 60%;
-
-}
   /* ========================================
      GENERAL
   ======================================== */
@@ -981,13 +1412,83 @@ const processSteps = [
     display: grid;
     /* place-items: center; */
 
-    background: #dedcd7;
+     background: transparent;
 
     color: #777;
 
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
+  }
+
+
+  /* ========================================
+     DRAGGABLE IMAGE VIEWPORTS
+  ======================================== */
+
+  .media-pan {
+    width: 100%;
+    min-width: 0;
+    height: 24rem;
+    min-height: 24rem;
+
+    display: block;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    cursor: grab;
+    user-select: none;
+    touch-action: pan-y;
+    overscroll-behavior-inline: contain;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+
+  .media-pan::-webkit-scrollbar {
+    display: none;
+  }
+
+
+  .media-pan.is-dragging {
+    cursor: grabbing;
+  }
+
+
+  /*
+    Vertical panning is enabled only after zooming, so the initial
+    appearance and all manually tuned image positions stay unchanged.
+  */
+  .media-pan.is-zoomed {
+    overflow-y: auto;
+    touch-action: none;
+  }
+
+
+  .media-pan__canvas {
+    width: max-content;
+    min-width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+  .media-pan__image {
+    display: block;
+
+    width: auto;
+    max-width: none;
+    height: 100%;
+
+    flex: none;
+
+    object-fit: contain;
+    pointer-events: none;
+    user-select: none;
   }
 
 
@@ -1134,30 +1635,49 @@ const processSteps = [
       clamp(1.25rem, 6vw, 6rem)
       6rem;
 
-    display: flex;
-    flex-wrap: wrap;
-
-    gap: 0.6rem;
+    /* Same card grid as Miles & Meals */
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
   }
-
 
   .process-index a {
-    padding: 0.6rem 0.9rem;
-
-    background: white;
-
-    color: #222;
-
+    display: flex;
+    gap: 0.9rem;
+    align-items: center;
+    padding: 1rem 1.1rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(14, 14, 14, 0.08);
     text-decoration: none;
-
-    font-size: 0.8rem;
+    color: #111111;
+    transition: transform 0.2s ease;
   }
 
+  .process-index a:hover {
+    transform: translateY(-2px);
+  }
+
+  .process-index a[hidden] {
+    display: none;
+  }
 
   .process-index a span {
-    margin-right: 0.5rem;
+    margin: 0;
+    color: rgba(17, 17, 17, 0.6);
+    font-variant-numeric: tabular-nums;
+  }
 
-    color: #aaa;
+  @media (max-width: 1100px) {
+    .process-index {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 820px) {
+    .process-index {
+      grid-template-columns: 1fr;
+    }
   }
 
 
@@ -1189,8 +1709,7 @@ const processSteps = [
 
 
   .section-heading h2,
-  .reflection h2,
-  .figjam h2 {
+  .reflection h2 {
     margin: 0;
 
     font-size: clamp(2.5rem, 6vw, 6rem);
@@ -1243,6 +1762,11 @@ const processSteps = [
   }
 
 
+  .artifact--reverse {
+    grid-template-columns: 2fr minmax(15rem, 0.7fr);
+  }
+
+
   .artifact h3,
   .audience-grid h3,
   .methods h3 {
@@ -1270,6 +1794,12 @@ const processSteps = [
 
 
   .artifact-grid .media-placeholder {
+    min-height: 22rem;
+  }
+
+
+  .artifact-grid .media-pan {
+    height: 22rem;
     min-height: 22rem;
   }
 
@@ -1799,7 +2329,7 @@ const processSteps = [
     flex-direction: column;
     justify-content: center;
 
-    background: var(--green);
+    background: #111;
 
     color: white;
   }
@@ -1881,67 +2411,181 @@ const processSteps = [
 
 
   /* ========================================
-     FIGJAM
+     FIGJAM / PROJECT LINK
   ======================================== */
 
-  .figjam {
+  .project-link-block {
+    margin:
+      0
+      clamp(1.25rem, 6vw, 6rem)
+      clamp(5rem, 10vw, 9rem);
+
     padding:
-      clamp(5rem, 12vw, 12rem)
-      clamp(1.25rem, 6vw, 6rem);
+      clamp(1.5rem, 3vw, 2.25rem)
+      0;
 
-    display: grid;
-    grid-template-columns: 0.7fr 1.5fr;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
 
-    gap: clamp(3rem, 8vw, 8rem);
+    gap: 2rem;
 
+    border-top: 1px solid rgba(0, 0, 0, 0.16);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+  }
+
+
+  .project-link-block > div {
+    max-width: 42rem;
+  }
+
+
+  .project-link-block h3 {
+    margin: 0;
+
+    font-size: clamp(1.6rem, 3vw, 2.8rem);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+
+  .project-link-block p {
+    max-width: 36rem;
+
+    margin:
+      1rem
+      0
+      0;
+
+    color: var(--muted);
+
+    line-height: 1.55;
+  }
+
+
+  .project-link-block__link {
+    flex: 0 0 auto;
+
+    display: inline-flex;
+    align-items: center;
+
+    gap: 0.75rem;
+
+    padding-bottom: 0.25rem;
+
+    border-bottom: 1px solid currentColor;
+
+    color: #111;
+
+    text-decoration: none;
+    white-space: nowrap;
+
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+  
+  /* ========================================
+     BACK TO MAIN PAGE
+  ======================================== */
+
+  .back-home {
+    position: fixed;
+    top: 1rem;
+    left: clamp(1rem, 2vw, 2rem);
+    z-index: 30;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+
+    padding: 0.7rem 0.95rem;
+
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.9);
+    color: #111;
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    text-decoration: none;
+    font-size: 0.85rem;
+    line-height: 1;
+  }
+
+
+  .back-home:hover {
     background: #111;
     color: white;
   }
 
 
-  .figjam .eyebrow {
-    color: #777;
+  .back-home:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
   }
 
 
-  .figjam p {
-    max-width: 30rem;
-
-    margin: 2rem 0;
-
-    color: #aaa;
-
-    line-height: 1.6;
-  }
-
-
-  .figjam-link {
-    display: inline-flex;
-    gap: 0.8rem;
-
-    color: white;
-
-    text-decoration: none;
-
-    border-bottom: 1px solid currentColor;
-
-    padding-bottom: 0.25rem;
-  }
-  
   /* ========================================
      RESPONSIVE
   ======================================== */
 
   @media (max-width: 800px) {
 
+    .project-link-block {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
     .case-hero__details,
     .artifact,
     .artifact-grid,
     .audience-grid,
     .method-panel,
-    .reflection,
-    .figjam {
-      grid-template-columns: 1fr;
+    .reflection {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+
+    /*
+      The audience cards contain wide draggable images. Grid items default
+      to min-width:auto, which lets that content force the whole page wider
+      than the phone viewport. These rules keep Noob/Nerd inside the page.
+    */
+    .audience-grid,
+    .audience-grid article,
+    .audience-grid .media-pan {
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+    }
+
+
+    .audience-grid article {
+      overflow: hidden;
+    }
+
+
+    .audience-grid article > p {
+      max-width: 100%;
+      overflow-wrap: anywhere;
+    }
+
+
+    /* Keep every draggable viewport inside the mobile column. */
+    .artifact .media-pan,
+    .research-questions-media {
+      min-width: 0;
+      max-width: 100%;
+    }
+
+
+    .back-home {
+      top: 0.75rem;
+      left: 0.75rem;
+      padding: 0.65rem 0.8rem;
     }
 
 
@@ -2038,12 +2682,196 @@ const processSteps = [
   }
 }
 @media (max-width: 800px) {
-  .figjam-image-wrap {
-    min-height: 25rem;
-  }
 
-  .figjam-image {
-    height: 25rem;
+  .img-noob,
+  .img-nerd {
+    height: 24rem;
+    width: auto;
   }
 }
+
+/* ========================================
+   INDIVIDUAL IMAGE CONTROLS
+   Edit these values manually per image.
+
+   - height / width = actual image size
+   - translate(x, y) = move image inside its viewport
+   - scale() = zoom image in / out
+   - transform-origin = point the zoom happens from
+======================================== */
+
+.img-ishikawa {
+  height: 25rem;
+  width: auto;
+  /* transform-origin: center; */
+}
+
+.img-issue-tree {
+  height: 25rem;
+  width: auto;
+  transform-origin: center;
+}
+
+.img-research-question {
+  height: 24rem;
+  width: auto;
+  transform: translate(0, 0) scale(1);
+  transform-origin: center;
+}
+
+
+.img-nerd, .img-noob {
+  height: 28rem;
+  width: auto;
+  transform-origin: center;
+}
+
+.img-ecosystem-map {
+  height: 29rem;
+  width: auto;
+  transform: translate(0, 0) scale(1);
+  transform-origin: center;
+}
+
+.img-assumption-matrix {
+  height: 28rem;
+  width: auto;
+  transform: translate(0, 0) scale(1);
+  transform-origin: center;
+}
+
+.img-stakeholders {
+  height: 27rem;
+  width: auto;
+  transform: translate(0, 0) scale(1);
+  transform-origin: center;
+}
+
+.img-research-questions {
+  height: 100%;
+  width: auto;
+  transform: translate(0, 0) scale(1);
+  transform-origin: center;
+}
+
+
+
+  /* ========================================
+     WHITE MEDIA CONTAINERS + DRAG HINT
+     (same look as the other case studies)
+  ======================================== */
+
+  .media-frame {
+    position: relative;
+    min-width: 0;
+  }
+
+
+  .drag-hint {
+    width: 1.55rem;
+    height: 1.55rem;
+    display: inline-grid;
+    place-items: center;
+  }
+
+  .drag-hint--overlay {
+    position: absolute;
+    top: 0.85rem;
+    left: 0.85rem;
+    z-index: 8;
+    width: 2.4rem;
+    height: 2.4rem;
+    padding: 0.45rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    backdrop-filter: blur(8px);
+    pointer-events: none;
+  }
+
+  .drag-hint__icon {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  /* ========================================
+     BORDER RADII — match the rest of the site
+  ======================================== */
+
+  .case-video,
+  .artifact-grid article,
+  .audience-grid article,
+  .insight-card {
+    border-radius: 1.5rem;
+  }
+
+  .case-video {
+    overflow: hidden;
+  }
+
+  .outcomes {
+    border-radius: 1.5rem;
+    overflow: hidden;
+  }
+
+
+  @media (max-width: 800px) {
+    .drag-hint--overlay {
+      top: 0.65rem;
+      left: 0.65rem;
+      width: 2.15rem;
+      height: 2.15rem;
+      padding: 0.4rem;
+    }
+  }
+
+  /* Liquid edge on draggable images — same blurred ring as the hero
+     physics box and the primary-research cards. Draggable only. */
+  .media-frame {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .media-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 7;
+    padding: 0.9rem;
+    border-radius: inherit;
+    pointer-events: none;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+  }
+
+  .media-frame,
+  .media-frame .media-pan {
+    border-radius: 0;
+  }
+
+  /* Synthesis flow: floating words in light greys, Insight plain and dark */
+  .synthesis-source span:nth-child(1) { color: #b8b8b8; }
+  .synthesis-source span:nth-child(2) { color: #cfcfcf; }
+  .synthesis-source span:nth-child(3) { color: #a9a9a9; }
+  .synthesis-middle span:nth-child(1) { color: #c4c4c4; }
+  .synthesis-middle span:nth-child(2) { color: #adadad; }
+  .synthesis-middle span:nth-child(3) { color: #d6d6d6; }
+
+  .synthesis-result {
+    padding: 0;
+    background: transparent;
+    color: #111111;
+    border-radius: 0;
+  }
 </style>

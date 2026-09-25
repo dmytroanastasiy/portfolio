@@ -1,12 +1,61 @@
 ---
 // Experiments.astro
-// Draft placeholders — swap each card's content for a real experiment
-// (image, title, short description, tag) when it's ready.
+// Cards open a detail modal (like the "Playground & experiments" reference).
+// Add more items to `experiments` — each needs either `video` or `image`.
+const base = import.meta.env.BASE_URL;
+
 const experiments = [
-  { index: "01" },
-  { index: "02" },
-  { index: "03" },
+  {
+    id: "puplet",
+    label: "Howest",
+    year: "2026",
+    title: "Puplet — Kickstarter film",
+    summary: "An animated launch film for an all-in-one paw washer.",
+    description:
+      "A promotion animation for a Kickstarter campaign. Every walk ends with muddy paws - and every dog owner knwos this bath & towel routine. Puplet turns cleaning into a quick and easy moment of care. Animation introduces the 4-in-1 product through playfully illustrated scenes. IlluA promotion animation for a Kickstarter campaign. Every walk ends with muddy paws — and every dog owner knows this bath & towel routine. Puplet turns cleaning into a quick and easy moment of care. The animation introduces the 4-in-1 product through playful illustrated scenes. My personal experiment here was to animate people and animals, which made me explore and execute new techniques. Illustrated in Illustrator and animated in After Effects, using Audition to work with sound & music.",
+    tags: ["Motion Design", "Storytelling", "Illustration"],
+    video: `${base}experiments/puplet-kickstarter.mp4`,
+    poster: `${base}experiments/puplet-kickstarter-poster.avif`,
+    image: `${base}experiments/puplet-cover.avif`,
+  },
+  {
+    id: "dress-to-impress",
+    label: "MoMu × Howest",
+    year: "2026",
+    title: "Dress to Impress",
+    summary: "An interactive scroll story on Walter Van Beirendonck’s fashion as activism",
+    description:
+      "A digital exhibition for MoMu about Walter Van Beirendonck and how he addresses crises through fashion, from the AIDS epidemic to the damage we're doing to our planet. My attention was drawn to his message that never changed, and he translated in through his work so much times: caring for a person and caring for the planet are the same thing. As a designer and developer, I didn't want to squeeze him into a clean, safe template. Walter is loud, provocative and one of a kind, so I made the design rough, bold and weird to match him. ",
+    tags: ["Interactive Story", "Design", "Scrollytelling", "Web Development"],
+    link: "https://dmytroanastasiy.github.io/integration3/",
+    cover: {
+      kicker: "Walter Van Beirendonck",
+      title: "Dress to Impress",
+      note: "Care is the same whether you are holding a person or a planet.",
+    },
+    image: `${base}experiments/dress-to-impress.avif`,
+  },
+  {
+    id: "type01",
+    label: "Type01 x Howest",
+    year: "2025",
+    title: "TYPE01 Conference",
+    summary: "Responsive website for a typography conference in London",
+    description:
+      "A website for the first TYPE01 typography conference in London, hosted by TYPE01 Magazine: two days of workshops and talks on type in print, motion and branding. TYPE01 are specialists in type, so ain my mind, a safe, standard layout wouldn't fit them. I treated the project as an experiment with typography, layout, colour and style in general. An expressive serif as the accent, combined with an experimentsl, clean layout and a vibrant colour scheme. I wanted the site itself to feel like part of the conference.",
+    tags: ["Web Design", "Responsive", "Figma"],
+    link: "https://www.figma.com/design/h4jrIjNWvWT4ECtgp60juE/2DEV-E_AnastasiyDmytro_Design?node-id=0-1",
+    linkLabel: "Open in Figma",
+    cover: `${base}experiments/type01-cover.avif`,
+    screens: [
+      { name: "Home", desktop: "type01-desktop-home", mobile: "type01-mobile-home" },
+      { name: "Schedule", desktop: "type01-desktop-schedule", mobile: "type01-mobile-schedule" },
+      { name: "Tickets", desktop: "type01-desktop-tickets", mobile: "type01-mobile-tickets" },
+    ],
+  },
 ];
+
+const shot = (name) => `${base}experiments/${name}.jpg`;
 ---
 
 <section class="experiments" id="experiments">
@@ -15,38 +64,213 @@ const experiments = [
     <span class="experiments-tag">#experiments</span>
   </div>
 
-  <ul class="experiments-list">
+  <ul class="experiments-grid">
     {experiments.map((item) => (
-      <li class="experiment-card">
-        <span class="experiment-index">{item.index}</span>
+      <li>
+        <button class="exp-card" type="button" data-exp-open={item.id} aria-haspopup="dialog">
+          <div class="exp-card__media">
+            {item.video && item.image ? (
+              <img class="exp-card__cover" src={item.image} alt="" loading="lazy" />
+            ) : item.screens && typeof item.cover === "string" ? (
+              <img class="exp-card__cover" src={item.cover} alt="" loading="lazy" />
+            ) : item.screens ? (
+              <div class="device-cover" aria-hidden="true">
+                <div class="device-cover__browser">
+                  <div class="device-bar"><i></i><i></i><i></i></div>
+                  <img src={shot(item.screens[0].desktop)} alt="" loading="lazy" />
+                </div>
+                <div class="device-cover__phone">
+                  <div><img src={shot(item.screens[0].mobile)} alt="" loading="lazy" /></div>
+                </div>
+              </div>
+            ) : item.video ? (
+              <video
+                src={item.video}
+                poster={item.poster}
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                aria-hidden="true"
+              ></video>
+            ) : item.image ? (
+              <img src={item.image} alt="" loading="lazy" />
+            ) : (
+              <div class="exp-cover" aria-hidden="true">
+                <span class="exp-cover__kicker">{item.cover.kicker}</span>
+                <span class="exp-cover__title">{item.cover.title}</span>
+                <span class="exp-cover__note">{item.cover.note}</span>
+              </div>
+            )}
+          </div>
 
-        <div class="experiment-media">
-          <svg
-            class="media-icon"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-          >
-            <rect x="3" y="3" width="18" height="18" rx="1" />
-            <circle cx="8.5" cy="9.5" r="1.5" />
-            <path d="M21 15l-5-5-9 9" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-          <span>add image</span>
-        </div>
+          <div class="exp-card__body">
+            <div class="exp-card__meta">
+              <span>{item.label}</span>
+              <span>{item.year}</span>
+            </div>
+            <h3 class="exp-card__title">{item.title}</h3>
+            <p class="exp-card__summary">{item.summary}</p>
+            <div class="exp-tags">
+              {item.tags.map((tag) => <span class="exp-tag">{tag}</span>)}
+            </div>
+          </div>
+        </button>
 
-        <h3 class="experiment-title">Experiment title</h3>
-        <p class="experiment-desc">One or two lines about what this explores.</p>
-        <span class="experiment-tag">tag</span>
+        <dialog class="exp-modal" data-exp-modal={item.id} aria-label={item.title}>
+          <div class={item.screens ? "exp-modal__media exp-modal__media--screens" : "exp-modal__media"}>
+            {item.screens ? (
+              <div class="screens" data-screens>
+                <div class="screens__switch" role="tablist" aria-label="Device">
+                  <button class="is-on" type="button" data-device="desktop">Desktop</button>
+                  <button type="button" data-device="mobile">Mobile</button>
+                </div>
+
+                <div class="screens__view is-on" data-view="desktop">
+                  <div class="screens__browser">
+                    <div class="device-bar"><i></i><i></i><i></i></div>
+                    {item.screens.map((sc, i) => (
+                      <div class:list={["screens__scroll", { "is-on": i === 0 }]} data-page={i}>
+                        <img src={shot(sc.desktop)} alt={`${item.title} — ${sc.name} page, desktop`} loading="lazy" />
+                      </div>
+                    ))}
+                  </div>
+
+                  <div class="screens__pager">
+                    <button type="button" data-step="-1" aria-label="Previous page">‹</button>
+                    <span data-page-name>{item.screens[0].name}</span>
+                    <div class="screens__dots">
+                      {item.screens.map((sc, i) => <i class:list={{ "is-on": i === 0 }} data-name={sc.name}></i>)}
+                    </div>
+                    <button type="button" data-step="1" aria-label="Next page">›</button>
+                  </div>
+                  <p class="screens__hint">Scroll inside the page to see it in full</p>
+                </div>
+
+                <div class="screens__view" data-view="mobile">
+                  <div class="screens__phones">
+                    {item.screens.map((sc) => (
+                      <div class="screens__phone">
+                        <div class="screens__frame">
+                          <div class="screens__phone-scroll">
+                            <img src={shot(sc.mobile)} alt={`${item.title} — ${sc.name} page, mobile`} loading="lazy" />
+                          </div>
+                        </div>
+                        <span>{sc.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <p class="screens__hint">Scroll inside each screen</p>
+                </div>
+              </div>
+            ) : item.video ? (
+              <video
+                src={item.video}
+                poster={item.poster}
+                controls
+                playsinline
+                preload="none"
+              ></video>
+            ) : item.image ? (
+              <img src={item.image} alt={item.title} loading="lazy" />
+            ) : (
+              <div class="exp-cover exp-cover--large" aria-hidden="true">
+                <span class="exp-cover__kicker">{item.cover.kicker}</span>
+                <span class="exp-cover__title">{item.cover.title}</span>
+                <span class="exp-cover__note">{item.cover.note}</span>
+              </div>
+            )}
+            <button class="exp-modal__close" type="button" data-exp-close aria-label="Close">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+            </button>
+          </div>
+
+          <div class="exp-modal__body">
+            <div class="exp-modal__meta">
+              <span>{item.label}</span>
+              <span>{item.year}</span>
+            </div>
+            <h3 class="exp-modal__title">{item.title}</h3>
+            <p class="exp-modal__desc">{item.description}</p>
+            <div class="exp-tags exp-tags--light">
+              {item.tags.map((tag) => <span class="exp-tag">{tag}</span>)}
+            </div>
+            {item.link && (
+              <a class="exp-modal__link" href={item.link} target="_blank" rel="noopener noreferrer">
+                {item.linkLabel ?? "Visit project"} <span aria-hidden="true">↗</span>
+              </a>
+            )}
+          </div>
+        </dialog>
       </li>
     ))}
   </ul>
 </section>
 
+<script>
+  document.querySelectorAll<HTMLButtonElement>("[data-exp-open]").forEach((card) => {
+    const id = card.dataset.expOpen;
+    const modal = document.querySelector<HTMLDialogElement>(`[data-exp-modal="${id}"]`);
+    if (!modal) return;
+    const video = modal.querySelector("video");
+
+    const close = () => {
+      video?.pause();
+      modal.close();
+    };
+
+    card.addEventListener("click", () => {
+      modal.showModal();
+      if (video) {
+        video.currentTime = 0;
+        video.muted = false;
+        video.play().catch(() => {});
+      }
+    });
+
+    modal.querySelector("[data-exp-close]")?.addEventListener("click", close);
+
+    // Click on the dimmed backdrop closes the modal.
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) close();
+    });
+
+    modal.addEventListener("cancel", () => video?.pause());
+  });
+
+  /* Desktop / mobile screen viewer */
+  document.querySelectorAll<HTMLElement>("[data-screens]").forEach((viewer) => {
+    const deviceButtons = viewer.querySelectorAll<HTMLButtonElement>("[data-device]");
+    const views = viewer.querySelectorAll<HTMLElement>("[data-view]");
+    deviceButtons.forEach((btn) =>
+      btn.addEventListener("click", () => {
+        deviceButtons.forEach((b) => b.classList.toggle("is-on", b === btn));
+        views.forEach((v) => v.classList.toggle("is-on", v.dataset.view === btn.dataset.device));
+      })
+    );
+
+    const pages = viewer.querySelectorAll<HTMLElement>("[data-page]");
+    const dots = viewer.querySelectorAll<HTMLElement>(".screens__dots i");
+    const label = viewer.querySelector("[data-page-name]");
+    let index = 0;
+    const show = (i: number) => {
+      index = (i + pages.length) % pages.length;
+      pages.forEach((p, n) => p.classList.toggle("is-on", n === index));
+      dots.forEach((d, n) => d.classList.toggle("is-on", n === index));
+      pages[index].scrollTop = 0;
+      if (label) label.textContent = dots[index]?.dataset.name ?? "";
+    };
+    viewer.querySelectorAll<HTMLButtonElement>("[data-step]").forEach((b) =>
+      b.addEventListener("click", () => show(index + Number(b.dataset.step)))
+    );
+  });
+</script>
+
 <style>
   .experiments {
-    background: #0d0d0d;
-    color: #ffffff;
+    background: #ffffff;
+    color: #111111;
     padding: clamp(2.5rem, 6vw, 5rem) clamp(1.25rem, 5vw, 4rem);
     font-family: system-ui, -apple-system, sans-serif;
   }
@@ -65,81 +289,547 @@ const experiments = [
   }
 
   .experiments-tag {
-    color: #444;
+    color: #9a9a9a;
     font-size: 0.9rem;
     font-family: monospace;
   }
 
-  .experiments-list {
+  /* ---------- Grid ---------- */
+
+  .experiments-grid {
     list-style: none;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
   }
 
-  .experiment-card {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    padding: 1.5rem;
-    border: 1px dashed rgba(255, 255, 255, 0.25);
+  .experiments-grid > li {
+    min-width: 0;
   }
 
-  .experiment-index {
-    font-family: monospace;
+  /* ---------- Card ---------- */
+
+  .exp-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    background: #f4f4f4;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .exp-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+  }
+
+  .exp-card:focus-visible {
+    outline: 2px solid #111;
+    outline-offset: 3px;
+  }
+
+  .exp-card__media {
+    aspect-ratio: 2 / 1;
+    overflow: hidden;
+    background: #222;
+  }
+
+  .exp-card__media img,
+  .exp-modal__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .exp-modal__media img {
+    height: auto;
+  }
+
+  .exp-card__media img {
+    object-position: center;
+  }
+
+  /* Typographic cover for projects without an image yet */
+  .exp-cover {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.4rem;
+    width: 100%;
+    height: 100%;
+    padding: 1.25rem 1.5rem;
+    background: #f3efe8;
+    color: #111;
+  }
+
+  .exp-cover__kicker {
+    font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8a7a64;
+  }
+
+  .exp-cover__title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+
+  .exp-cover__note {
+    max-width: 22rem;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: #6b6b6b;
+  }
+
+  .exp-cover--large {
+    aspect-ratio: 16 / 9;
+    padding: 2.5rem;
+  }
+
+  .exp-cover--large .exp-cover__title {
+    font-size: clamp(2.4rem, 6vw, 4rem);
+  }
+
+  .exp-modal__link {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.6rem;
+    padding: 0.95rem 1.6rem;
+    border-radius: 999px;
+    background: #111;
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  .exp-card__media video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .exp-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1.5rem 1.6rem 1.7rem;
+  }
+
+  .exp-card__meta,
+  .exp-modal__meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    color: #8a8a8a;
+  }
+
+  .exp-card__title {
+    margin: 0;
+    font-size: clamp(1.3rem, 1.8vw, 1.65rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .exp-card__summary {
+    margin: 0;
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .exp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 0.4rem;
+  }
+
+  .exp-tag {
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    background: #e9e9e9;
+    color: #333;
+    font-size: 0.78rem;
+  }
+
+  /* ---------- Modal ---------- */
+
+  .exp-modal {
+    width: min(92vw, 40rem);
+    max-height: 90vh;
+    padding: 0;
+    border: 0;
+    border-radius: 1.5rem;
+    overflow: auto;
+    background: #fff;
+    color: #111;
+  }
+
+  .exp-modal::backdrop {
+    background: rgba(20, 20, 20, 0.55);
+    backdrop-filter: blur(4px);
+  }
+
+  .exp-modal[open] {
+    animation: exp-in 0.25s ease;
+  }
+
+  @keyframes exp-in {
+    from { opacity: 0; transform: translateY(12px) scale(0.98); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .exp-modal__media {
+    position: relative;
+    background: #000;
+  }
+
+  .exp-modal__media video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+  }
+
+  .exp-modal__close {
+    position: absolute;
+    top: 0.9rem;
+    right: 0.9rem;
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border: 0;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  }
+
+  .exp-modal__close svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    fill: none;
+    stroke: #111;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+  }
+
+  .exp-modal__body {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.8rem 2.2rem 2.2rem;
+  }
+
+  .exp-modal__meta {
+    justify-content: flex-start;
+    color: #8a8a8a;
+  }
+
+  .exp-modal__title {
+    margin: 0;
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  .exp-modal__desc {
+    margin: 0;
     color: #555;
-    font-size: 0.85rem;
+    font-size: 1rem;
+    line-height: 1.65;
   }
 
-  .experiment-media {
-    aspect-ratio: 4 / 3;
+  .exp-tags--light .exp-tag {
+    background: #f0f0f0;
+    color: #333;
+  }
+
+  .exp-card__media .exp-card__cover {
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  .exp-card__media img[src*="puplet-cover"] {
+    object-position: center;
+  }
+
+  /* ---------- Device cover (card) ---------- */
+
+  .device-cover {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #e9e3d8, #d4ccbc);
+  }
+
+  .device-bar {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    height: 1.1rem;
+    padding: 0 0.5rem;
+    background: #f1f1f1;
+  }
+
+  .device-bar i {
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #d0d0d0;
+  }
+
+  .device-cover__browser {
+    position: absolute;
+    left: 8%;
+    top: 14%;
+    width: 68%;
+    height: 96%;
+    overflow: hidden;
+    border-radius: 0.6rem;
+    background: #fff;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  }
+
+  .device-cover__phone {
+    position: absolute;
+    right: 8%;
+    top: 24%;
+    width: 19%;
+    aspect-ratio: 430 / 932;
+    padding: 4px;
+    border-radius: 1.1rem;
+    background: #111;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  }
+
+  .device-cover__phone > div {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 0.9rem;
+  }
+
+  .exp-card__media .device-cover img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* ---------- Screen viewer (modal) ---------- */
+
+  .exp-modal:has(.exp-modal__media--screens) {
+    width: min(94vw, 58rem);
+  }
+
+  .exp-modal__media--screens {
+    background: #ecebe7;
+  }
+
+  .screens {
+    position: relative;
+    padding: 3.4rem 1.5rem 1.4rem;
+  }
+
+  .screens__switch {
+    position: absolute;
+    top: 0.9rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    padding: 0.25rem;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  }
+
+  .screens__switch button {
+    padding: 0.5rem 1rem;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: #333;
+    font: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+
+  .screens__switch button.is-on {
+    background: #111;
+    color: #fff;
+  }
+
+  .screens__view {
+    display: none;
+  }
+
+  .screens__view.is-on {
+    display: block;
+  }
+
+  .screens__browser {
+    max-width: 46rem;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 0.8rem;
+    background: #fff;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  }
+
+  .screens__browser .device-bar {
+    height: 1.8rem;
+  }
+
+  .screens__scroll {
+    display: none;
+    height: min(52vh, 26rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .screens__scroll.is-on {
+    display: block;
+  }
+
+  .exp-modal__media .screens img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: auto;
+  }
+
+  .screens__pager {
+    display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    border: 1px dashed rgba(255, 255, 255, 0.25);
+    gap: 0.8rem;
+    margin-top: 1.1rem;
     color: #555;
     font-size: 0.8rem;
   }
 
-  .media-icon {
-    width: 28px;
-    height: 28px;
+  .screens__pager button {
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 50%;
+    background: #fff;
+    color: #111;
+    cursor: pointer;
   }
 
-  .experiment-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #777;
-    margin: 0;
+  .screens__pager span {
+    min-width: 4.5rem;
+    text-align: center;
   }
 
-  .experiment-desc {
-    font-size: 0.9rem;
-    line-height: 1.5;
+  .screens__dots {
+    display: flex;
+    gap: 0.35rem;
+  }
+
+  .screens__dots i {
+    display: block;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 99px;
+    background: #c9c9c9;
+    transition: width 0.2s ease;
+  }
+
+  .screens__dots i.is-on {
+    width: 1.2rem;
+    background: #111;
+  }
+
+  .screens__phones {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .screens__phone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
     color: #555;
-    margin: 0;
+    font-size: 0.8rem;
   }
 
-  .experiment-tag {
-    align-self: flex-start;
-    background: #1c1c1c;
-    color: #777;
-    padding: 0.3rem 0.8rem;
+  .screens__frame {
+    width: 11.5rem;
+    aspect-ratio: 430 / 932;
+    overflow: hidden; /* keeps the phone shape; content scrolls inside */
+    padding: 5px;
+    border-radius: 1.6rem;
+    background: #111;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+  }
+
+  .screens__phone-scroll {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-radius: 1.35rem;
+    background: #fff;
+    scrollbar-width: none;
+  }
+
+  .screens__phone-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .screens__hint {
+    margin: 0.6rem 0 0;
+    text-align: center;
+    color: #888;
     font-size: 0.75rem;
   }
 
-  /* Desktop — three cards in a row */
-  @media (min-width: 768px) {
-    .experiments-list {
-      flex-direction: row;
+  /* ---------- Responsive ---------- */
+
+  @media (max-width: 1100px) {
+    .experiments-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 700px) {
+    .experiments-grid {
+      grid-template-columns: 1fr;
     }
 
-    .experiment-card {
-      flex: 1;
+    .exp-modal__body {
+      padding: 1.4rem 1.4rem 1.6rem;
+    }
+
+    .screens__phone:nth-child(n + 2) {
+      display: none;
     }
   }
 </style>

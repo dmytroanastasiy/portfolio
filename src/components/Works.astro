@@ -21,40 +21,26 @@ const works = [
   slug: "project-one",
 },
   {
-    title: "Cup",
-    category: "product design",
-    tags: ["Ceramics", "Clay Modeling", "Glazing"],
-    slug: "cup",
-    imageName: "cup1-final.png",
+    title: "Safety Without Excessive Monitoring",
+  category: "Experience Design · Speculative UX",
+  description:
+    "Designing a community-safety system for a generational spaceship without turning everyday life into surveillance",
+  tags: [
+    "Experience Design",
+    "UX",
+    "Prototyping",
+    "Ethical Design"
+  ],
+  slug: "project-two",
   },
   {
-    title: "Table timer",
-    category: "industrial design",
-    tags: ["Adobe Illustrator", "Laser Cutting", "MDF"],
-    slug: "table-timer",
-    imageName: "timer-1.png",
-  },
-  {
-    title: "Shaving razor",
-    category: "personal care",
-    tags: ["PU Foam", "Sculptural Modeling", "Prototyping"],
-    slug: "shaving-razor",
-    imageName: "razor-2.png",
-  },
-  {
-    title: "Phone belt",
-    category: "wearable design",
-    tags: ["Fluorescent Material", "Metal Cutting", "Soft Goods"],
-    slug: "phone-belt",
-    imageName: "belt-1.png",
-  },
-  {
-    title: "Stool",
-    category: "furniture design",
-    tags: ["Siemens NX", "Blender", "Metal Fabrication"],
-    slug: "stool",
-    imageName: "stool-1.png",
-  },
+  title: "Miles & Meals",
+  category: "Mobile App Design · Branding",
+  description:
+    "A meal-box app and brand identity that turn weekly food delivery into a journey through street food, cities and local stories.",
+  tags: ["UX/UI", "Branding", "Mobile App"],
+  slug: "miles-and-meals",
+},
 ];
 
 // Helper function to resolve the bundled asset URL
@@ -112,8 +98,8 @@ function getImageUrl(imageName: string) {
 
 <style>
   .works {
-    background: #0d0d0d;
-    color: #ffffff;
+    background: #ffffff;
+    color: #111111;
     padding: clamp(2.5rem, 6vw, 5rem) clamp(1.25rem, 5vw, 4rem);
     font-family: system-ui, -apple-system, sans-serif;
   }
@@ -132,7 +118,7 @@ function getImageUrl(imageName: string) {
   }
 
   .works-tag {
-    color: #444;
+    color: #9a9a9a;
     font-size: 0.9rem;
     font-family: monospace;
   }
@@ -148,7 +134,7 @@ function getImageUrl(imageName: string) {
     justify-content: space-between;
     align-items: flex-start;
     padding: 1.75rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     text-decoration: none;
     color: inherit;
     gap: 1rem;
@@ -170,7 +156,7 @@ function getImageUrl(imageName: string) {
 
   .work-category {
     font-size: 0.95rem;
-    color: #777;
+    color: #888;
     font-weight: 400;
   }
 
@@ -189,8 +175,8 @@ function getImageUrl(imageName: string) {
   }
 
   .pill {
-    background: #1c1c1c;
-    color: #d1d1d1;
+    background: #f2f2f2;
+    color: #333333;
     border-radius: 999px;
     padding: 0.35rem 0.85rem;
     font-size: 0.75rem;
@@ -201,7 +187,7 @@ function getImageUrl(imageName: string) {
   .arrow-icon {
     width: 28px;
     height: 28px;
-    color: #ffffff;
+    color: #111111;
     flex-shrink: 0;
   }
 

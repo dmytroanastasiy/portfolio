@@ -1,0 +1,2278 @@
+---
+
+import CaseProgressNav from "./CaseProgressNav.astro";
+
+
+const {
+  title = "Safety Without Excessive Monitoring",
+  year = "2026",
+  type = "Experience Design · Speculative UX",
+  role = "Team project",
+} = Astro.props;
+
+const behanceUrl = "https://www.behance.net/dmytroanastasiy";
+const figjamUrl = "https://www.figma.com/board/6zOfQVcsnaR8cxzSV8rmt4/XD4-ENG-Team-14?node-id=39-555&t=r6yov2Sjw6FH29l4-1";
+
+const processSteps = [
+  "The tension",
+  "The system",
+  "From question to concept",
+  "Testing",
+  "Iteration",
+  "Final experience",
+  "Ethical design",
+  "Outcome",
+];
+
+const principles = [
+  {
+    number: "01",
+    title: "Minimum data by default",
+    text: "The system should collect only what is necessary for safety, rather than treating constant monitoring as the default.",
+  },
+  {
+    number: "02",
+    title: "Consent before additional tracking",
+    text: "Additional information should require a clear reason and an explicit choice from the person involved.",
+  },
+  {
+    number: "03",
+    title: "Transparent data use",
+    text: "People should understand what is being collected, why it is needed and how it affects them.",
+  },
+  {
+    number: "04",
+    title: "Private reputation",
+    text: "Reputation can support trust without becoming a public score or a mechanism for social punishment.",
+  },
+  {
+    number: "05",
+    title: "Moderation without punishment",
+    text: "The system should support conflict resolution and community safety rather than encourage surveillance or permanent judgement.",
+  },
+  {
+    number: "06",
+    title: "No permanent safety hierarchy",
+    text: "Safety responsibilities should not create a fixed authority structure that gives one group continuous control over another.",
+  },
+];
+---
+
+<article class="generation-case">
+
+  <a
+    class="back-button"
+    href={import.meta.env.BASE_URL}
+    aria-label="Back to main portfolio page"
+  >
+    ← Back
+  </a>
+
+  <!-- ==========================================
+       HERO
+  =========================================== -->
+
+  <header class="case-hero">
+    <div class="case-hero__meta">
+      <span>{type}</span>
+      <span>{year}</span>
+    </div>
+
+    <p class="eyebrow">Generational spaceship</p>
+
+    <h1>{title}</h1>
+
+    <p class="case-hero__lead">
+      How do you create social safety in a closed community
+      without making people feel continuously watched?
+    </p>
+
+    <p class="case-hero__intro">
+      A speculative experience-design project exploring how a
+      self-sustaining community travelling through deep space could
+      maintain safety, trust and accountability without turning
+      everyday life into a surveillance system.
+    </p>
+
+    <div class="case-hero__details">
+      <div>
+        <span class="eyebrow">Project</span>
+        <p>Experience Design · ENG Team 14</p>
+      </div>
+
+      <div>
+        <span class="eyebrow">Role</span>
+        <p>{role}</p>
+      </div>
+    </div>
+
+    <div class="hero-pan">
+  <img
+    src={`${import.meta.env.BASE_URL}spaceship/spaceship-hero.svg`}
+    alt="Interior of a generational spaceship looking out toward a planet and space"
+  />
+</div>
+  </header>
+
+
+  <!-- ==========================================
+       QUICK / FULL
+  =========================================== -->
+
+  <nav class="reading-mode" aria-label="Case study reading mode">
+    <button
+      type="button"
+      class="reading-mode__button is-active"
+      data-mode="quick"
+    >
+      Quick read
+    </button>
+
+    <button
+      type="button"
+      class="reading-mode__button"
+      data-mode="full"
+    >
+      Full process
+    </button>
+  </nav>
+
+
+  <!-- ==========================================
+       PROCESS INDEX
+  =========================================== -->
+
+  <nav class="process-index" aria-label="Case study sections">
+    {
+      processSteps.map((step, index) => (
+        <a href={`#generation-section-${index + 1}`}>
+          <span>{String(index + 1).padStart(2, "0")}</span>
+          {step}
+        </a>
+      ))
+    }
+  </nav>
+<CaseProgressNav />
+
+  <!-- ==========================================
+       01 — THE TENSION
+  =========================================== -->
+
+  <section
+    class="case-section"
+    id="generation-section-1"
+    data-progress-section
+    data-progress-label="The tension"
+  >
+    <div class="section-number">01</div>
+
+    <div class="section-heading">
+      <span class="eyebrow">The tension</span>
+
+      <h2>
+        A safe society can easily become
+        a monitored society.
+      </h2>
+    </div>
+
+    <div class="section-body">
+      <p class="large-copy">
+        A generational spaceship would need to support human life
+        for decades or even centuries in a closed environment. Safety matters enormously -
+        but constant surveillance could create a society built on
+        control rather than trust.
+      </p>
+
+      <p>
+        Our project focused on the security-control theme and asked
+        how a closed community could respond to risk, conflict and
+        uncertainty while preserving privacy, autonomy and social
+        trust.
+      </p>
+    </div>
+
+    <blockquote class="hmw">
+      <span>How might we</span>
+
+      maintain <strong>social safety</strong> for a long period of time in a
+      <strong>closed environment</strong> without creating a feeling of
+      <strong>excessive monitoring or control</strong>?
+    </blockquote>
+  </section>
+
+
+  <!-- ==========================================
+       02 — SYSTEM
+  =========================================== -->
+
+  <section
+    class="case-section"
+    id="generation-section-2"
+    data-progress-section
+    data-progress-label="The system"
+  >
+    <div class="section-number">02</div>
+
+    <div class="section-heading">
+      <span class="eyebrow">The system</span>
+
+      <h2>
+        Safety without constant surveillance.
+      </h2>
+    </div>
+
+    <div class="section-body">
+      <p class="large-copy">
+        Instead of designing one interface, we developed a connected
+        system combining digital and physical touchpoints.
+      </p>
+
+      <p>
+        The concept evolved around three parts: a mobile experience,
+        a physical activation point and a wearable monitoring device.
+        Together they supported communication and safety while
+        avoiding continuous observation as the default condition.
+      </p>
+    </div>
+
+    <div class="system-grid">
+      <article>
+        <span class="eyebrow">01</span>
+        <h3>Mobile app</h3>
+        <p>
+          A personal interface for communication, community
+          information and safety-related interactions.
+        </p>
+        <div class="project-media project-media--image">
+          <img
+            src={`${import.meta.env.BASE_URL}spaceship/app-screens.svg`}
+            alt="Mobile application screens from the generational spaceship concept"
+            loading="lazy"
+          />
+        </div>
+      </article>
+
+      <article>
+        <span class="eyebrow">02</span>
+        <h3>Activation pole</h3>
+        <p>
+          A physical touchpoint connecting the digital service to the
+          shared environment of the ship.
+        </p>
+        <div class="project-media project-media--image">
+          <img
+            src={`${import.meta.env.BASE_URL}spaceship/touchpoint.svg`}
+            alt="Physical activation touchpoint from the generational spaceship concept"
+            loading="lazy"
+          />
+        </div>
+      </article>
+
+      <article>
+        <span class="eyebrow">03</span>
+        <h3>Monitoring device</h3>
+        <p>
+          A wearable element whose role was deliberately limited so
+          that safety did not automatically mean permanent tracking.
+        </p>
+        <div class="project-media project-media--image">
+          <img
+            src={`${import.meta.env.BASE_URL}spaceship/device.svg`}
+            alt="Monitoring device prototype from the generational spaceship concept"
+            loading="lazy"
+          />
+        </div>
+      </article>
+    </div>
+  </section>
+
+
+  <!-- ==========================================
+       03 — CONCEPT DEVELOPMENT
+       FULL PROCESS
+  =========================================== -->
+
+  <section
+    class="case-section full-process"
+    id="generation-section-3"
+    data-progress-section
+    data-progress-label="Concept development"
+  >
+    <div class="section-number">03</div>
+
+    <div class="section-heading">
+      <span class="eyebrow">Concept development</span>
+
+      <h2>
+        From an ethical question
+        to a tangible system.
+      </h2>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Early ideation explored what safety might look like inside a
+        closed habitat. The concept gradually moved from broad system
+        thinking toward interactions that could be experienced,
+        tested and questioned.
+      </p>
+    </div>
+
+    <div class="artifact-story">
+      <article class="artifact">
+        <div>
+          <span class="eyebrow">01</span>
+          <h3>Task flow</h3>
+          <p>
+            Mapping the key steps a resident moves through when a
+            safety-related situation begins, from recognising the issue
+            to taking action through the connected system.
+          </p>
+        </div>
+
+        <div
+          class="project-media project-media--interactive"
+          data-drag-scroll
+          aria-label="Task flow. Drag to explore the image and zoom in for detail."
+        >
+      <span
+        class="drag-hint drag-hint--overlay"
+        aria-label="This image can be dragged and zoomed"
+        title="Drag / zoom image"
+      >
+        <img
+          class="drag-hint__icon drag-hint__icon--black"
+          src={`${import.meta.env.BASE_URL}icons/drag-black.svg`}
+          alt=""
+          aria-hidden="true"
+        />
+        <img
+          class="drag-hint__icon drag-hint__icon--white"
+          src={`${import.meta.env.BASE_URL}icons/drag-white.svg`}
+          alt=""
+          aria-hidden="true"
+        />
+      </span>
+          <div class="media-pan__canvas">
+            <img
+              class="media-pan__image"
+              src={`${import.meta.env.BASE_URL}spaceship/task-flow.png`}
+              alt="Task flow showing the main steps through the spaceship safety system"
+              loading="lazy"
+              draggable="false"
+            />
+          </div>
+        </div>
+      </article>
+
+      <article class="artifact">
+        <div>
+          <span class="eyebrow">02</span>
+          <h3>User flow</h3>
+          <p>
+            Following one complete journey through the service to understand
+            how digital and physical touchpoints connect during a
+            safety-related interaction.
+          </p>
+        </div>
+
+        <div
+          class="project-media project-media--interactive"
+          data-drag-scroll
+          aria-label="User flow. Drag to explore the image and zoom in for detail."
+        >
+      <span
+        class="drag-hint drag-hint--overlay"
+        aria-label="This image can be dragged and zoomed"
+        title="Drag / zoom image"
+      >
+        <img
+          class="drag-hint__icon drag-hint__icon--black"
+          src={`${import.meta.env.BASE_URL}icons/drag-black.svg`}
+          alt=""
+          aria-hidden="true"
+        />
+        <img
+          class="drag-hint__icon drag-hint__icon--white"
+          src={`${import.meta.env.BASE_URL}icons/drag-white.svg`}
+          alt=""
+          aria-hidden="true"
+        />
+      </span>
+          <div class="media-pan__canvas">
+            <img
+              class="media-pan__image"
+              src={`${import.meta.env.BASE_URL}spaceship/user-flow.png`}
+              alt="User flow through the generational spaceship safety experience"
+              loading="lazy"
+              draggable="false"
+            />
+          </div>
+        </div>
+      </article>
+
+      <article class="artifact">
+        <div>
+          <span class="eyebrow">03</span>
+          <h3>Early prototype</h3>
+          <p>
+            Bringing the first physical and digital ideas together so the
+            interaction could be experienced, discussed and tested.
+          </p>
+        </div>
+
+        <div
+          class="project-media project-media--interactive"
+          data-drag-scroll
+          aria-label="Early prototype. Drag to explore the image and zoom in for detail."
+        >
+      <span
+        class="drag-hint drag-hint--overlay"
+        aria-label="This image can be dragged and zoomed"
+        title="Drag / zoom image"
+      >
+        <img
+          class="drag-hint__icon drag-hint__icon--black"
+          src={`${import.meta.env.BASE_URL}icons/drag-black.svg`}
+          alt=""
+          aria-hidden="true"
+        />
+        <img
+          class="drag-hint__icon drag-hint__icon--white"
+          src={`${import.meta.env.BASE_URL}icons/drag-white.svg`}
+          alt=""
+          aria-hidden="true"
+        />
+      </span>
+          <div class="media-pan__canvas">
+            <img
+              class="media-pan__image"
+              src={`${import.meta.env.BASE_URL}spaceship/early-prototype.png`}
+              alt="Early prototype combining physical and digital parts of the spaceship safety concept"
+              loading="lazy"
+              draggable="false"
+            />
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+
+  <!-- ==========================================
+       04 — TESTING
+  =========================================== -->
+
+  <section
+    class="case-section"
+    id="generation-section-4"
+    data-progress-section
+    data-progress-label="Testing"
+  >
+    <div class="section-number">04</div>
+
+    <div class="section-heading">
+      <span class="eyebrow">Testing</span>
+
+      <h2>
+        We weren't only testing whether it worked.
+        We were testing whether it felt acceptable.
+      </h2>
+    </div>
+
+    <div class="section-body">
+      <p class="large-copy">
+        The central question was emotional as much as functional:
+        would people experience the system as supportive, or as
+        another layer of control?
+      </p>
+
+      <p>
+        Testing therefore considered usability together with clarity,
+        perceived safety, trust and the degree of monitoring
+        participants felt during the experience.
+      </p>
+    </div>
+
+    <div
+      class="project-media project-media--large project-media--interactive"
+      data-drag-scroll
+      aria-label="Testing tasks. Drag to explore the image and zoom in for detail."
+    >
+      <span
+        class="drag-hint drag-hint--overlay"
+        aria-label="This image can be dragged and zoomed"
+        title="Drag / zoom image"
+      >
+        <img
+          class="drag-hint__icon drag-hint__icon--black"
+          src={`${import.meta.env.BASE_URL}icons/drag-black.svg`}
+          alt=""
+          aria-hidden="true"
+        />
+        <img
+          class="drag-hint__icon drag-hint__icon--white"
+          src={`${import.meta.env.BASE_URL}icons/drag-white.svg`}
+          alt=""
+          aria-hidden="true"
+        />
+      </span>
+      <div class="media-pan__canvas">
+        <img
+          class="media-pan__image img-testing-tasks"
+          src={`${import.meta.env.BASE_URL}spaceship/testing-tasks.png`}
+          alt="Testing tasks, objectives and scenarios for evaluating the spaceship concept"
+          loading="lazy"
+          draggable="false"
+        />
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==========================================
+       05 — ITERATION
+  =========================================== -->
+
+  <section
+    class="case-section"
+    id="generation-section-5"
+    data-progress-section
+    data-progress-label="Iteration"
+  >
+    <div class="section-number">05</div>
+
+    <div class="section-heading">
+      <span class="eyebrow">Iteration</span>
+
+      <h2>
+        Testing changed the system.
+      </h2>
+    </div>
+
+    <div class="section-body">
+      <p>
+        Feedback exposed moments where the experience was unclear,
+        intrusive or unnecessarily complicated. We used those
+        moments to simplify the interaction and make control more
+        visible to the user.
+      </p>
+    </div>
+
+    <div class="iteration-stack">
+      <article>
+        <div class="iteration-copy">
+          <span class="eyebrow">Mobile app</span>
+          <h3>From prototype to clearer interaction</h3>
+          <p>
+            The first version helped us validate the structure, but the final
+            interface needed a clearer hierarchy and faster access to everyday
+            actions. We refined the dashboard, calendar and help-request flow so
+            important information is easier to scan and the next action is more obvious.
+          </p>
+        </div>
+
+        <div class="iteration-comparison iteration-comparison--app">
+          <img
+            class="iteration-image"
+            src={`${import.meta.env.BASE_URL}spaceship/app-first.svg`}
+            alt="First iteration of the mobile app"
+            loading="lazy"
+          />
+
+          <span class="comparison-arrow">→</span>
+
+          <img
+            class="iteration-image"
+            src={`${import.meta.env.BASE_URL}spaceship/app-final.svg`}
+            alt="Final iteration of the mobile app"
+            loading="lazy"
+          />
+        </div>
+      </article>
+
+      <article>
+        <div class="iteration-copy">
+          <span class="eyebrow">Activation pole</span>
+          <h3>Making the physical interaction easier to understand</h3>
+          <p>
+            The physical touchpoint was simplified around one clear action: scan
+            and activate. The later version gives the QR code more visual priority,
+            improves the instruction hierarchy and adds clearer location context so
+            people understand what the pole does before interacting with it.
+          </p>
+        </div>
+
+        <div class="iteration-comparison iteration-comparison--touchpoint">
+          <img
+            class="iteration-image"
+            src={`${import.meta.env.BASE_URL}spaceship/touchpoint-first.svg`}
+            alt="First iteration of the activation pole"
+            loading="lazy"
+          />
+
+          <span class="comparison-arrow">→</span>
+
+          <img
+            class="iteration-image"
+            src={`${import.meta.env.BASE_URL}spaceship/touchpoint-final.svg`}
+            alt="Final iteration of the activation pole"
+            loading="lazy"
+          />
+        </div>
+      </article>
+
+      <article>
+        <div class="iteration-copy">
+          <span class="eyebrow">Monitoring device</span>
+          <h3>Reducing the feeling of passive surveillance</h3>
+          <p>
+            The wearable evolved from a rough functional prototype into a more
+            deliberate object with a clearer role in the system. The refinement
+            focused on making its purpose understandable while keeping the device
+            visually lightweight, so it reads as a temporary safety tool rather
+            than a symbol of constant tracking.
+          </p>
+        </div>
+
+        <div class="iteration-comparison iteration-comparison--device">
+          <img
+            class="iteration-image"
+            src={`${import.meta.env.BASE_URL}spaceship/device-first.svg`}
+            alt="First iteration of the monitoring device"
+            loading="lazy"
+          />
+
+          <span class="comparison-arrow">→</span>
+
+          <img
+            class="iteration-image"
+            src={`${import.meta.env.BASE_URL}spaceship/device-final.svg`}
+            alt="Final iteration of the monitoring device"
+            loading="lazy"
+          />
+        </div>
+      </article>
+    </div>
+  </section>
+
+
+  <!-- ==========================================
+       06 — FINAL EXPERIENCE
+  =========================================== -->
+
+  <section
+    class="case-section"
+    id="generation-section-6"
+    data-progress-section
+    data-progress-label="Final experience"
+  >
+    <div class="section-number">06</div>
+
+    <div class="section-heading">
+      <span class="eyebrow">Final experience</span>
+
+      <h2>
+        One ecosystem.
+        Several ways to interact with it.
+      </h2>
+    </div>
+
+    <div class="section-body">
+      <p>
+        The final direction connected the mobile and physical
+        prototypes into one safety ecosystem while keeping the
+        interaction intentionally lightweight.
+      </p>
+    </div>
+
+    <div class="final-demo">
+      <video
+        class="final-demo__video"
+        controls
+        playsinline
+        preload="metadata"
+      >
+        <!--
+          Put your MP4 in public/spaceship/ and name it app-demo.mp4,
+          or change the filename below to match your actual file.
+        -->
+        <source
+          src={`${import.meta.env.BASE_URL}spaceship/nexus.mp4`}
+          type="video/mp4"
+        />
+        Your browser does not support HTML5 video.
+      </video>
+
+      <p class="final-demo__caption">
+        Full application walkthrough showing the main flows and how the final
+        interface behaves as one connected experience.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ==========================================
+       07 — ETHICS
+  =========================================== -->
+
+  <section
+    class="ethics-section"
+    id="generation-section-7"
+    data-progress-section
+    data-progress-label="Ethical design"
+  >
+    <span class="eyebrow">Ethical design</span>
+
+    <h2>
+      Safety cannot depend
+      on invisible surveillance.
+    </h2>
+
+    <p class="ethics-intro">
+      The final concept became less about monitoring people and more
+      about defining clear boundaries for what the system should be
+      allowed to know and do.
+    </p>
+
+    <div class="principles-grid">
+      {
+        principles.map((principle) => (
+          <article class="principle">
+            <span>{principle.number}</span>
+            <h3>{principle.title}</h3>
+            <p>{principle.text}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+
+  <!-- ==========================================
+       08 — OUTCOME
+  =========================================== -->
+
+  <section
+    class="case-section"
+    id="generation-section-8"
+    data-progress-section
+    data-progress-label="Outcome"
+  >
+    <div class="section-number">08</div>
+
+    <div class="section-heading">
+      <span class="eyebrow">Outcome</span>
+
+      <h2>
+        A system built around trust,
+        rather than control.
+      </h2>
+    </div>
+
+    <div class="section-body">
+      <p class="large-copy">
+        The project began with the assumption that safety in an
+        isolated environment would require monitoring. It ended with
+        a more careful question: how little monitoring can a community
+        rely on while still feeling supported?
+      </p>
+
+      <p>
+        The final direction prioritised transparency, consent,
+        minimal data collection and user control. Safety remained
+        important, but it was reframed as something created through
+        social structures and responsible interaction rather than
+        constant observation.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ==========================================
+       REFLECTION
+  =========================================== -->
+
+  <section class="case-section reflection">
+    <div class="reflection-copy">
+      <span class="eyebrow">Reflection</span>
+
+      <h2>
+        Designing a system also means
+        deciding what that system should never do.
+      </h2>
+
+      <p>
+        What made this project valuable was that the most important
+        decisions were not only about usability or visual design.
+        They were about responsibility. Every additional piece of
+        information the system could collect created another question
+        about privacy, power and trust.
+      </p>
+
+      <p>
+        Working across physical products, digital interfaces and
+        community rules made me think about experience design as more
+        than a sequence of screens. The behaviour of the entire system
+        matters — including the parts a user may never directly see.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ==========================================
+       BEHANCE / MICROSITE
+  =========================================== -->
+
+  <section class="project-link-block">
+    <div>
+      <span class="eyebrow">Microsite</span>
+      <h3>See the complete project on Behance.</h3>
+      <p>
+        Open the published project for the extended presentation,
+        additional visuals and the complete prototype story.
+      </p>
+    </div>
+
+    <a
+      class="project-link-block__link"
+      href={behanceUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Open Behance
+      <span aria-hidden="true">↗</span>
+    </a>
+  </section>
+
+
+  <section class="project-link-block project-link-block--figjam">
+    <div>
+      <span class="eyebrow">Full process</span>
+      <h3>Explore the complete FigJam.</h3>
+      <p>
+        Open the working board to see the research, task flows,
+        testing material, iterations and the less polished process
+        behind the final case study.
+      </p>
+    </div>
+
+    <a
+      class="project-link-block__link"
+      href={figjamUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Explore FigJam
+      <span aria-hidden="true">↗</span>
+    </a>
+  </section>
+
+</article>
+
+
+<script>
+  const buttons =
+    document.querySelectorAll(".reading-mode__button");
+
+  const fullSections =
+    document.querySelectorAll(".full-process");
+
+  function setReadingMode(mode) {
+    buttons.forEach((button) => {
+      button.classList.toggle(
+        "is-active",
+        button.dataset.mode === mode
+      );
+    });
+
+    fullSections.forEach((section) => {
+      section.classList.toggle(
+        "is-hidden",
+        mode === "quick"
+      );
+    });
+  }
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      setReadingMode(button.dataset.mode);
+    });
+  });
+
+  setReadingMode("quick");
+
+
+  /* ==========================================
+     DRAGGABLE + ZOOMABLE PROCESS IMAGES
+
+     This version does NOT use scrollLeft / scrollWidth for panning.
+     The image itself is translated and scaled, and the drag limits are
+     recalculated from the CURRENT zoomed image size on every move.
+  ========================================== */
+
+  const draggableMedia =
+    document.querySelectorAll<HTMLElement>("[data-drag-scroll]");
+
+  draggableMedia.forEach((viewport) => {
+    const image =
+      viewport.querySelector<HTMLImageElement>(".media-pan__image");
+
+    if (!image) return;
+
+    let baseWidth = 0;
+    let baseHeight = 0;
+
+    let zoom = 1;
+    let panX = 0;
+    let panY = 0;
+
+    let isDragging = false;
+    let lastPointerX = 0;
+    let lastPointerY = 0;
+
+    const MIN_ZOOM = 1;
+    const MAX_ZOOM = 5;
+
+    const clamp = (value: number, min: number, max: number) =>
+      Math.min(max, Math.max(min, value));
+
+    const captureBaseSize = () => {
+      if (baseWidth && baseHeight) return;
+
+      baseWidth = image.offsetWidth;
+      baseHeight = image.offsetHeight;
+    };
+
+    const getBounds = () => {
+      captureBaseSize();
+
+      const viewportWidth = viewport.clientWidth;
+      const viewportHeight = viewport.clientHeight;
+
+      const scaledWidth = baseWidth * zoom;
+      const scaledHeight = baseHeight * zoom;
+
+      /*
+        If the zoomed image is smaller than the viewport on an axis,
+        lock it to the centre on that axis.
+
+        If it is larger, allow movement all the way from one edge
+        to the other.
+      */
+      const minX =
+        scaledWidth <= viewportWidth
+          ? (viewportWidth - scaledWidth) / 2
+          : viewportWidth - scaledWidth;
+
+      const maxX =
+        scaledWidth <= viewportWidth
+          ? (viewportWidth - scaledWidth) / 2
+          : 0;
+
+      const minY =
+        scaledHeight <= viewportHeight
+          ? (viewportHeight - scaledHeight) / 2
+          : viewportHeight - scaledHeight;
+
+      const maxY =
+        scaledHeight <= viewportHeight
+          ? (viewportHeight - scaledHeight) / 2
+          : 0;
+
+      return {
+        minX,
+        maxX,
+        minY,
+        maxY,
+      };
+    };
+
+    const clampPan = () => {
+      const bounds = getBounds();
+
+      panX = clamp(panX, bounds.minX, bounds.maxX);
+      panY = clamp(panY, bounds.minY, bounds.maxY);
+    };
+
+    const render = () => {
+      clampPan();
+
+      image.style.transform =
+        `translate3d(${panX}px, ${panY}px, 0) scale(${zoom})`;
+
+      viewport.classList.toggle("is-zoomed", zoom > 1);
+    };
+
+    const centreImage = () => {
+      captureBaseSize();
+
+      const scaledWidth = baseWidth * zoom;
+      const scaledHeight = baseHeight * zoom;
+
+      panX =
+        (viewport.clientWidth - scaledWidth) / 2;
+
+      panY =
+        (viewport.clientHeight - scaledHeight) / 2;
+
+      render();
+    };
+
+    const setZoom = (
+      nextZoom: number,
+      clientX?: number,
+      clientY?: number
+    ) => {
+      captureBaseSize();
+
+      const rect = viewport.getBoundingClientRect();
+
+      const anchorX =
+        clientX ?? rect.left + rect.width / 2;
+
+      const anchorY =
+        clientY ?? rect.top + rect.height / 2;
+
+      const localX =
+        anchorX - rect.left;
+
+      const localY =
+        anchorY - rect.top;
+
+      /*
+        Work out which point INSIDE the image is currently under the
+        mouse / trackpad position.
+      */
+      const imageX =
+        (localX - panX) / zoom;
+
+      const imageY =
+        (localY - panY) / zoom;
+
+      const newZoom =
+        clamp(nextZoom, MIN_ZOOM, MAX_ZOOM);
+
+      if (newZoom === zoom) return;
+
+      zoom = newZoom;
+
+      /*
+        Reposition the image so the same image point remains underneath
+        the pointer after zooming.
+      */
+      panX =
+        localX - imageX * zoom;
+
+      panY =
+        localY - imageY * zoom;
+
+      render();
+    };
+
+    const initialise = () => {
+      captureBaseSize();
+      centreImage();
+    };
+
+    if (image.complete) {
+      initialise();
+    } else {
+      image.addEventListener(
+        "load",
+        initialise,
+        { once: true }
+      );
+    }
+
+
+    /* ------------------------------------------
+       DRAG / PAN
+    ------------------------------------------ */
+
+    viewport.addEventListener("pointerdown", (event) => {
+      if (
+        event.pointerType === "mouse" &&
+        event.button !== 0
+      ) {
+        return;
+      }
+
+      isDragging = true;
+
+      lastPointerX = event.clientX;
+      lastPointerY = event.clientY;
+
+      viewport.classList.add("is-dragging");
+
+      viewport.setPointerCapture?.(
+        event.pointerId
+      );
+    });
+
+    viewport.addEventListener("pointermove", (event) => {
+      if (!isDragging) return;
+
+      const deltaX =
+        event.clientX - lastPointerX;
+
+      const deltaY =
+        event.clientY - lastPointerY;
+
+      lastPointerX = event.clientX;
+      lastPointerY = event.clientY;
+
+      /*
+        Dragging directly updates the image translation.
+        The limits below are based on the CURRENT zoom level.
+      */
+      panX += deltaX;
+      panY += deltaY;
+
+      render();
+    });
+
+    const stopDragging = (event) => {
+      if (!isDragging) return;
+
+      isDragging = false;
+      viewport.classList.remove("is-dragging");
+
+      if (
+        viewport.hasPointerCapture?.(
+          event.pointerId
+        )
+      ) {
+        viewport.releasePointerCapture(
+          event.pointerId
+        );
+      }
+    };
+
+    viewport.addEventListener(
+      "pointerup",
+      stopDragging
+    );
+
+    viewport.addEventListener(
+      "pointercancel",
+      stopDragging
+    );
+
+    viewport.addEventListener(
+      "lostpointercapture",
+      () => {
+        isDragging = false;
+        viewport.classList.remove(
+          "is-dragging"
+        );
+      }
+    );
+
+
+    /* ------------------------------------------
+       ZOOM
+    ------------------------------------------ */
+
+    viewport.addEventListener(
+      "wheel",
+      (event) => {
+        const wantsZoom =
+          event.ctrlKey ||
+          event.metaKey ||
+          event.altKey;
+
+        if (!wantsZoom) return;
+
+        event.preventDefault();
+
+        const factor =
+          Math.exp(-event.deltaY * 0.01);
+
+        setZoom(
+          zoom * factor,
+          event.clientX,
+          event.clientY
+        );
+      },
+      { passive: false }
+    );
+
+    viewport.addEventListener(
+      "dblclick",
+      (event) => {
+        event.preventDefault();
+
+        setZoom(
+          zoom > 1 ? 1 : 1.5,
+          event.clientX,
+          event.clientY
+        );
+
+        if (zoom === 1) {
+          centreImage();
+        }
+      }
+    );
+
+
+    /* ------------------------------------------
+       KEYBOARD
+    ------------------------------------------ */
+
+    if (!viewport.hasAttribute("tabindex")) {
+      viewport.tabIndex = 0;
+    }
+
+    viewport.addEventListener(
+      "keydown",
+      (event) => {
+        if (
+          event.key === "+" ||
+          event.key === "="
+        ) {
+          event.preventDefault();
+          setZoom(zoom * 1.2);
+        }
+
+        if (event.key === "-") {
+          event.preventDefault();
+          setZoom(zoom / 1.2);
+        }
+
+        if (event.key === "0") {
+          event.preventDefault();
+
+          zoom = 1;
+          centreImage();
+        }
+      }
+    );
+
+
+    /* ------------------------------------------
+       RESPONSIVE
+    ------------------------------------------ */
+
+    window.addEventListener("resize", () => {
+      render();
+    });
+  });
+</script>
+
+
+<script>
+  /* Process index adapts to Quick read / Full process:
+     hides links to sections that are hidden and renumbers the rest
+     (index card + section number stay in sync). */
+  const indexLinks = [...document.querySelectorAll(".process-index a")];
+
+  indexLinks.forEach((link) => {
+    const target = document.querySelector(link.getAttribute("href"));
+    const num = link.querySelector("span");
+    const secNum = target?.querySelector(":scope > .section-number");
+    link._target = target;
+    link._num = num;
+    link._secNum = secNum;
+    link._orig = num?.textContent;
+    if (secNum) secNum.dataset.orig = secNum.textContent;
+  });
+
+  function syncProcessIndex() {
+    let n = 0;
+    indexLinks.forEach((link) => {
+      const hidden = !link._target || link._target.classList.contains("is-hidden");
+      link.hidden = hidden;
+      if (hidden) return;
+      n += 1;
+      const label = String(n).padStart(2, "0");
+      if (link._num) link._num.textContent = label;
+      if (link._secNum) link._secNum.textContent = label;
+    });
+  }
+
+  // Re-sync whenever a section is shown/hidden by the reading-mode toggle
+  const indexObserver = new MutationObserver(syncProcessIndex);
+  indexLinks.forEach((link) => {
+    if (link._target) indexObserver.observe(link._target, { attributes: true, attributeFilter: ["class"] });
+  });
+
+  syncProcessIndex();
+</script>
+
+<style>
+    
+  .generation-case {
+    --bg: #f4f4f4;
+    --text: #151515;
+    --muted: #777;
+    --blue: #777;
+    --dark: #080d12;
+
+    background: var(--bg);
+    color: var(--text);
+
+    font-family:
+      Inter,
+      system-ui,
+      -apple-system,
+      sans-serif;
+  }
+
+  .eyebrow {
+    display: block;
+    margin-bottom: 0.8rem;
+
+    color: var(--muted);
+
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+
+  /* BACK BUTTON */
+
+  .back-button {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 40;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 2.6rem;
+    padding: 0.65rem 1rem;
+
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+
+    color: #111;
+    text-decoration: none;
+
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1;
+
+    transition:
+      transform 160ms ease,
+      background 160ms ease;
+  }
+
+  .back-button:hover {
+    transform: translateY(-1px);
+    background: #fff;
+  }
+
+  .back-button:focus-visible {
+    outline: 2px solid #111;
+    outline-offset: 3px;
+  }
+
+
+  /* HERO */
+
+  .case-hero {
+    min-height: 100svh;
+
+    padding:
+      clamp(2rem, 5vw, 5rem)
+      clamp(1.25rem, 6vw, 6rem);
+
+    background: var(--dark);
+    color: white;
+  }
+
+  .case-hero__meta {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: clamp(4rem, 15vh, 10rem);
+
+    color: #8b949d;
+
+    font-size: 0.8rem;
+    text-transform: uppercase;
+  }
+
+  .case-hero h1 {
+    max-width: 11ch;
+
+    margin: 0;
+
+    font-size: clamp(3.5rem, 9vw, 9rem);
+    font-weight: 500;
+    line-height: 0.9;
+    letter-spacing: -0.065em;
+  }
+
+  .case-hero__lead {
+    max-width: 28ch;
+
+    margin:
+      clamp(2rem, 6vw, 5rem)
+      0
+      1.5rem;
+
+    font-size: clamp(1.5rem, 3vw, 3rem);
+    line-height: 1.15;
+  }
+
+  .case-hero__intro {
+    max-width: 48rem;
+
+    color: #aeb6bd;
+
+    font-size: clamp(1rem, 1.3vw, 1.2rem);
+    line-height: 1.6;
+  }
+
+  .case-hero__details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 2rem;
+
+    margin: 4rem 0;
+  }
+
+  .case-hero .eyebrow {
+    color: #77818a;
+  }
+
+
+  /* PLACEHOLDER MEDIA */
+
+  .hero-pan {
+  width: 100%;
+  height: clamp(20rem, 48vw, 25rem);
+
+  overflow: hidden;
+
+  background: #05090d;
+}
+
+.hero-pan img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: left center;
+
+  animation:
+    hero-space-pan
+    40s
+    linear
+    infinite
+    alternate;
+}
+
+@keyframes hero-space-pan {
+  0% {
+    object-position: left center;
+  }
+
+  100% {
+    object-position: right center;
+  }
+}
+
+  .project-media {
+    min-height: 22rem;
+
+    display: grid;
+    place-items: center;
+
+    padding: 2rem;
+
+    background: #e9e9e9;
+
+    /* color: #70808d; */
+
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .project-media--image {
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .project-media--image img {
+    position: absolute;
+    inset: 0;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+  }
+
+
+  /* INTERACTIVE PROCESS IMAGES */
+
+  .project-media--interactive {
+    position: relative;
+
+    height: 22rem;
+    min-height: 22rem;
+
+    padding: 0;
+
+    display: block;
+
+    overflow: hidden;
+
+    cursor: grab;
+    user-select: none;
+
+    /*
+      Keep normal page scrolling available at the default zoom.
+      When zoomed, the class below takes over both axes.
+    */
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+  }
+
+  .project-media--interactive.is-dragging {
+    cursor: grabbing;
+  }
+
+  .project-media--interactive.is-zoomed {
+    touch-action: none;
+  }
+
+  .media-pan__canvas {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+  }
+
+  .media-pan__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: block;
+
+    width: auto;
+    max-width: none;
+    height: 24rem;
+
+    object-fit: contain;
+
+    transform-origin: 0 0;
+    will-change: transform;
+
+    pointer-events: none;
+    user-select: none;
+  }
+
+
+  .project-media--interactive.project-media--large {
+    height: 38rem;
+    min-height: 38rem;
+  }
+
+  .img-testing-tasks {
+    width: auto;
+    height: 100%;
+  }
+
+
+  .project-media--hero {
+    min-height: min(65vh, 48rem);
+
+    background:
+      linear-gradient(
+        135deg,
+        #0c1721,
+        #163448
+      );
+
+    color: #7ecbff;
+  }
+
+  .project-media--large {
+    min-height: 38rem;
+  }
+
+
+  /* READING MODE */
+
+  .reading-mode {
+    position: sticky;
+    top: 1rem;
+    z-index: 20;
+
+    width: fit-content;
+
+    margin:
+      clamp(1.75rem, 4vw, 3rem)
+      auto
+      clamp(4rem, 8vw, 8rem);
+
+    padding: 0.3rem;
+
+    display: flex;
+
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+
+    border-radius: 999px;
+  }
+
+  .reading-mode button {
+    padding: 0.7rem 1.1rem;
+
+    border: 0;
+    border-radius: inherit;
+
+    background: transparent;
+
+    cursor: pointer;
+  }
+
+  .reading-mode button.is-active {
+    background: #111;
+    color: white;
+  }
+
+  .full-process.is-hidden {
+    display: none;
+  }
+
+
+  /* INDEX */
+
+  .process-index {
+    padding:
+      0
+      clamp(1.25rem, 6vw, 6rem)
+      6rem;
+
+    /* Same card grid as Miles & Meals */
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .process-index a {
+    display: flex;
+    gap: 0.9rem;
+    align-items: center;
+    padding: 1rem 1.1rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(14, 14, 14, 0.08);
+    text-decoration: none;
+    color: #111111;
+    transition: transform 0.2s ease;
+  }
+
+  .process-index a:hover {
+    transform: translateY(-2px);
+  }
+
+  .process-index a[hidden] {
+    display: none;
+  }
+
+  .process-index a span {
+    margin: 0;
+    color: rgba(17, 17, 17, 0.6);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 1100px) {
+    .process-index {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 820px) {
+    .process-index {
+      grid-template-columns: 1fr;
+    }
+  }
+
+
+  /* GENERAL SECTIONS */
+
+  .case-section {
+    padding:
+      clamp(5rem, 12vw, 12rem)
+      clamp(1.25rem, 6vw, 6rem);
+
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .section-number {
+    margin-bottom: 4rem;
+
+    color: #aaa;
+
+    font-size: 0.8rem;
+  }
+
+  .section-heading {
+    max-width: 70rem;
+  }
+
+  .section-heading h2,
+  .reflection h2 {
+    margin: 0;
+
+    font-size: clamp(2.5rem, 6vw, 6rem);
+    font-weight: 500;
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+  }
+
+  .section-body {
+    width: min(100%, 42rem);
+
+    margin:
+      clamp(2rem, 5vw, 5rem)
+      0
+      clamp(3rem, 7vw, 7rem);
+
+    margin-left: auto;
+  }
+
+  .section-body p,
+  .reflection p {
+    line-height: 1.65;
+  }
+
+  .large-copy {
+    font-size: clamp(1.2rem, 2vw, 1.8rem);
+  }
+
+
+  /* HMW */
+
+  .hmw {
+    width: min(100%, 62rem);
+
+    margin:
+      clamp(3rem, 8vw, 8rem)
+      auto
+      0;
+
+    padding:
+      clamp(2rem, 5vw, 5rem);
+
+    border: 0;
+
+    background: white;
+
+    font-size: clamp(1.8rem, 4vw, 4rem);
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+  }
+
+  .hmw span {
+    display: block;
+
+    margin-bottom: 1rem;
+
+    color: #777;
+
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+
+  .hmw strong {
+    font-weight: 700;
+  }
+
+
+  /* SYSTEM */
+
+  .system-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 1rem;
+  }
+
+  .system-grid article {
+    padding: clamp(1.5rem, 3vw, 3rem);
+
+    background: white;
+  }
+
+  .system-grid h3,
+  .artifact h3,
+  .iteration-copy h3 {
+    margin: 0 0 1rem;
+
+    font-size: clamp(1.8rem, 3vw, 3.5rem);
+    font-weight: 500;
+    letter-spacing: -0.04em;
+  }
+
+  .system-grid p,
+  .artifact p {
+    line-height: 1.55;
+  }
+
+  .system-grid .project-media {
+    margin-top: 2rem;
+  }
+
+
+  /* DRAG / ZOOM HINT */
+
+  .drag-hint {
+    width: 1.55rem;
+    height: 1.55rem;
+
+    display: inline-grid;
+    place-items: center;
+  }
+
+  .drag-hint--overlay {
+    position: absolute;
+    top: 0.85rem;
+    left: 0.85rem;
+    z-index: 8;
+
+    padding: 0.45rem;
+
+    width: 2.4rem;
+    height: 2.4rem;
+
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(8px);
+
+    pointer-events: none;
+  }
+
+  .drag-hint__icon {
+    grid-area: 1 / 1;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+  }
+
+  .drag-hint__icon--white {
+    display: none;
+  }
+
+  /* Optional support for future dark draggable media. */
+  .project-media--interactive.is-dark .drag-hint--overlay {
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .project-media--interactive.is-dark .drag-hint__icon--black {
+    display: none;
+  }
+
+  .project-media--interactive.is-dark .drag-hint__icon--white {
+    display: block;
+  }
+
+
+  /* PROCESS */
+
+  .artifact-story {
+    display: grid;
+    gap: 8rem;
+  }
+
+  .artifact {
+    display: grid;
+
+    grid-template-columns:
+      minmax(15rem, 0.7fr)
+      2fr;
+
+    align-items: start;
+
+    gap: clamp(2rem, 6vw, 7rem);
+  }
+
+
+  /* ITERATION */
+
+  .iteration-stack {
+    display: grid;
+    gap: clamp(5rem, 10vw, 10rem);
+  }
+
+  .iteration-copy {
+    max-width: 56rem;
+  }
+
+  .iteration-copy p {
+    max-width: 48rem;
+    margin: 1rem 0 0;
+    line-height: 1.6;
+  }
+
+  .iteration-comparison {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    width: fit-content;
+    max-width: 100%;
+
+    gap: clamp(0.75rem, 1.5vw, 1.5rem);
+
+    margin-top: 2rem;
+  }
+
+  .comparison-arrow {
+    flex: 0 0 auto;
+
+    color: var(--blue);
+    font-size: 2rem;
+  }
+
+  .iteration-image {
+    display: block;
+
+    width: clamp(18rem, 32vw, 31rem);
+    max-width: 100%;
+    height: auto;
+
+    flex: 0 1 auto;
+  }
+
+  /* The physical prototype photos are portrait-oriented, so keep
+     this comparison intentionally narrower than the app/device rows. */
+  .iteration-comparison--touchpoint .iteration-image {
+    width: clamp(13rem, 23vw, 22rem);
+  }
+
+  .iteration-comparison--device .iteration-image {
+    width: clamp(17rem, 29vw, 28rem);
+  }
+
+
+  /* FINAL EXPERIENCE */
+
+  .final-demo {
+    width: min(100%, 74rem);
+  }
+
+  .final-demo__video {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    background: #000;
+  }
+
+  .final-demo__caption {
+    width: min(100%, 42rem);
+    margin: 1rem 0 0;
+
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+
+  /* ETHICS */
+
+  .ethics-section {
+    min-height: 100svh;
+
+    padding:
+      clamp(5rem, 10vw, 10rem)
+      clamp(1.25rem, 8vw, 8rem);
+
+    background: #000;
+    color: white;
+  }
+
+  .ethics-section > .eyebrow {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .ethics-section > h2 {
+    max-width: 13ch;
+
+    margin: 0;
+
+    font-size: clamp(3rem, 8vw, 8rem);
+    font-weight: 500;
+    line-height: 0.92;
+    letter-spacing: -0.06em;
+  }
+
+  .ethics-intro {
+    max-width: 38rem;
+
+    margin:
+      clamp(2rem, 5vw, 4rem)
+      0
+      clamp(4rem, 8vw, 8rem);
+
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  .principles-grid {
+    display: grid;
+
+    grid-template-columns:
+      repeat(3, 1fr);
+
+    border-top:
+      1px solid
+      rgba(255, 255, 255, 0.35);
+  }
+
+  .principle {
+    padding:
+      clamp(1.5rem, 3vw, 3rem)
+      clamp(1rem, 2vw, 2rem);
+
+    border-bottom:
+      1px solid
+      rgba(255, 255, 255, 0.35);
+  }
+
+  .principle span {
+    color: rgba(255, 255, 255, 0.6);
+
+    font-size: 0.75rem;
+  }
+
+  .principle h3 {
+    max-width: 12ch;
+
+    margin:
+      3rem
+      0
+      1rem;
+
+    font-size: clamp(1.6rem, 2.5vw, 2.6rem);
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  .principle p {
+    max-width: 30ch;
+
+    color: rgba(255, 255, 255, 0.85);
+
+    line-height: 1.55;
+  }
+
+
+  /* PROJECT / BEHANCE LINK */
+
+  .project-link-block {
+    margin:
+      0
+      clamp(1.25rem, 6vw, 6rem)
+      clamp(5rem, 10vw, 9rem);
+
+    padding:
+      clamp(1.5rem, 3vw, 2.25rem)
+      0;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 2rem;
+
+    border-top: 1px solid rgba(0, 0, 0, 0.16);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+  }
+
+  .project-link-block > div {
+    max-width: 42rem;
+  }
+
+  .project-link-block h3 {
+    margin: 0;
+
+    font-size: clamp(1.6rem, 3vw, 2.8rem);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .project-link-block p {
+    max-width: 36rem;
+
+    margin:
+      1rem
+      0
+      0;
+
+    color: var(--muted);
+
+    line-height: 1.55;
+  }
+
+  .project-link-block--figjam {
+    margin-top: calc(clamp(1.25rem, 6vw, 6rem) * -1);
+  }
+
+
+  .project-link-block__link {
+    flex: 0 0 auto;
+
+    display: inline-flex;
+    align-items: center;
+
+    gap: 0.75rem;
+
+    padding-bottom: 0.25rem;
+
+    border-bottom: 1px solid currentColor;
+
+    color: #111;
+
+    text-decoration: none;
+    white-space: nowrap;
+
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+
+  /* REFLECTION */
+
+  .reflection-copy {
+    width: min(100%, 70rem);
+  }
+
+  .reflection-copy p {
+    width: min(100%, 42rem);
+
+    margin-left: auto;
+    margin-top: 3rem;
+  }
+
+
+  /* MOBILE */
+
+  @media (max-width: 800px) {
+    .reading-mode {
+      margin-top: 1.5rem;
+    }
+
+    .drag-hint--overlay {
+      top: 0.65rem;
+      left: 0.65rem;
+
+      width: 2.15rem;
+      height: 2.15rem;
+
+      padding: 0.4rem;
+    }
+
+    .project-link-block {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .project-link-block--figjam {
+      margin-top: -1px;
+    }
+
+    .back-button {
+      top: 0.75rem;
+      left: 0.75rem;
+    }
+
+    .case-hero__details,
+    .system-grid,
+    .artifact,
+    .principles-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .iteration-comparison {
+      width: 100%;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .iteration-image,
+    .iteration-comparison--touchpoint .iteration-image,
+    .iteration-comparison--device .iteration-image {
+      width: min(100%, 28rem);
+    }
+
+    .comparison-arrow {
+      transform: rotate(90deg);
+      align-self: flex-start;
+      margin-left: 1rem;
+    }
+
+    .project-media--large {
+      min-height: 25rem;
+    }
+
+    .principle h3 {
+      margin-top: 2rem;
+    }
+  }
+  
+
+  /* Liquid edge on draggable images — same blurred ring as the hero
+     physics box and the primary-research cards. Draggable only. */
+  .project-media--interactive {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .project-media--interactive::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 7;
+    padding: 0.9rem;
+    border-radius: inherit;
+    pointer-events: none;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+  }
+
+  .project-media--interactive {
+    border-radius: 0;
+  }
+</style>

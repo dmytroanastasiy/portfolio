@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import WorkCard from "../components/WorkCard.astro";
 import About from "../components/About.astro";
+import Nav from "../components/Nav.astro";
 import Works from "../components/Works.astro";
 import Experiments from "../components/Experiments.astro";
 import Counter from "../components/Counter.jsx";
@@ -14,16 +15,9 @@ const skills = (await getCollection("skills")).sort((a, b) => a.data.order - b.d
 const base = import.meta.env.BASE_URL;
 ---
 <BaseLayout pageTitle="Home">
+  <Nav />
+  <div class="glow-zone" id="glow-zone">
   <section class="hero" id="hero-section">
-    <div class="hero-top">
-      <p class="hero-eyebrow">
-        Digital Designer
-        <span>&amp; Developer</span>
-      </p>
-
-      <p class="hero-year">© 2026</p>
-    </div>
-
     <div class="hero-main">
      <h1 class="hero-title">
   <span class="title-line title-line--physics">
@@ -37,6 +31,7 @@ const base = import.meta.env.BASE_URL;
       <img
   class="physics-letter"
   src={`${base}hero-letters/d.svg`}
+  style="--w: 82"
   alt=""
   draggable="false"
 />
@@ -44,6 +39,7 @@ const base = import.meta.env.BASE_URL;
 <img
   class="physics-letter"
   src={`${base}hero-letters/m.svg`}
+  style="--w: 121"
   alt=""
   draggable="false"
 />
@@ -51,6 +47,7 @@ const base = import.meta.env.BASE_URL;
 <img
   class="physics-letter"
   src={`${base}hero-letters/y.svg`}
+  style="--w: 84"
   alt=""
   draggable="false"
 />
@@ -58,6 +55,7 @@ const base = import.meta.env.BASE_URL;
 <img
   class="physics-letter"
   src={`${base}hero-letters/t.svg`}
+  style="--w: 48"
   alt=""
   draggable="false"
 />
@@ -65,6 +63,7 @@ const base = import.meta.env.BASE_URL;
 <img
   class="physics-letter"
   src={`${base}hero-letters/r.svg`}
+  style="--w: 49"
   alt=""
   draggable="false"
 />
@@ -72,6 +71,7 @@ const base = import.meta.env.BASE_URL;
 <img
   class="physics-letter"
   src={`${base}hero-letters/o.svg`}
+  style="--w: 86"
   alt=""
   draggable="false"
 />
@@ -97,7 +97,7 @@ const base = import.meta.env.BASE_URL;
     <div class="hero-bottom">
       <p class="hero-location">Designer / Developer</p>
 
-      <a href="#about" class="hero-scroll" aria-label="Scroll to about section">
+      <a href="#works" class="hero-scroll" aria-label="Scroll to works section">
         <span>Explore</span>
 
         <svg
@@ -111,12 +111,15 @@ const base = import.meta.env.BASE_URL;
       </a>
     </div>
 
-    <div class="hero-glow" aria-hidden="true"></div>
   </section>
 
-  <About />
   <Works />
   <Experiments />
+
+  <div class="cursor-glow" aria-hidden="true"></div>
+  </div>
+
+  <About />
 </BaseLayout>
 
 <style>
@@ -150,13 +153,7 @@ const base = import.meta.env.BASE_URL;
     clamp(1.5rem, 3vw, 2.75rem)
     clamp(1.25rem, 4vw, 4.5rem);
 
-  background:
-    radial-gradient(
-      circle at var(--mouse-x) var(--mouse-y),
-      rgba(255, 255, 255, 0.055),
-      transparent 28rem
-    ),
-    #0a0a0a;
+  background: #0a0a0a;
 
   color: #f5f5f5;
 }
@@ -229,7 +226,7 @@ const base = import.meta.env.BASE_URL;
     Dmytro now lives toward the upper-left
     instead of around the vertical center.
   */
-  margin-top: clamp(2rem, 4vh, 3.5rem);
+  margin-top: clamp(4.5rem, 9vh, 6.5rem);
   margin-bottom: clamp(2rem, 5vh, 4rem);
 }
 
@@ -433,25 +430,68 @@ const base = import.meta.env.BASE_URL;
 ======================================== */
 
 .title-line--surname {
+  /* Final letter spacing — the slide-in lands on this value */
+  --surname-ls: -0.075em;
+
   display: block;
 
-  overflow: hidden;
+  /* Visible so the word can travel in from the left edge of the screen
+     (the .hero itself clips anything outside the viewport). */
+  overflow: visible;
 
-  padding-block: 0.08em;
+  padding-block: 0.20em;
 }
 
 
 .title-line--surname > span {
   display: block;
+  width: max-content;
 
-  transform: translateY(115%);
+  letter-spacing: var(--surname-ls);
+  will-change: transform, letter-spacing;
 
+  /* Runs at the same time the physics letters drop */
   animation:
-    title-reveal
-    1.1s
+    surname-slide
+    2.4s
     cubic-bezier(0.16, 1, 0.3, 1)
-    0.22s
-    forwards;
+    0.15s
+    both;
+}
+
+@keyframes surname-slide {
+  0% {
+    transform: translateX(-110vw);
+    letter-spacing: 0.9em;
+    opacity: 0;
+  }
+
+  12% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(0);
+    letter-spacing: var(--surname-ls);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 800px) {
+  .title-line--surname {
+    --surname-ls: -0.07em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .title-line--surname > span {
+    animation: surname-fade 0.6s ease 0.15s both;
+  }
+
+  @keyframes surname-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
 }
 
 
@@ -554,27 +594,46 @@ const base = import.meta.env.BASE_URL;
     transform: translateY(0.25rem);
   }
 
-  .hero-glow {
+  /* ========================================
+     CURSOR GLOW (hero + works + experiments)
+  ======================================== */
+
+  .glow-zone {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+  }
+
+  .cursor-glow {
     position: absolute;
-    z-index: 0;
+    z-index: 5;
+    top: 0;
+    left: 0;
 
-    left: var(--mouse-x);
-    top: var(--mouse-y);
-
-    width: clamp(16rem, 30vw, 30rem);
+    width: clamp(36rem, 56vw, 56rem);
     aspect-ratio: 1;
 
     border-radius: 50%;
 
-    background: rgba(255, 255, 255, 0.02);
-    filter: blur(50px);
+    background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.07) 0%,
+      rgba(255, 255, 255, 0.03) 30%,
+      transparent 65%
+    );
 
+    mix-blend-mode: screen;
     pointer-events: none;
 
-    transform: translate(-50%, -50%);
-    transition:
-      left 300ms ease-out,
-      top 300ms ease-out;
+    opacity: 0;
+    transform: translate3d(var(--glow-x, -100vw), var(--glow-y, -100vh), 0)
+      translate(-50%, -50%);
+    transition: opacity 400ms ease;
+    will-change: transform;
+  }
+
+  .glow-zone.is-glowing .cursor-glow {
+    opacity: 1;
   }
 
   @keyframes title-reveal {
@@ -627,7 +686,7 @@ const base = import.meta.env.BASE_URL;
 
     gap: 2rem;
 
-    margin-top: 2.5rem;
+    margin-top: 4.5rem;
     margin-bottom: 2.5rem;
   }
 
@@ -683,7 +742,6 @@ const base = import.meta.env.BASE_URL;
 
 
   .hero,
-  .hero-glow,
   .hero-scroll,
   .hero-scroll svg {
     transition: none;
@@ -704,6 +762,39 @@ const base = import.meta.env.BASE_URL;
 
   }
 }
+
+/* ========================================
+   LETTER SIZES
+   Every letter keeps its real proportions (the SVGs share one scale:
+   x-height letters are shorter than d / y / t). --w is the SVG's width.
+======================================== */
+.hero .dmytro-physics .physics-letter {
+  width: calc(var(--physics-height) * var(--w) / 308);
+  height: auto;
+}
+
+@media (max-width: 800px) {
+  /* Scale from the screen width so all six letters fit side by side. */
+  .hero .dmytro-physics .physics-letter {
+    width: calc(var(--w) * 0.155vw);
+  }
+}
+
+/* ========================================
+   MOBILE: physics box spans the full width
+   (same side padding as the rest of the hero)
+======================================== */
+@media (max-width: 800px) {
+  .hero-title {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .title-line--physics {
+    width: 100%;
+  }
+}
+
 </style>
 
 <script>
@@ -714,31 +805,49 @@ const base = import.meta.env.BASE_URL;
   ========================================= */
 
   function initHeroGlow() {
-    const hero = document.querySelector("#hero-section");
+    const zone = document.querySelector("#glow-zone");
 
     if (
-      !(hero instanceof HTMLElement) ||
+      !(zone instanceof HTMLElement) ||
+      zone.dataset.glowReady === "true" ||
       !window.matchMedia("(pointer: fine)").matches
     ) {
       return;
     }
 
-    hero.addEventListener("pointermove", (event) => {
-      const rect = hero.getBoundingClientRect();
+    zone.dataset.glowReady = "true";
 
-      const x =
-        ((event.clientX - rect.left) / rect.width) * 100;
+    let frame = 0;
+    let lastX = 0;
+    let lastY = 0;
 
-      const y =
-        ((event.clientY - rect.top) / rect.height) * 100;
+    function update() {
+      if (frame) return;
 
-      hero.style.setProperty("--mouse-x", `${x}%`);
-      hero.style.setProperty("--mouse-y", `${y}%`);
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+
+        const rect = zone.getBoundingClientRect();
+
+        zone.style.setProperty("--glow-x", `${lastX - rect.left}px`);
+        zone.style.setProperty("--glow-y", `${lastY - rect.top}px`);
+      });
+    }
+
+    zone.addEventListener("pointermove", (event) => {
+      lastX = event.clientX;
+      lastY = event.clientY;
+      zone.classList.add("is-glowing");
+      update();
     });
 
-    hero.addEventListener("pointerleave", () => {
-      hero.style.setProperty("--mouse-x", "50%");
-      hero.style.setProperty("--mouse-y", "50%");
+    /* keep the glow under the cursor while scrolling */
+    window.addEventListener("scroll", () => {
+      if (zone.classList.contains("is-glowing")) update();
+    }, { passive: true });
+
+    zone.addEventListener("pointerleave", () => {
+      zone.classList.remove("is-glowing");
     });
   }
 

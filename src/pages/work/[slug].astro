@@ -3,7 +3,10 @@ import { getCollection, render } from "astro:content";
 
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import WorkLayout from "../../layouts/WorkLayout.astro";
+
 import ResearchCaseStudy from "../../components/ResearchCaseStudy.astro";
+import GenerationShipCaseStudy from "../../components/GenerationShipCaseStudy.astro";
+import MilesAndMeals from "../../components/MilesAndMeals.astro";
 
 
 export async function getStaticPaths() {
@@ -25,8 +28,19 @@ const { work } = Astro.props;
 
 const { Content } = await render(work);
 
+
+/* ==========================================
+   CASE STUDY TYPES
+========================================== */
+
 const isResearchCase =
   work.data.template === "research";
+
+const isGenerationShipCase =
+  work.data.template === "generation-ship";
+
+const isMilesAndMealsCase =
+  work.data.template === "miles-and-meals";
 ---
 
 
@@ -40,6 +54,28 @@ const isResearchCase =
         type={work.data.type}
         role={work.data.role}
         figjamUrl={work.data.figjamUrl}
+      />
+    </BaseLayout>
+
+  ) : isGenerationShipCase ? (
+
+    <BaseLayout pageTitle={work.data.title}>
+      <GenerationShipCaseStudy
+        title={work.data.title}
+        year={work.data.year}
+        type={work.data.type}
+        role={work.data.role}
+      />
+    </BaseLayout>
+
+  ) : isMilesAndMealsCase ? (
+
+    <BaseLayout pageTitle={work.data.title}>
+      <MilesAndMeals
+        title={work.data.title}
+        year={work.data.year}
+        type={work.data.type}
+        role={work.data.role}
       />
     </BaseLayout>
 

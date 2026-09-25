@@ -1,10 +1,23 @@
 ---
-title: "Project Two"
-description: "One-line summary shown on the works card."
-thumbnail: "../../assets/placeholder.svg"
-order: 2
----
+title: "Safety Without Excessive Monitoring"
 
-Second example entry, same structure. Duplicate this file per project —
-the `glob()` loader will pick up every `.md` file in this folder
-automatically, so adding a new project is just adding a new file.
+description: "Designing a community-safety system for a generational spaceship without turning everyday life into surveillance."
+
+thumbnail: "../../assets/placeholder.svg"
+
+order: 2
+
+template: "generation-ship"
+
+year: "2026"
+
+type: "Experience Design · Speculative UX"
+
+role: "Team project"
+
+tags:
+  - Experience Design
+  - UX
+  - Physical Prototyping
+  - Ethical Design
+---

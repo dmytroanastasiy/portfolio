@@ -1,0 +1,3031 @@
+---
+import CaseProgressNav from "./CaseProgressNav.astro";
+
+const {
+  title = "Miles & Meals",
+  year = "2026",
+  type = "Mobile app design · Branding",
+  role = "Concept, brand identity, UX/UI design",
+} = Astro.props;
+
+const processSteps = [
+  "Overview",
+  "Brief & audience",
+  "Research & moodboard",
+  "Identity exploration",
+  "Brand system",
+  "Wireframes",
+  "App Store presence",
+  "Onboarding",
+  "Personalisation",
+  "Core product",
+  "Explore",
+  "Recipe guidance",
+  "Outcome",
+];
+
+const quickHighlights = [
+  {
+    number: "01",
+    title: "A meal box with a point of view",
+    text: "Miles & Meals reframes subscription food delivery as a mix of convenience, cultural discovery and storytelling.",
+  },
+  {
+    number: "02",
+    title: "Brand first, then interface",
+    text: "The visual language combines playful illustration, bold typography, off-white surfaces and bright green-yellow accents to feel warm and memorable.",
+  },
+  {
+    number: "03",
+    title: "Three core journeys",
+    text: "The product revolves around managing your box, exploring cities and dishes, and cooking with guided step-by-step recipes.",
+  },
+  {
+    number: "04",
+    title: "A consistent ecosystem",
+    text: "From App Store storytelling to onboarding, dashboard, recipe screens and favourites, the brand carries through every touchpoint.",
+  },
+];
+
+const brandPillars = [
+  {
+    title: "Out & Social",
+    text: "Vibrant, energetic and human. The identity evokes sharing food with friends, busy market stalls and warm evenings outside.",
+  },
+  {
+    title: "Authentic & Open",
+    text: "Real flavours and real stories. Raw, in-the-moment photography and hand-written notes replace the polished look of typical meal kits.",
+  },
+  {
+    title: "Trendy, not mainstream",
+    text: "Stylish and modern, with smart references to tradition — like coin-shaped box markers that nod to foreign currency and travel.",
+  },
+];
+
+const visualSystem = [
+  "Warm Cream #F3ECE2 — natural ingredients, dough and unbleached market packaging",
+  "Green-Black #032000 — an earthy, softer alternative to pure black for text and UI",
+  "Sun Yellow #FFC738 — spices, street stalls and warm evenings",
+  "Vibrant Mint #18EB9C — fresh herbs and the “Out & Social” energy",
+  "Pilcrow Rounded for headings, Helvetica for body, a hand-written marker style for notes",
+  "Martin, the brand character, plus patterns built from the logo’s wavy curves",
+];
+
+const brandColors = [
+  {
+    name: "Warm Cream",
+    x: 6,
+    y: 11,
+    line: [28.5, 43],
+    hex: "#F3ECE2",
+    side: "left",
+    text: "References natural ingredients, dough and unbleached market packaging — tying into the brand’s honesty and focus on authenticity.",
+  },
+  {
+    name: "Vibrant Mint",
+    x: 3,
+    y: 54.5,
+    line: [25.5, 44],
+    hex: "#18EB9C",
+    side: "left",
+    text: "Refers to herbs and vegetables and brings the “Out & Social” energy. Trendy, fresh and energetic — a modern pop.",
+  },
+  {
+    name: "Green-Black",
+    x: 0,
+    y: 77.5,
+    line: [22.5, 29],
+    hex: "#032000",
+    side: "left",
+    text: "A very dark, earthy tone instead of pure black. Makes text easier and more pleasant to read next to the rest of the palette.",
+  },
+  {
+    name: "Sun Yellow",
+    x: 79,
+    y: 32.9,
+    line: [58.5, 77.5],
+    hex: "#FFC738",
+    side: "right",
+    text: "Warmth, appetite and culinary discovery — spices, street-food stalls and warm evenings spent eating outside.",
+  },
+  {
+    name: "Clean White",
+    x: 80.5,
+    y: 69.6,
+    line: [70.5, 79],
+    hex: "#FFFFFF",
+    side: "right",
+    text: "The modern canvas. Keeps the visual identity open, clean and highly scalable for all kinds of visuals.",
+  },
+];
+
+const logoVariants = [
+  {
+    name: "Brand character mark",
+    text: "Martin holding a bowl with the logo as noodles. Used where the brand needs personality, like the loading screen.",
+  },
+  {
+    name: "Secondary logo",
+    text: "A compact “m & m” lockup. Road markings nod to the streets and double as drop shadows.",
+  },
+  {
+    name: "Primary logo",
+    text: "The main wordmark. Wavy letters read as roads and noodles; the smile is a face and a plate.",
+  },
+  {
+    name: "Stamp",
+    text: "The most reduced mark, for small formats, stickers and stamping on packaging.",
+  },
+];
+
+const fontPairing = [
+  {
+    name: "Pilcrow Rounded",
+    image: "mm-font-pilcrow",
+    role: "Headings",
+    text: "Welcoming and modern. Its soft, rounded forms mirror the friendly curves of the logo. Used mainly for headings and naming on packaging, with bold as the main weight.",
+  },
+  {
+    name: "Helvetica",
+    image: "mm-font-helvetica",
+    role: "Body copy",
+    text: "The ultimate workhorse. Balanced, clean and timeless, it grounds the design. Used for body copy and subheadings, so everything reads clearly across all brand materials.",
+  },
+  {
+    name: "Hand-written",
+    image: "mm-font-handwritten",
+    role: "Notes",
+    text: "Adds simplicity and raw authenticity, nodding to the quick marker signs at real street-food stalls. Used strictly for tiny notes, scribbles and small annotations.",
+  },
+];
+
+const Y = "#FFC738";
+const D = "#032000";
+const M = "#18EB9C";
+const W = "#F5F5F5";
+
+const logoColourRows = [
+  {
+    name: "Primary logo",
+    kind: "primary",
+    tiles: [[Y, D], [D, Y], [M, D]],
+    text: "the full wordmark with the smile, for main brand moments.",
+  },
+  {
+    name: "Secondary logo",
+    kind: "secondary",
+    tiles: [[Y, D], [D, Y], [M, D]],
+    text: "the compact “m & m” lockup for narrow, horizontal spaces.",
+  },
+  {
+    name: "Stamp",
+    kind: "stamp",
+    tiles: [[Y, D], [D, Y], [M, D], [D, M], [W, D]],
+    text: "the most reduced mark, for small formats and for stamping packaging.",
+  },
+];
+
+const coinNotes = [
+  {
+    name: "Local Legend",
+    text: "White and beige — premium and timeless, for the generational classics.",
+  },
+  {
+    name: "Street Made",
+    text: "Bright yellow and orange — the glow of warm evenings sharing street food.",
+  },
+  {
+    name: "Neighbourhood Bakes",
+    text: "Orange and beige — warm and simple, like picking up comfort treats.",
+  },
+];
+
+const productFacts = [
+  { label: "Box types", value: "Local Legend, Street Made and Neighbourhood Bakes — 4 recipes each" },
+  { label: "Servings", value: "2, 4 or 6 servings — €30, €60 or €75 per box" },
+  { label: "Rhythm", value: "Weekly or every two weeks, Tuesday evening or Thursday morning" },
+  { label: "Diet", value: "Every box in a vegetarian and a meat-based version" },
+  { label: "Sustainability", value: "Compostable packaging and bicycle-based delivery" },
+  { label: "Flexibility", value: "Pause or cancel any time through the app" },
+];
+
+const boxTypes = [
+  {
+    title: "Local Legend",
+    text: "The dishes people grow up with and never stop craving — timeless local classics you order without looking at the menu.",
+  },
+  {
+    title: "Street Made",
+    text: "Fast, bold street food with layered sauces, heat, smoke and crunch — big flavour for people with limited time in the kitchen.",
+  },
+  {
+    title: "Neighbourhood Bakes",
+    text: "Snacks, breads, fritters and sweet treats sold on corners and markets, for bakers and dessert lovers.",
+  },
+];
+
+const outcomePoints = [
+  "A clear product proposition that differentiates the service from generic meal-kit apps.",
+  "A coherent brand system translated into marketing screens, onboarding and final UI.",
+  "A product structure that balances subscription logistics, exploration and cooking support.",
+  "A flexible visual language that could extend into packaging, social media and future features.",
+];
+
+const imgBase = `${import.meta.env.BASE_URL}miles-and-meals/`;
+const figmaUrl = "https://www.figma.com/design/3kBKjNhOqcOx9Iji8INXZK/Miles---Meals?node-id=6817-1887&t=Ikccj6MlT4vrWCq5-1";
+---
+
+<article class="miles-case">
+  <a
+    class="back-button"
+    href={import.meta.env.BASE_URL}
+    aria-label="Back to main portfolio page"
+  >
+    ← Back
+  </a>
+
+  <header class="case-hero">
+    <div class="case-hero__meta">
+      <span>{type}</span>
+      <span>{year}</span>
+    </div>
+
+    <h1>{title}</h1>
+
+    <p class="case-hero__lead">
+      A food-box mobile app that turns weekly delivery into an experience built around flavour, discovery and cultural storytelling.
+    </p>
+
+    <p class="case-hero__intro">
+      Miles &amp; Meals is a branding and app design project for a subscription-based
+      food service. The concept combines the practical side of weekly meal delivery
+      with the emotional side of travel, local dishes and culinary exploration.
+      The result is a product ecosystem where brand, interface and content work together.
+    </p>
+
+    <div class="case-hero__details">
+      <div>
+        <span class="eyebrow">Project</span>
+        <p>Brand identity + UX/UI for a mobile food-delivery concept</p>
+      </div>
+
+      <div>
+        <span class="eyebrow">Role</span>
+        <p>{role}</p>
+      </div>
+    </div>
+
+    <div class="hero-stack">
+      <div class="hero-stack__phone">
+        <img src={`${imgBase}onboarding-feature1-final.avif`} alt="Miles & Meals — Onboarding screen: discover the world in your kitchen" loading="eager" />
+      </div>
+      <div class="hero-stack__phone">
+        <img src={`${imgBase}welcome1-final.avif`} alt="Miles & Meals — Box setup screen: choose your favourite box" loading="eager" />
+      </div>
+      <div class="hero-stack__phone">
+        <img src={`${imgBase}dashboard-final.avif`} alt="Miles & Meals — Dashboard screen" loading="eager" />
+      </div>
+      <div class="hero-stack__phone">
+        <img src={`${imgBase}explore-final.avif`} alt="Miles & Meals — Explore screen" loading="eager" />
+      </div>
+      <div class="hero-stack__phone">
+        <img src={`${imgBase}recipe-detail-step5-final.avif`} alt="Miles & Meals — Guided recipe step" loading="eager" />
+      </div>
+    </div>
+  </header>
+
+  <nav class="reading-mode" aria-label="Case study reading mode">
+    <button type="button" class="reading-mode__button is-active" data-mode="quick">
+      Quick read
+    </button>
+
+    <button type="button" class="reading-mode__button" data-mode="full">
+      Full process
+    </button>
+  </nav>
+
+  <!-- QUICK READ -->
+  <nav class="process-index" aria-label="Quick read sections" data-view="quick">
+    <a href="#miles-quick-1"><span>01</span>Overview</a>
+    <a href="#miles-quick-2"><span>02</span>Brand snapshot</a>
+    <a href="#miles-quick-3"><span>03</span>Product highlights</a>
+    <a href="#miles-quick-4"><span>04</span>Outcome</a>
+  </nav>
+
+  <section class="case-section quick-read" id="miles-quick-1" data-view="quick">
+    <div class="section-number">01</div>
+
+    <div class="section-heading">
+      <span class="eyebrow">Overview</span>
+      <h2>From meal delivery to a richer food experience.</h2>
+    </div>
+
+    <div class="section-body">
+      <p class="large-copy">
+        The project started with a simple question: how can a meal-box service feel less generic,
+        and more like something people genuinely want to explore? Instead of focusing only on delivery,
+        Miles &amp; Meals builds a world around food — recipes, cities, local stories and a playful identity.
+      </p>
+    </div>
+
+    <div class="quick-grid">
+      {
+        quickHighlights.map((item) => (
+          <article class="quick-card">
+            <span>{item.number}</span>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="case-section quick-read" id="miles-quick-2" data-view="quick">
+    <div class="section-number">02</div>
+
+    <div class="section-heading">
+      <span class="eyebrow">Brand snapshot</span>
+      <h2>A playful brand built around flavour, travel and warmth.</h2>
+    </div>
+
+    <div class="section-body two-col-copy">
+      <p>
+        The brandboard defines Miles &amp; Meals as friendly, recognisable and easy to remember.
+        The visual system uses a soft neutral base, dark green for structure, warm yellow for energy,
+        mint highlights for freshness and a mascot that acts as a memorable thread through the whole product.
+      </p>
+
+      <p>
+        Rather than treating the brand as decoration added after the interface, the project integrates
+        brand thinking directly into the product. The result is a system that feels consistent across App Store previews,
+        onboarding, navigation, recipe guidance and discovery features.
+      </p>
+    </div>
+
+    <div class="pillars-grid">
+      {
+        brandPillars.map((pillar) => (
+          <article class="pillar-card">
+            <h3>{pillar.title}</h3>
+            <p>{pillar.text}</p>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="brand-block identity-block quick-brand">
+      <div class="logo-color-list">
+        {
+          logoColourRows.map((row) => (
+            <figure class="logo-color">
+              <div class={`logo-tiles logo-tiles--${row.kind}`} role="img" aria-label={`${row.name} in the brand colours`}>
+                {
+                  row.tiles.map(([bg, fg]) => (
+                    <span class="logo-tile" style={`background:${bg};color:${fg}`}>
+                      <span
+                        class="logo-tile__mark"
+                        style={`-webkit-mask-image:url(${imgBase}mm-mask-${row.kind}.webp);mask-image:url(${imgBase}mm-mask-${row.kind}.webp)`}
+                      ></span>
+                    </span>
+                  ))
+                }
+              </div>
+              <figcaption><strong>{row.name}</strong> — {row.text}</figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="brand-block brand-block--split identity-block">
+      <img class="mascot-image" src={`${imgBase}mm-brand-martin.avif`} alt="Martin, the Miles & Meals brand mascot" loading="lazy" />
+
+      <div class="brand-block__intro">
+        <span class="eyebrow">Brand mascot</span>
+        <h3>Meet Martin.</h3>
+        <p>
+          The explorer with a backpack and a huge bowl of noodles — a friendly face that mirrors the audience
+          and sets the illustration style for the whole brand.
+        </p>
+      </div>
+    </div>
+
+    <div class="brand-block identity-block">
+      <div class="brand-block__intro">
+        <span class="eyebrow">Brand in action</span>
+        <h3>Built for the real world.</h3>
+        <p>
+          From stickers to take-away bags, the identity is designed to live on physical touchpoints.
+          Every piece should feel authentic, as if it came straight from a street-food stall.
+        </p>
+      </div>
+
+      <div class="action-row action-row--stickers">
+        <img src={`${imgBase}mm-action-sticker-1.avif`} alt="Miles & Meals sticker mockup" loading="lazy" />
+        <img src={`${imgBase}mm-action-sticker-2.avif`} alt="Miles & Meals sticker with Martin" loading="lazy" />
+      </div>
+
+      <div class="action-row">
+        <img src={`${imgBase}mm-action-bag-1.avif`} alt="Neighbourhood Bakes paper bags" loading="lazy" />
+        <img src={`${imgBase}mm-action-bag-2.avif`} alt="Local Legend paper bag mockup" loading="lazy" />
+        <img src={`${imgBase}mm-action-bag-3.avif`} alt="Street Made paper bag mockup" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <section class="case-section quick-read" id="miles-quick-3" data-view="quick">
+    <div class="section-number">03</div>
+
+    <div class="section-heading">
+      <span class="eyebrow">Product highlights</span>
+      <h2>Marketing, onboarding, discovery and cooking in one ecosystem.</h2>
+    </div>
+
+    <div class="screen-row screen-row--four">
+      <figure class="phone-card">
+        <div class="phone-screen"><img src={`${imgBase}appstore3-final.avif`} alt="App Store detail preview for Miles & Meals" /></div>
+        <figcaption>App Store storytelling</figcaption>
+      </figure>
+
+      <figure class="phone-card">
+        <div class="phone-screen"><img src={`${imgBase}welcome1-final.avif`} alt="Box customisation screen" /></div>
+        <figcaption>Onboarding setup</figcaption>
+      </figure>
+
+      <figure class="phone-card">
+        <div class="phone-screen phone-screen--nav" style="--nav-ratio: 0.2814"><img src={`${imgBase}mm-mybox-screen.avif`} alt="My Box dashboard screen" /><img class="phone-nav" src={`${imgBase}mm-mybox-nav.avif`} alt="" aria-hidden="true" /></div>
+        <figcaption>Weekly box management</figcaption>
+      </figure>
+
+      <figure class="phone-card">
+        <div class="phone-screen phone-screen--nav" style="--nav-ratio: 0.4535"><img src={`${imgBase}mm-recipe-detail-welcome-screen.avif`} alt="Recipe detail screen" /><img class="phone-nav" src={`${imgBase}mm-recipe-detail-welcome-nav.avif`} alt="" aria-hidden="true" /></div>
+        <figcaption>Guided cooking</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="case-section quick-read" id="miles-quick-4" data-view="quick">
+    <div class="section-number">04</div>
+
+    <div class="section-heading">
+      <span class="eyebrow">Outcome</span>
+      <h2>A coherent app concept with a clear emotional angle.</h2>
+    </div>
+
+    <div class="section-body two-col-copy">
+      <p>
+        What makes Miles &amp; Meals stand out is not a single screen, but the way the whole system hangs together.
+        The onboarding explains the offer, the home flow supports logistics, the explore flow adds editorial depth,
+        and the recipe experience turns ingredients into a practical, engaging journey.
+      </p>
+
+      <p>
+        The project demonstrates how strong branding can directly improve product design: it gives the app a clearer voice,
+        a more memorable identity and a stronger reason for users to connect with the service beyond pure convenience.
+      </p>
+    </div>
+
+    <ul class="outcome-list">
+      {
+        outcomePoints.map((item) => (
+          <li>{item}</li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- FULL PROCESS -->
+  <nav class="process-index full-process" aria-label="Case study sections" data-view="full">
+    {
+      processSteps.map((step, index) => (
+        <a href={`#miles-section-${index + 1}`}>
+          <span>{String(index + 1).padStart(2, "0")}</span>
+          {step}
+        </a>
+      ))
+    }
+  </nav>
+
+  <div class="full-process" data-view="full">
+    <CaseProgressNav />
+  </div>
+
+  <section
+    class="case-section full-process"
+    id="miles-section-1"
+    data-view="full"
+    data-progress-section
+    data-progress-label="Overview"
+  >
+    <div class="section-number">01</div>
+
+    <div class="section-heading">
+      <span class="eyebrow">Overview</span>
+      <h2>A food-box service that feels more like discovery than routine.</h2>
+    </div>
+
+    <div class="section-body two-col-copy">
+      <p class="large-copy">
+        Many meal-delivery products are useful, but they often feel interchangeable.
+        Miles &amp; Meals explores an alternative direction: a subscription service where convenience is still important,
+        but it does pay attention to storytelling and identity.
+      </p>
+
+      <p>
+        The concept imagines an app that helps people receive their weekly box, manage deliveries,
+        choose preferences, discover local dishes from around the world and follow rich recipe flows.
+        The project brings branding and digital product design together so the interface supports a bigger narrative.
+      </p>
+    </div>
+  </section>
+
+  <section
+    class="case-section full-process"
+    id="miles-section-2"
+    data-view="full"
+    data-progress-section
+    data-progress-label="Brief & audience"
+  >
+    <div class="section-number">02</div>
+
+    <div class="section-heading">
+      <span class="eyebrow">Brief &amp; audience</span>
+      <h2>Street food. Local stories. At home.</h2>
+    </div>
+
+    <div class="section-body two-col-copy">
+      <p>
+        The client is a duo, Rob Reinaerdt and Melanie Torres, who met over a shared love for street food.
+        Their concept: curated, small-batch boxes built around one signature dish per city, developed together with locals
+        and translated into an at-home cooking experience. Antwerp is the pilot city, with Flanders and the Netherlands as the long-term goal.
+      </p>
+
+      <p>
+        The target audience is <strong>“The Discoverer”</strong>: urban professionals aged 25–50 who are tired of repetitive weeknight meals
+        and mainstream food trends. They look for authenticity, transparency and new experiences, have some cooking experience,
+        and want exclusivity without a steep learning curve.
+      </p>
+    </div>
+
+    <div class="fact-grid">
+      {
+        productFacts.map((fact) => (
+          <article class="fact-card">
+            <span class="eyebrow">{fact.label}</span>
+            <p>{fact.value}</p>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="pillars-grid">
+      {
+        boxTypes.map((box) => (
+          <article class="pillar-card">
+            <h3>{box.title}</h3>
+            <p>{box.text}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section
+    class="case-section full-process"
+    id="miles-section-3"
+    data-view="full"
+    data-progress-section
+    data-progress-label="Research & moodboard"
+  >
+    <div class="section-number">03</div>
+
+    <div class="section-heading">
+      <span class="eyebrow">Research &amp; moodboard</span>
+      <h2>Stepping away from the usual meal-kit look.</h2>
+    </div>
+
+    <div class="section-body two-col-copy">
+      <p>
+        Before designing, I looked at how existing Belgian and Dutch meal-box brands present themselves — HelloFresh, eFarmz and Foodbag.
+        They are clean and trustworthy, but visually, I felt they were too similar.
+      </p>
+
+      <p>
+        Miles &amp; Meals needed the opposite energy. The moodboard dives into raw street culture that can be said in five design keywords:
+        social, energetic, authentic, friendly and open.
+      </p>
+    </div>
+
+    <div class="board-grid board-grid--three">
+      <figure class="board-card">
+        <img src={`${imgBase}mm-process-competitor-hellofresh.avif`} alt="Competitor analysis of HelloFresh" loading="lazy" />
+        <figcaption>Competitor scan — HelloFresh</figcaption>
+      </figure>
+      <figure class="board-card">
+        <img src={`${imgBase}mm-process-competitor-efarmz.avif`} alt="Competitor analysis of eFarmz" loading="lazy" />
+        <figcaption>Competitor scan — eFarmz</figcaption>
+      </figure>
+      <figure class="board-card">
+        <img src={`${imgBase}mm-process-competitor-foodbag.avif`} alt="Competitor analysis of Foodbag" loading="lazy" />
+        <figcaption>Competitor scan — Foodbag</figcaption>
+      </figure>
+    </div>
+
+    <figure class="board-card board-card--wide">
+      <img src={`${imgBase}mm-process-moodboard.avif`} alt="Moodboard with street food stalls, colourful stools and market scenes" loading="lazy" />
+      <figcaption>Moodboard</figcaption>
+    </figure>
+
+    <p class="small-note">
+      The moodboard collects raw street-food culture: stacked plastic stools, market stalls and food trucks, hand-painted signs,
+      take-away bags and food eaten on the go. The mood to translate into design:
+      <strong>social, energetic, authentic, community-driven, friendly and open.</strong>
+    </p>
+
+    <figure class="board-card board-card--wide">
+      <img src={`${imgBase}mm-brand-styleboard.avif`} alt="Styleboard with character illustrations, packaging textures, hand-written scribbles and international graphic references" loading="lazy" />
+      <figcaption>Styleboard</figcaption>
+    </figure>
+
+    <p class="small-note">
+      The styleboard sets the visual ingredients: <strong>playful, simple character illustrations</strong> for a kind mood
+      (later becoming the brand character), <strong>packaging textures</strong> like foil, cardboard and plastic as a nod to real street food,
+      <strong>hand-written scribbles</strong> like the notes cooks write on take-away packaging, and a <strong>global, international aesthetic</strong>
+      with glyphs and characters from different cultures. Together they blend playful energy with raw authenticity.
+    </p>
+  </section>
+
+  <section
+    class="case-section full-process"
+    id="miles-section-4"
+    data-view="full"
+    data-progress-section
+    data-progress-label="Identity exploration"
+  >
+    <div class="section-number">04</div>
+
+    <div class="section-heading">
+      <span class="eyebrow">Identity exploration</span>
+      <h2>From logo sketches to a system with a smile.</h2>
+    </div>
+
+    <div class="section-body two-col-copy">
+      <p>
+        The logo went through several rounds of try-outs exploring may different ways to creaivey approach the idea. The process involved experimenting with various shapes, forms, and styles.
+      </p>
+
+      <p>
+        Colour and type were explored in parallel. The final palette pairs a warm cream and a very dark green-black with
+        sun yellow and a vibrant mint, while Pilcrow Rounded, Helvetica and a hand-written marker style balance friendliness,
+        clarity and street-sign authenticity.
+      </p>
+    </div>
+
+    <figure class="board-card board-card--wide identity-block">
+      <div
+        class="project-media project-media--interactive"
+        data-drag-scroll
+        aria-label="Logo try-outs. Drag to explore the image and zoom in for detail."
+      >
+        <span
+          class="drag-hint drag-hint--overlay"
+          aria-label="This image can be dragged and zoomed"
+          title="Drag / zoom image"
+        >
+          <img
+            class="drag-hint__icon drag-hint__icon--black"
+            src={`${import.meta.env.BASE_URL}icons/drag-black.svg`}
+            alt=""
+            aria-hidden="true"
+          />
+          <img
+            class="drag-hint__icon drag-hint__icon--white"
+            src={`${import.meta.env.BASE_URL}icons/drag-white.svg`}
+            alt=""
+            aria-hidden="true"
+          />
+        </span>
+        <div class="media-pan__canvas">
+          <img
+            class="media-pan__image media-pan__image--fit-width"
+            src={`${imgBase}mm-process-logo-tryouts.avif`}
+            alt="Logo try-outs and sketches"
+            loading="lazy"
+            draggable="false"
+          />
+        </div>
+      </div>
+      <figcaption>Logo try-outs</figcaption>
+    </figure>
+
+    <div class="color-feature identity-block">
+      <img
+        class="color-feature__image"
+        src={`${imgBase}mm-brand-martin-colors.avif`}
+        alt="Martin, the brand character, balancing the five brand colours"
+        loading="lazy"
+      />
+
+      {
+        brandColors.map((color) => (
+          <>
+            <span
+              class="color-line"
+              aria-hidden="true"
+              style={`left:${color.line[0]}%;width:${color.line[1] - color.line[0]}%;top:${color.y}%`}
+            ></span>
+            <article
+              class={`color-note color-note--${color.side}`}
+              style={`left:${color.x}%;top:${color.y}%`}
+            >
+              <h3><span class="color-dot" style={`background:${color.hex}`}></span>{color.name} <small>{color.hex}</small></h3>
+              <p>{color.text}</p>
+            </article>
+          </>
+        ))
+      }
+    </div>
+
+    <div class="font-feature identity-block">
+      <div class="font-list">
+        {
+          fontPairing.map((font) => (
+            <article class="font-item">
+              <div class="font-card">
+                <img class="font-sample" src={`${imgBase}${font.image}.avif`} alt={`${font.name} type sample`} loading="lazy" />
+              </div>
+              <span class="eyebrow">{font.role}</span>
+              <p>{font.text}</p>
+            </article>
+          ))
+        }
+      </div>
+
+      <img
+        class="font-feature__image"
+        src={`${imgBase}mm-brand-martin-type.avif`}
+        alt="Martin juggling letters in the brand fonts"
+        loading="lazy"
+      />
+    </div>
+
+    <div class="logo-row identity-block">
+      {
+        logoVariants.map((logo, index) => (
+          <article class="logo-item">
+            <figure class="logo-card">
+              <img src={`${imgBase}mm-logo-${index + 1}.avif`} alt={logo.name} loading="lazy" />
+            </figure>
+            <h3>{logo.name}</h3>
+            <p>{logo.text}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section
+    class="case-section full-process"
+    id="miles-section-5"
+    data-view="full"
+    data-progress-section
+    data-progress-label="Brand system"
+  >
+    <div class="section-number">05</div>
+
+    <div class="section-heading">
+      <span class="eyebrow">Brand system</span>
+      <h2>A brandboard built to travel across box, app and street.</h2>
+    </div>
+
+    <div class="section-body two-col-copy">
+      <p>
+        The brandboard establishes the core personality of the project. Miles &amp; Meals feels cheerful and approachable,
+        but also structured enough to support subscription management and shopping-like tasks. The mascot becomes a central recognisable element,
+        while food photography grounds the experience in real appetite and real places.
+      </p>
+
+      <p>
+        The interface never feels disconnected from the brand. Rounded shapes, editorial headings,
+        organic accent lines and a controlled palette all help translate the identity into screens that stay usable,
+        but still feel specific and memorable.
+      </p>
+    </div>
+
+    <div class="pillars-grid">
+      {
+        brandPillars.map((pillar) => (
+          <article class="pillar-card">
+            <h3>{pillar.title}</h3>
+            <p>{pillar.text}</p>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="brand-block identity-block">
+      <div class="brand-block__intro">
+        <span class="eyebrow">Logo in colour</span>
+        <h3>One wordmark, three levels of detail.</h3>
+        <p>
+          Every version of the logo works on the three core colours — sun yellow, green-black and vibrant mint —
+          so it can sit on packaging, app screens and social posts in many different ways.
+        </p>
+      </div>
+
+      <div class="logo-color-list">
+        {
+          logoColourRows.map((row) => (
+            <figure class="logo-color">
+              <div class={`logo-tiles logo-tiles--${row.kind}`} role="img" aria-label={`${row.name} in the brand colours`}>
+                {
+                  row.tiles.map(([bg, fg]) => (
+                    <span class="logo-tile" style={`background:${bg};color:${fg}`}>
+                      <span
+                        class="logo-tile__mark"
+                        style={`-webkit-mask-image:url(${imgBase}mm-mask-${row.kind}.webp);mask-image:url(${imgBase}mm-mask-${row.kind}.webp)`}
+                      ></span>
+                    </span>
+                  ))
+                }
+              </div>
+              <figcaption><strong>{row.name}</strong> — {row.text}</figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="brand-block identity-block">
+      <div class="brand-block__intro">
+        <span class="eyebrow">Brand patterns</span>
+        <h3>Patterns built from the logo’s curves.</h3>
+        <p>
+          Inspired directly by the rounded typography of the logo. The same waves, arches and dashes combine into
+          many layout variations and can be applied anywhere, giving a playful visual thread across every touchpoint.
+        </p>
+      </div>
+
+      <div class="pattern-row">
+        {
+          [1, 2, 3, 4].map((n) => (
+            <img class="pattern-item" src={`${imgBase}mm-brand-pattern-${n}.avif`} alt={`Brand pattern ${n}`} loading="lazy" />
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="brand-block identity-block">
+      <div class="brand-block__intro">
+        <span class="eyebrow">Brand photography</span>
+        <h3>Keep it true.</h3>
+        <p>
+          No overly polished, artificial food styling. The photography focuses on raw, in-the-moment action shots —
+          food in motion, hands, crates and plastic plates — so it feels like real street food, not a studio.
+        </p>
+      </div>
+
+      <img class="brand-wide-image" src={`${imgBase}mm-brand-photos.avif`} alt="Brand photography: raw street-food moments" loading="lazy" />
+    </div>
+
+    <div class="brand-block brand-block--split identity-block">
+      <img class="mascot-image" src={`${imgBase}mm-brand-martin.avif`} alt="Martin, the Miles & Meals brand mascot" loading="lazy" />
+
+      <div class="brand-block__intro">
+        <span class="eyebrow">Brand mascot</span>
+        <h3>Meet Martin.</h3>
+        <p>
+          Martin is our brand mascot and a mirror of the target audience: the explorer. His backpack is the attribute
+          of every traveller, his oversized body makes him feel like a kind giant, and his smile keeps the mood positive.
+          He holds a huge bowl with the logo drawn as noodles - showing his passion for food. He also sets the baseline
+          for the whole illustration style.
+        </p>
+      </div>
+    </div>
+
+    <div class="brand-block identity-block">
+      <div class="brand-block__intro">
+        <span class="eyebrow">Graphic elements</span>
+        <h3>A coin for every box.</h3>
+        <p>
+          Each subscription box gets its own marker, shaped like a coin — a reference to foreign currency and to
+          exchanging money for local street food while travelling.
+        </p>
+      </div>
+
+      <img class="brand-wide-image brand-wide-image--contained" src={`${imgBase}mm-brand-coins.avif`} alt="Coin markers for Local Legend, Street Made and Neighbourhood Bakes" loading="lazy" />
+
+      <div class="coin-notes">
+        {
+          coinNotes.map((coin) => (
+            <article>
+              <h4>{coin.name}</h4>
+              <p>{coin.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="brand-block identity-block">
+      <div class="brand-block__intro">
+        <span class="eyebrow">Brand in action</span>
+        <h3>Built for the real world.</h3>
+        <p>
+          From stickers to take-away bags, the identity is designed to live on physical touchpoints.
+          Every piece should feel authentic, as if it came straight from a street-food stall.
+        </p>
+      </div>
+
+      <div class="action-row action-row--stickers">
+        <img src={`${imgBase}mm-action-sticker-1.avif`} alt="Miles & Meals sticker mockup" loading="lazy" />
+        <img src={`${imgBase}mm-action-sticker-2.avif`} alt="Miles & Meals sticker with Martin" loading="lazy" />
+      </div>
+
+      <div class="action-row">
+        <img src={`${imgBase}mm-action-bag-1.avif`} alt="Neighbourhood Bakes paper bags" loading="lazy" />
+        <img src={`${imgBase}mm-action-bag-2.avif`} alt="Local Legend paper bag mockup" loading="lazy" />
+        <img src={`${imgBase}mm-action-bag-3.avif`} alt="Street Made paper bag mockup" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="case-section full-process"
+    id="miles-section-6"
+    data-view="full"
+    data-progress-section
+    data-progress-label="Wireframes"
+  >
+    <div class="section-number">06</div>
+
+    <div class="section-heading">
+      <span class="eyebrow">Wireframes</span>
+      <h2>Structure first, flavour later.</h2>
+    </div>
+
+    <div class="section-body two-col-copy">
+      <p>
+        The app flows were first mapped as low-fidelity wireframes: onboarding, box setup, the dashboard, My Box,
+        Explore and the recipe detail. Working in greyscale kept the focus on hierarchy, content and navigation
+        before any brand decisions were layered on top.
+      </p>
+
+      <p>
+        Comparing these wireframes with the final screens shows where the brand added the most: the same structure,
+        but with Martin, the coin markers, food photography and “heated-up” icons turning utility screens into something recognisable.
+      </p>
+    </div>
+
+    <div class="screen-row screen-row--three">
+      <figure class="phone-card">
+        <div class="phone-screen"><img src={`${imgBase}mm-wire-onboarding.avif`} alt="Wireframe of the onboarding feature screen" loading="lazy" /></div>
+        <figcaption>Onboarding</figcaption>
+      </figure>
+      <figure class="phone-card">
+        <div class="phone-screen"><img src={`${imgBase}mm-wire-setup.avif`} alt="Wireframe of the box setup screen" loading="lazy" /></div>
+        <figcaption>Box setup</figcaption>
+      </figure>
+      <figure class="phone-card">
+        <div class="phone-screen"><img src={`${imgBase}mm-wire-dashboard.avif`} alt="Wireframe of the dashboard" loading="lazy" /></div>
+        <figcaption>Dashboard</figcaption>
+      </figure>
+      <figure class="phone-card">
+        <div class="phone-screen"><img src={`${imgBase}mm-wire-mybox.avif`} alt="Wireframe of My Box" loading="lazy" /></div>
+        <figcaption>My Box</figcaption>
+      </figure>
+      <figure class="phone-card">
+        <div class="phone-screen"><img src={`${imgBase}mm-wire-explore.avif`} alt="Wireframe of Explore" loading="lazy" /></div>
+        <figcaption>Explore</figcaption>
+      </figure>
+      <figure class="phone-card">
+        <div class="phone-screen"><img src={`${imgBase}mm-wire-recipe.avif`} alt="Wireframe of the recipe detail" loading="lazy" /></div>
+        <figcaption>Recipe detail</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section
+    class="case-section full-process"
+    id="miles-section-7"
+    data-view="full"
+    data-progress-section
+    data-progress-label="App Store presence"
+  >
+    <div class="section-number">07</div>
+
+    <div class="section-heading">
+      <span class="eyebrow">App Store presence</span>
+      <h2>The product proposition starts before the app even opens.</h2>
+    </div>
+
+    <div class="section-body two-col-copy">
+      <p>
+        The App Store previews communicate the idea quickly: food delivery, yes — but also curated discovery,
+        doorstep convenience, personalisation and ease of use. This is where the brand promise becomes legible at a glance.
+      </p>
+
+      <p>
+        The screens combine bold messaging with clean visuals, helping users understand what makes the app different
+        before they commit to downloading it.
+      </p>
+    </div>
+
+    <div class="screen-row screen-row--three">
+      <figure class="phone-card">
+        <div class="phone-screen"><img src={`${imgBase}appstore1-final.avif`} alt="App Store search result view showing Miles & Meals" /></div>
+        <figcaption>Search result placement</figcaption>
+      </figure>
+
+      <figure class="phone-card">
+        <div class="phone-screen"><img src={`${imgBase}appstore2-final.avif`} alt="App Store preview strip showing Miles & Meals features" /></div>
+        <figcaption>Preview gallery</figcaption>
+      </figure>
+
+      <figure class="phone-card">
+        <div class="phone-screen"><img src={`${imgBase}appstore3-final.avif`} alt="App Store detail page preview" /></div>
+        <figcaption>Product detail page</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section
+    class="case-section full-process"
+    id="miles-section-8"
+    data-view="full"
+    data-progress-section
+    data-progress-label="Onboarding"
+  >
+    <div class="section-number">08</div>
+
+    <div class="section-heading">
+      <span class="eyebrow">Onboarding</span>
+      <h2>Explain the offer through a set of simple, memorable promises.</h2>
+    </div>
+
+    <div class="section-body two-col-copy">
+      <p>
+        The onboarding cards introduce the concept through four short messages. Instead of pushing functionality first,
+        the flow leads with benefits: bringing the world into your kitchen, customising your box,
+        making the service easy for all and delivering directly to your doorstep.
+      </p>
+
+      <p>
+        Visually, these cards are also a compact expression of the brand system. They combine the mascot, soft shape language,
+        minimal copy and a limited accent palette to set the tone for the rest of the app.
+      </p>
+    </div>
+
+    <div class="screen-row screen-row--four">
+      <figure class="phone-card">
+        <div class="phone-screen"><img src={`${imgBase}onboarding-feature1-final.avif`} alt="Onboarding feature card about discovering the world in your kitchen" /></div>
+        <figcaption>Discover the world in your kitchen</figcaption>
+      </figure>
+
+      <figure class="phone-card">
+        <div class="phone-screen"><img src={`${imgBase}onboarding-feature2-final.avif`} alt="Onboarding feature card about a customized box" /></div>
+        <figcaption>Customized box</figcaption>
+      </figure>
+
+      <figure class="phone-card">
+        <div class="phone-screen"><img src={`${imgBase}onboarding-feature3-final.avif`} alt="Onboarding feature card about being easy for all" /></div>
+        <figcaption>Easy for all</figcaption>
+      </figure>
+
+      <figure class="phone-card">
+        <div class="phone-screen"><img src={`${imgBase}onboarding-feature4-final.avif`} alt="Onboarding feature card about doorstep delivery" /></div>
+        <figcaption>Delivered at your doorstep</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section
+    class="case-section full-process"
+    id="miles-section-9"
+    data-view="full"
+    data-progress-section
+    data-progress-label="Personalisation"
+  >
+    <div class="section-number">09</div>
+
+    <div class="section-heading">
+      <span class="eyebrow">Personalisation</span>
+      <h2>Build the subscription around preference, company size and delivery rhythm.</h2>
+    </div>
+
+    <div class="section-body two-col-copy">
+      <p>
+        The setup flow breaks personalisation into a few understandable steps: choose a box style,
+        decide between vegetarian and non-vegetarian options, select the number of servings and set delivery frequency.
+      </p>
+
+      <p>
+        These screens translate operational choices into a visually consistent journey. Instead of a dry form,
+        the flow feels branded and human, making configuration part of the experience rather than just a task.
+      </p>
+    </div>
+
+    <div class="screen-row screen-row--four">
+      <figure class="phone-card">
+        <div class="phone-screen"><img src={`${imgBase}welcome1-final.avif`} alt="Choose your favourite box screen" /></div>
+        <figcaption>Choose a box</figcaption>
+      </figure>
+
+      <figure class="phone-card">
+        <div class="phone-screen"><img src={`${imgBase}welcome2-final.avif`} alt="Preference selection screen" /></div>
+        <figcaption>Dietary preference</figcaption>
+      </figure>
+
+      <figure class="phone-card">
+        <div class="phone-screen"><img src={`${imgBase}welcome3-final.avif`} alt="Company or serving-size selection screen" /></div>
+        <figcaption>Serving size</figcaption>
+      </figure>
+
+      <figure class="phone-card">
+        <div class="phone-screen"><img src={`${imgBase}welcome4-final.avif`} alt="Delivery frequency selection screen" /></div>
+        <figcaption>Frequency and timing</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section
+    class="case-section full-process"
+    id="miles-section-10"
+    data-view="full"
+    data-progress-section
+    data-progress-label="Core product"
+  >
+    <div class="section-number">10</div>
+
+    <div class="section-heading">
+      <span class="eyebrow">Core product</span>
+      <h2>A home experience centred on weekly delivery, box management and saved meals.</h2>
+    </div>
+
+    <div class="section-body two-col-copy">
+      <p>
+        The main product screens organise the everyday part of the service. The dashboard gives a broad overview,
+        My Box focuses on deliveries, recipes and add-ons, while the favourites states show how users can save and revisit meals.
+      </p>
+
+      <p>
+        What is notable here is the balance between clarity and character. Cards, sections and tabs stay straightforward,
+        while colour, imagery and the mascot keep the product visually distinct.
+      </p>
+    </div>
+
+    <div class="screen-row screen-row--four">
+      <figure class="phone-card">
+        <div class="phone-screen phone-screen--nav" style="--nav-ratio: 0.2605"><img src={`${imgBase}mm-dashboard-screen.avif`} alt="Dashboard screen with deliveries and specials" /><img class="phone-nav" src={`${imgBase}mm-dashboard-nav.avif`} alt="" aria-hidden="true" /></div>
+        <figcaption>Dashboard overview</figcaption>
+      </figure>
+
+      <figure class="phone-card">
+        <div class="phone-screen phone-screen--nav" style="--nav-ratio: 0.2814"><img src={`${imgBase}mm-mybox-screen.avif`} alt="My Box screen showing deliveries and recipes" /><img class="phone-nav" src={`${imgBase}mm-mybox-nav.avif`} alt="" aria-hidden="true" /></div>
+        <figcaption>My Box</figcaption>
+      </figure>
+
+      <figure class="phone-card">
+        <div class="phone-screen phone-screen--nav" style="--nav-ratio: 0.2744"><img src={`${imgBase}mm-myfavourite-empty-screen.avif`} alt="Empty favourites state screen" /><img class="phone-nav" src={`${imgBase}mm-myfavourite-empty-nav.avif`} alt="" aria-hidden="true" /></div>
+        <figcaption>Empty state</figcaption>
+      </figure>
+
+      <figure class="phone-card">
+        <div class="phone-screen phone-screen--nav" style="--nav-ratio: 0.2744"><img src={`${imgBase}mm-myfavourite-screen.avif`} alt="Filled favourites screen" /><img class="phone-nav" src={`${imgBase}mm-myfavourite-nav.avif`} alt="" aria-hidden="true" /></div>
+        <figcaption>Saved recipes</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section
+    class="case-section full-process"
+    id="miles-section-11"
+    data-view="full"
+    data-progress-section
+    data-progress-label="Explore"
+  >
+    <div class="section-number">11</div>
+
+    <div class="section-heading">
+      <span class="eyebrow">Explore</span>
+      <h2>Discovery turns the app from a utility into a richer editorial experience.</h2>
+    </div>
+
+    <div class="section-body two-col-copy">
+      <p>
+        The Explore flow is where the core brand idea becomes most visible. Users can browse city-inspired content,
+        discover recently viewed places, uncover recommendations and move into richer destination screens that connect food with context.
+      </p>
+
+      <p>
+        This editorial layer helps justify the name Miles &amp; Meals. The product is no longer only about getting a box delivered;
+        it becomes a way of framing food through travel, place and curiosity.
+      </p>
+    </div>
+
+    <div class="screen-row screen-row--two screen-row--as-three">
+      <figure class="phone-card">
+        <div class="phone-screen phone-screen--nav" style="--nav-ratio: 0.2744"><img src={`${imgBase}mm-explore-screen.avif`} alt="Explore screen with city recommendations" /><img class="phone-nav" src={`${imgBase}mm-explore-nav.avif`} alt="" aria-hidden="true" /></div>
+        <figcaption>Explore overview</figcaption>
+      </figure>
+
+      <figure class="phone-card">
+        <div class="phone-screen phone-screen--nav" style="--nav-ratio: 0.2744"><img src={`${imgBase}mm-explore-detail-screen.avif`} alt="Explore detail screen about Istanbul and local dishes" /><img class="phone-nav" src={`${imgBase}mm-explore-detail-nav.avif`} alt="" aria-hidden="true" /></div>
+        <figcaption>City detail experience</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section
+    class="case-section full-process"
+    id="miles-section-12"
+    data-view="full"
+    data-progress-section
+    data-progress-label="Recipe guidance"
+  >
+    <div class="section-number">12</div>
+
+    <div class="section-heading">
+      <span class="eyebrow">Recipe guidance</span>
+      <h2>Step-by-step cooking support extends the product beyond delivery.</h2>
+    </div>
+
+    <div class="section-body two-col-copy">
+      <p>
+        Recipe detail screens show how the product supports people after the box arrives.
+        There is an overview page for each dish, followed by a guided cooking flow with ingredients,
+        step markers and concise instructions.
+      </p>
+
+      <p>
+        This part of the experience is especially important because it transforms the service from subscription logistics into an active culinary companion.
+        The content is practical, but still visually aligned with the wider brand and interface system.
+      </p>
+    </div>
+
+    <div class="screen-row screen-row--three screen-row--recipe-intro">
+      <figure class="phone-card">
+        <div class="phone-screen phone-screen--nav" style="--nav-ratio: 0.4535"><img src={`${imgBase}mm-recipe-detail-welcome-screen.avif`} alt="Recipe introduction screen for bouillabaisse" /><img class="phone-nav" src={`${imgBase}mm-recipe-detail-welcome-nav.avif`} alt="" aria-hidden="true" /></div>
+        <figcaption>Recipe entry</figcaption>
+      </figure>
+
+      <figure class="phone-card">
+        <div class="phone-screen"><img src={`${imgBase}recipe-detail-step1-FINAL.avif`} alt="Recipe step 1 screen" /></div>
+        <figcaption>Step 1</figcaption>
+      </figure>
+
+      <figure class="phone-card">
+        <div class="phone-screen"><img src={`${imgBase}recipe-detail-step2-final.avif`} alt="Recipe step 2 screen" /></div>
+        <figcaption>Step 2</figcaption>
+      </figure>
+    </div>
+
+    <div class="screen-row screen-row--three">
+      <figure class="phone-card">
+        <div class="phone-screen"><img src={`${imgBase}recipe-detail-step3-final.avif`} alt="Recipe step 3 screen" /></div>
+        <figcaption>Step 3</figcaption>
+      </figure>
+
+      <figure class="phone-card">
+        <div class="phone-screen"><img src={`${imgBase}recipe-detail-step4-final.avif`} alt="Recipe step 4 screen" /></div>
+        <figcaption>Step 4</figcaption>
+      </figure>
+
+      <figure class="phone-card">
+        <div class="phone-screen"><img src={`${imgBase}recipe-detail-step5-final.avif`} alt="Recipe step 5 screen" /></div>
+        <figcaption>Step 5</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section
+    class="case-section full-process"
+    id="miles-section-13"
+    data-view="full"
+    data-progress-section
+    data-progress-label="Outcome"
+  >
+    <div class="section-number">13</div>
+
+    <div class="section-heading">
+      <span class="eyebrow">Outcome</span>
+      <h2>A compact but well-defined ecosystem for brand and product.</h2>
+    </div>
+
+    <div class="section-body two-col-copy">
+      <p>
+        Miles &amp; Meals shows how a digital product can benefit from a clearly articulated brand world.
+        Instead of treating branding as a surface layer, the project uses it to shape the whole user experience —
+        from first impression to ongoing use.
+      </p>
+
+      <p>
+        The strongest quality of the project is coherence. The tone of voice, mascot, palette, card system,
+        food imagery and product flows all reinforce the same idea: a meal-box app that makes everyday food delivery feel richer,
+        more inviting and more worth returning to.
+      </p>
+    </div>
+
+    <ul class="outcome-list">
+      {
+        outcomePoints.map((item) => (
+          <li>{item}</li>
+        ))
+      }
+    </ul>
+  </section>
+  <!-- ==========================================
+       FIGMA / PROJECT LINK
+  =========================================== -->
+
+  <section class="project-link-block">
+    <div>
+      <span class="eyebrow">Full process</span>
+      <h3>Explore the complete Figma file.</h3>
+      <p>
+        Open the design file to see the brief, wireframes, brand identity process,
+        brandboard and every final screen behind this case study.
+      </p>
+    </div>
+
+    <a
+      class="project-link-block__link"
+      href={figmaUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Explore Figma
+      <span aria-hidden="true">↗</span>
+    </a>
+  </section>
+</article>
+
+<script>
+  const buttons = document.querySelectorAll('.reading-mode__button');
+  const toggleItems = document.querySelectorAll('[data-view]');
+
+  function setReadingMode(mode) {
+    buttons.forEach((button) => {
+      button.classList.toggle('is-active', button.dataset.mode === mode);
+    });
+
+    toggleItems.forEach((item) => {
+      const itemMode = item.getAttribute('data-view');
+      const shouldShow = itemMode === mode;
+      item.classList.toggle('is-hidden', !shouldShow);
+    });
+
+    // Draggable images measure themselves once they become visible.
+    window.dispatchEvent(new Event('resize'));
+  }
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      setReadingMode(button.dataset.mode);
+    });
+  });
+
+  setReadingMode('quick');
+
+  /* ==========================================
+     SCROLL HINT NEXT TO SECTION HEADINGS
+     A section gets the hint when at least one of its phone screens
+     is taller than the phone frame (so it can be scrolled inside).
+  ========================================== */
+
+  const SCROLL_ICON = `${import.meta.env.BASE_URL}icons/scroll-blacksvg.svg`;
+  const PHONE_RATIO = 932 / 430;
+
+  function addScrollHint(section) {
+    if (!section || section.querySelector('.scroll-hint')) return;
+    const heading = section.querySelector('.section-heading h2');
+    if (!heading) return;
+
+    const hint = document.createElement('button');
+    hint.type = 'button';
+    hint.className = 'scroll-hint';
+    hint.setAttribute('aria-label', 'Images in this section are scrollable');
+    hint.innerHTML =
+      `<img class="scroll-hint__icon" src="${SCROLL_ICON}" alt="" aria-hidden="true" />` +
+      `<span class="scroll-hint__text">Images in this section are scrollable</span>`;
+
+    // Touch devices have no hover: a tap toggles the explanation.
+    hint.addEventListener('click', () => hint.classList.toggle('is-open'));
+
+    heading.appendChild(hint);
+  }
+
+  function checkScreen(img) {
+    const ratio = img.naturalHeight / img.naturalWidth;
+    if (ratio > PHONE_RATIO * 1.04) {
+      addScrollHint(img.closest('.case-section'));
+    }
+  }
+
+  document.querySelectorAll('.phone-screen img:not(.phone-nav)').forEach((img) => {
+    if (img.complete && img.naturalWidth) {
+      checkScreen(img);
+    } else {
+      img.addEventListener('load', () => checkScreen(img), { once: true });
+    }
+    // Lazy images far down the page only load when scrolled to;
+    // load them eagerly enough to know their size.
+    img.loading = 'eager';
+  });
+
+
+  /* ==========================================
+     DRAGGABLE + ZOOMABLE PROCESS IMAGES
+
+     This version does NOT use scrollLeft / scrollWidth for panning.
+     The image itself is translated and scaled, and the drag limits are
+     recalculated from the CURRENT zoomed image size on every move.
+  ========================================== */
+
+  const draggableMedia =
+    document.querySelectorAll<HTMLElement>("[data-drag-scroll]");
+
+  draggableMedia.forEach((viewport) => {
+    const image =
+      viewport.querySelector<HTMLImageElement>(".media-pan__image");
+
+    if (!image) return;
+
+    let baseWidth = 0;
+    let baseHeight = 0;
+
+    let zoom = 1;
+    let panX = 0;
+    let panY = 0;
+
+    let isDragging = false;
+    let lastPointerX = 0;
+    let lastPointerY = 0;
+
+    const MIN_ZOOM = 1;
+    const MAX_ZOOM = 5;
+
+    const clamp = (value: number, min: number, max: number) =>
+      Math.min(max, Math.max(min, value));
+
+    const captureBaseSize = () => {
+      if (baseWidth && baseHeight) return;
+
+      baseWidth = image.offsetWidth;
+      baseHeight = image.offsetHeight;
+    };
+
+    const getBounds = () => {
+      captureBaseSize();
+
+      const viewportWidth = viewport.clientWidth;
+      const viewportHeight = viewport.clientHeight;
+
+      const scaledWidth = baseWidth * zoom;
+      const scaledHeight = baseHeight * zoom;
+
+      /*
+        If the zoomed image is smaller than the viewport on an axis,
+        lock it to the centre on that axis.
+
+        If it is larger, allow movement all the way from one edge
+        to the other.
+      */
+      const minX =
+        scaledWidth <= viewportWidth
+          ? (viewportWidth - scaledWidth) / 2
+          : viewportWidth - scaledWidth;
+
+      const maxX =
+        scaledWidth <= viewportWidth
+          ? (viewportWidth - scaledWidth) / 2
+          : 0;
+
+      const minY =
+        scaledHeight <= viewportHeight
+          ? (viewportHeight - scaledHeight) / 2
+          : viewportHeight - scaledHeight;
+
+      const maxY =
+        scaledHeight <= viewportHeight
+          ? (viewportHeight - scaledHeight) / 2
+          : 0;
+
+      return {
+        minX,
+        maxX,
+        minY,
+        maxY,
+      };
+    };
+
+    const clampPan = () => {
+      const bounds = getBounds();
+
+      panX = clamp(panX, bounds.minX, bounds.maxX);
+      panY = clamp(panY, bounds.minY, bounds.maxY);
+    };
+
+    const render = () => {
+      clampPan();
+
+      image.style.transform =
+        `translate3d(${panX}px, ${panY}px, 0) scale(${zoom})`;
+
+      viewport.classList.toggle("is-zoomed", zoom > 1);
+    };
+
+    const centreImage = () => {
+      captureBaseSize();
+
+      const scaledWidth = baseWidth * zoom;
+      const scaledHeight = baseHeight * zoom;
+
+      panX =
+        (viewport.clientWidth - scaledWidth) / 2;
+
+      panY =
+        (viewport.clientHeight - scaledHeight) / 2;
+
+      render();
+    };
+
+    const setZoom = (
+      nextZoom: number,
+      clientX?: number,
+      clientY?: number
+    ) => {
+      captureBaseSize();
+
+      const rect = viewport.getBoundingClientRect();
+
+      const anchorX =
+        clientX ?? rect.left + rect.width / 2;
+
+      const anchorY =
+        clientY ?? rect.top + rect.height / 2;
+
+      const localX =
+        anchorX - rect.left;
+
+      const localY =
+        anchorY - rect.top;
+
+      /*
+        Work out which point INSIDE the image is currently under the
+        mouse / trackpad position.
+      */
+      const imageX =
+        (localX - panX) / zoom;
+
+      const imageY =
+        (localY - panY) / zoom;
+
+      const newZoom =
+        clamp(nextZoom, MIN_ZOOM, MAX_ZOOM);
+
+      if (newZoom === zoom) return;
+
+      zoom = newZoom;
+
+      /*
+        Reposition the image so the same image point remains underneath
+        the pointer after zooming.
+      */
+      panX =
+        localX - imageX * zoom;
+
+      panY =
+        localY - imageY * zoom;
+
+      render();
+    };
+
+    const initialise = () => {
+      captureBaseSize();
+      centreImage();
+    };
+
+    if (image.complete) {
+      initialise();
+    } else {
+      image.addEventListener(
+        "load",
+        initialise,
+        { once: true }
+      );
+    }
+
+
+    /* ------------------------------------------
+       DRAG / PAN
+    ------------------------------------------ */
+
+    viewport.addEventListener("pointerdown", (event) => {
+      if (
+        event.pointerType === "mouse" &&
+        event.button !== 0
+      ) {
+        return;
+      }
+
+      isDragging = true;
+
+      lastPointerX = event.clientX;
+      lastPointerY = event.clientY;
+
+      viewport.classList.add("is-dragging");
+
+      viewport.setPointerCapture?.(
+        event.pointerId
+      );
+    });
+
+    viewport.addEventListener("pointermove", (event) => {
+      if (!isDragging) return;
+
+      const deltaX =
+        event.clientX - lastPointerX;
+
+      const deltaY =
+        event.clientY - lastPointerY;
+
+      lastPointerX = event.clientX;
+      lastPointerY = event.clientY;
+
+      /*
+        Dragging directly updates the image translation.
+        The limits below are based on the CURRENT zoom level.
+      */
+      panX += deltaX;
+      panY += deltaY;
+
+      render();
+    });
+
+    const stopDragging = (event) => {
+      if (!isDragging) return;
+
+      isDragging = false;
+      viewport.classList.remove("is-dragging");
+
+      if (
+        viewport.hasPointerCapture?.(
+          event.pointerId
+        )
+      ) {
+        viewport.releasePointerCapture(
+          event.pointerId
+        );
+      }
+    };
+
+    viewport.addEventListener(
+      "pointerup",
+      stopDragging
+    );
+
+    viewport.addEventListener(
+      "pointercancel",
+      stopDragging
+    );
+
+    viewport.addEventListener(
+      "lostpointercapture",
+      () => {
+        isDragging = false;
+        viewport.classList.remove(
+          "is-dragging"
+        );
+      }
+    );
+
+
+    /* ------------------------------------------
+       ZOOM
+    ------------------------------------------ */
+
+    viewport.addEventListener(
+      "wheel",
+      (event) => {
+        const wantsZoom =
+          event.ctrlKey ||
+          event.metaKey ||
+          event.altKey;
+
+        if (!wantsZoom) return;
+
+        event.preventDefault();
+
+        const factor =
+          Math.exp(-event.deltaY * 0.01);
+
+        setZoom(
+          zoom * factor,
+          event.clientX,
+          event.clientY
+        );
+      },
+      { passive: false }
+    );
+
+    viewport.addEventListener(
+      "dblclick",
+      (event) => {
+        event.preventDefault();
+
+        setZoom(
+          zoom > 1 ? 1 : 1.5,
+          event.clientX,
+          event.clientY
+        );
+
+        if (zoom === 1) {
+          centreImage();
+        }
+      }
+    );
+
+
+    /* ------------------------------------------
+       KEYBOARD
+    ------------------------------------------ */
+
+    if (!viewport.hasAttribute("tabindex")) {
+      viewport.tabIndex = 0;
+    }
+
+    viewport.addEventListener(
+      "keydown",
+      (event) => {
+        if (
+          event.key === "+" ||
+          event.key === "="
+        ) {
+          event.preventDefault();
+          setZoom(zoom * 1.2);
+        }
+
+        if (event.key === "-") {
+          event.preventDefault();
+          setZoom(zoom / 1.2);
+        }
+
+        if (event.key === "0") {
+          event.preventDefault();
+
+          zoom = 1;
+          centreImage();
+        }
+      }
+    );
+
+
+    /* ------------------------------------------
+       RESPONSIVE
+    ------------------------------------------ */
+
+    window.addEventListener("resize", () => {
+      render();
+    });
+  });
+</script>
+
+<style>
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+
+  .miles-case {
+    --page-bg: #f4f4f4;
+    --surface: #ffffff;
+    --border: rgba(14, 14, 14, 0.08);
+    --text: #111111;
+    --muted: rgba(17, 17, 17, 0.6);
+    --accent: #103b14;
+    --accent-soft: #e7f5ea;
+    --yellow: #f4c742;
+    --mint: #a5edd0;
+    color: var(--text);
+    background: var(--page-bg);
+    padding: 0;
+  }
+
+  .back-button {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 40;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    margin: 0;
+    padding: 0.8rem 1rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(17, 17, 17, 0.08);
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.95rem;
+  }
+
+  .case-hero,
+  /* Shared page rhythm — identical to the other case studies */
+  .case-hero,
+  .case-section,
+  .process-index {
+    padding-inline: clamp(1.25rem, 6vw, 6rem);
+  }
+
+  /* Hero — same hierarchy and spacing as the research case study */
+  .case-hero {
+    display: block;
+    padding-block: clamp(2rem, 5vw, 5rem);
+    min-height: 100svh;
+  }
+
+  .case-hero__meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: clamp(4rem, 15vh, 10rem);
+    color: var(--muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+  }
+
+  .case-hero__details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin: 4rem 0;
+  }
+
+  .case-hero__details .eyebrow {
+    margin-bottom: 0.8rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+  }
+
+  .eyebrow {
+    display: block;
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.82rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  .section-heading h2 {
+    margin: 0;
+    max-width: 12ch;
+    font-size: clamp(3.5rem, 9vw, 9rem);
+    font-weight: 500;
+    line-height: 0.92;
+    letter-spacing: -0.065em;
+  }
+
+  .case-hero h1 {
+    max-width: 12ch;
+    margin: 0;
+    font-size: clamp(4rem, 10vw, 10rem);
+    font-weight: 500;
+    line-height: 0.9;
+    letter-spacing: -0.07em;
+  }
+
+  .case-hero__lead {
+    max-width: 24ch;
+    margin: clamp(2rem, 6vw, 5rem) 0 1rem;
+    font-size: clamp(1.5rem, 3vw, 3rem);
+    line-height: 1.15;
+  }
+
+  .case-hero__intro,
+  .case-hero__details p,
+  .case-section p,
+  .quick-card p,
+  .pillar-card p,
+  .outcome-list li,
+  .check-item {
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+
+  .case-hero__intro {
+    max-width: 50rem;
+    margin: 0;
+    color: #555;
+    font-size: clamp(1rem, 1.3vw, 1.2rem) !important;
+    line-height: 1.6;
+  }
+
+  .case-hero__details p {
+    margin: 0;
+  }
+
+  .hero-stack {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 12.5rem));
+    justify-content: center;
+    align-items: start;
+    gap: 1rem;
+    padding-top: 2rem;
+  }
+
+  .hero-stack__phone {
+    border-radius: 1.75rem;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid rgba(17, 17, 17, 0.06);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.07);
+  }
+
+  .hero-stack__phone img,
+  .phone-card img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+
+  .reading-mode {
+    position: sticky;
+    top: 1rem;
+    z-index: 18;
+    display: flex;
+    width: fit-content;
+    gap: 0.4rem;
+    margin: 0 auto clamp(4rem, 8vw, 8rem);
+    padding: 0.35rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(17, 17, 17, 0.08);
+    backdrop-filter: blur(18px);
+  }
+
+  .reading-mode__button {
+    border: 0;
+    background: transparent;
+    color: var(--text);
+    padding: 0.9rem 1.4rem;
+    border-radius: 999px;
+    font-size: 0.98rem;
+    cursor: pointer;
+  }
+
+  .reading-mode__button.is-active {
+    background: #111111;
+    color: white;
+  }
+
+  .process-index {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+    padding-bottom: 6rem;
+  }
+
+  .process-index a {
+    display: flex;
+    gap: 0.9rem;
+    align-items: center;
+    padding: 1rem 1.1rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--text);
+    transition: transform 0.2s ease;
+  }
+
+  .process-index a:hover {
+    transform: translateY(-2px);
+  }
+
+  .process-index span {
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .case-section {
+    display: grid;
+    /* One column, like the other case studies: number, eyebrow, heading, content. */
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 0;
+    padding-block: clamp(5rem, 12vw, 12rem);
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .case-section > * {
+    grid-column: 1;
+    min-width: 0;
+  }
+
+  .case-section > .section-number {
+    margin-bottom: 4rem;
+  }
+
+  .section-number {
+    color: var(--muted);
+    font-size: 1rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .section-heading {
+    display: grid;
+    gap: 0.65rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-heading h2 {
+    max-width: 12ch;
+    font-size: clamp(2.5rem, 6vw, 5.2rem);
+  }
+
+  .section-body {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .large-copy {
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
+    line-height: 1.55;
+  }
+
+  .two-col-copy {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem 2rem;
+  }
+
+  .quick-grid,
+  .pillars-grid,
+  .check-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .quick-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pillars-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-bottom: 1rem;
+  }
+
+  .quick-card,
+  .pillar-card,
+  .check-item {
+    padding: 1.3rem;
+    border-radius: 1.2rem;
+    background: rgba(255, 255, 255, 0.58);
+    border: 1px solid rgba(17, 17, 17, 0.06);
+  }
+
+  .quick-card span {
+    display: inline-block;
+    margin-bottom: 0.8rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .quick-card h3,
+  .pillar-card h3 {
+    margin: 0 0 0.55rem;
+    font-size: 1.25rem;
+    line-height: 1.25;
+  }
+
+  .check-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .check-item {
+    position: relative;
+    padding-left: 3rem;
+  }
+
+  .check-item::before {
+    content: "•";
+    position: absolute;
+    left: 1.25rem;
+    top: 1rem;
+    color: var(--accent);
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  .screen-row {
+    display: grid;
+    gap: 1.1rem;
+    align-items: start;
+  }
+
+  .screen-row--two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .screen-row--three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .screen-row--four {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  /* Two screens at the same size as a three-column row (e.g. Explore). */
+  .screen-row--as-three {
+    max-width: calc((100% - 2.2rem) / 3 * 2 + 1.1rem);
+  }
+
+  .phone-card {
+    padding: 1rem;
+    border-radius: 1.5rem;
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(17, 17, 17, 0.06);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.05);
+  }
+
+  .phone-card figcaption {
+    margin-top: 0.8rem;
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+
+  /* Screens are exported at full length. Show them in a phone-shaped
+     viewport and let people scroll inside long screens. */
+  .phone-screen {
+    aspect-ratio: 430 / 932;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-radius: 1rem;
+    background: #ffffff;
+    scrollbar-width: thin;
+  }
+
+  .phone-card--tall .phone-screen {
+    aspect-ratio: 430 / 1300;
+  }
+
+  .hero-stack__phone {
+    aspect-ratio: 430 / 932;
+  }
+
+  .hero-stack__phone img {
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  .board-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    align-items: start;
+    margin-bottom: 1rem;
+  }
+
+  .board-grid--three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .board-grid--spaced {
+    margin-top: 1.5rem;
+  }
+
+  .board-card {
+    margin: 0;
+    padding: 0.75rem;
+    border-radius: 1.5rem;
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(17, 17, 17, 0.06);
+  }
+
+  .board-card img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 60rem;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 1rem;
+  }
+
+  .board-card--wide img {
+    max-height: none;
+  }
+
+  .board-card figcaption {
+    margin-top: 0.7rem;
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+
+  /* ========================================
+     DRAGGABLE / ZOOMABLE IMAGE (same logic as other case studies)
+  ======================================== */
+
+  .project-media {
+    position: relative;
+    display: block;
+    border-radius: 1rem;
+    background: #ffffff;
+  }
+
+  .project-media--interactive {
+    height: 27rem;
+    min-height: 27rem;
+    padding: 0;
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+  }
+
+  .project-media--interactive.is-dragging {
+    cursor: grabbing;
+  }
+
+  .project-media--interactive.is-zoomed {
+    touch-action: none;
+  }
+
+  .media-pan__canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .media-pan__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: auto;
+    max-width: none;
+    height: 24rem;
+    object-fit: contain;
+    transform-origin: 0 0;
+    will-change: transform;
+    pointer-events: none;
+  }
+
+  /* Tall boards: fill the width and drag vertically through them. */
+  .media-pan__image--fit-width {
+    width: 100%;
+    height: auto;
+    max-height: none;
+    border-radius: 0;
+  }
+
+  .drag-hint {
+    width: 1.55rem;
+    height: 1.55rem;
+    display: inline-grid;
+    place-items: center;
+  }
+
+  .drag-hint--overlay {
+    position: absolute;
+    top: 0.85rem;
+    left: 0.85rem;
+    z-index: 8;
+    padding: 0.45rem;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(8px);
+    pointer-events: none;
+  }
+
+  .drag-hint__icon {
+    grid-area: 1 / 1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .drag-hint__icon--white {
+    display: none;
+  }
+
+  /* Undo the generic board-card image styles inside the draggable viewport. */
+  .board-card .media-pan__image--fit-width {
+    width: 100%;
+    height: auto;
+    max-height: none;
+    object-fit: contain;
+    border-radius: 0;
+  }
+
+  .board-card .drag-hint__icon {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    border-radius: 0;
+  }
+
+  .board-card .drag-hint__icon--white {
+    display: none;
+  }
+
+  /* ========================================
+     BRAND COLOURS — Martin in the centre, notes around him
+     Positions are percentages of the feature box, mirroring the brandboard.
+  ======================================== */
+
+  .color-feature {
+    position: relative;
+    aspect-ratio: 2.22 / 1;
+    margin-top: 7rem !important;
+  }
+
+  .color-feature__image {
+    position: absolute;
+    left: 30%;
+    top: 0;
+    width: 40%;
+    height: auto;
+    display: block;
+  }
+
+  .color-line {
+    position: absolute;
+    height: 1px;
+    background: rgba(17, 17, 17, 0.28);
+  }
+
+  /* The heading of each note sits on its line; the text runs below it. */
+  .color-note {
+    position: absolute;
+    width: 21%;
+    transform: translateY(-0.72rem);
+  }
+
+  .color-note--right {
+    width: 17%;
+  }
+
+  .color-note h3 {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 0 0 0.3rem;
+    font-size: 0.98rem;
+  }
+
+  .color-note small {
+    color: var(--muted);
+    font-weight: 400;
+    font-size: 0.78rem;
+  }
+
+  .color-note p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.86rem !important;
+    line-height: 1.5 !important;
+  }
+
+  .color-dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    flex: none;
+    border-radius: 50%;
+    border: 1px solid rgba(17, 17, 17, 0.15);
+  }
+
+  /* ========================================
+     LOGO VARIANTS ROW
+  ======================================== */
+
+  .logo-row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .logo-card {
+    margin: 0;
+    padding: 0.75rem;
+    border-radius: 1.5rem;
+    background: #ffffff;
+    border: 1px solid rgba(17, 17, 17, 0.06);
+  }
+
+  .logo-card img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 1rem;
+  }
+
+  .logo-item h3,
+  .font-item h3 {
+    margin: 1rem 0 0.35rem;
+    font-size: 1.05rem;
+  }
+
+  .logo-item p,
+  .font-item p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.92rem !important;
+    line-height: 1.5 !important;
+  }
+
+  /* ========================================
+     TYPOGRAPHY — font cards in a column, Martin on the right
+  ======================================== */
+
+  .font-feature {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .font-list {
+    display: grid;
+    gap: 2.25rem;
+  }
+
+  .font-card {
+    display: flex;
+    align-items: center;
+    padding: 1.1rem 1.5rem;
+    border-radius: 1.5rem;
+    background: #ffffff;
+    border: 1px solid rgba(17, 17, 17, 0.06);
+  }
+
+  .font-sample {
+    display: block;
+    height: 2.1rem;
+    width: auto;
+    max-width: 100%;
+  }
+
+  /* Indent the text so it lines up with the lettering inside the card. */
+  .font-item .eyebrow,
+  .font-item p {
+    padding-left: 1.5rem;
+  }
+
+  .font-item .eyebrow {
+    margin: 0.9rem 0 0.35rem;
+  }
+
+  .font-list {
+    gap: 3rem !important;
+  }
+
+  .font-feature__image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* ========================================
+     BRAND SYSTEM BLOCKS
+  ======================================== */
+
+  .brand-block__intro {
+    max-width: 44rem;
+    margin-bottom: 2rem;
+  }
+
+  .brand-block__intro h3 {
+    margin: 0.5rem 0 0.75rem;
+    font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .brand-block__intro p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .logo-color-list {
+    display: grid;
+    gap: 3.5rem;
+  }
+
+  .logo-color {
+    margin: 0;
+  }
+
+  /* Colour tiles are built in CSS; the logo is a mask filled with the tile's text colour. */
+  .logo-tiles {
+    display: grid;
+    gap: 1rem;
+    max-width: 46rem;
+  }
+
+  .logo-tiles--primary,
+  .logo-tiles--secondary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .logo-tiles--stamp {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .logo-tile {
+    display: grid;
+    place-items: center;
+    border-radius: 0.75rem;
+    aspect-ratio: 2.4 / 1;
+  }
+
+  .logo-tiles--secondary .logo-tile {
+    aspect-ratio: 2.8 / 1;
+  }
+
+  .logo-tiles--stamp .logo-tile {
+    aspect-ratio: 1;
+    border-radius: 1.1rem;
+  }
+
+  .logo-tile__mark {
+    display: block;
+    width: 72%;
+    aspect-ratio: 1345 / 524;
+    background: currentColor;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+  }
+
+  .logo-tiles--secondary .logo-tile__mark {
+    width: 74%;
+    aspect-ratio: 1065 / 219;
+  }
+
+  .logo-tiles--stamp .logo-tile__mark {
+    width: 64%;
+    aspect-ratio: 449 / 445;
+  }
+
+  .logo-color figcaption {
+    margin-top: 0.9rem;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+
+  .logo-color figcaption strong {
+    color: var(--text);
+  }
+
+  .pattern-row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .pattern-item {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .brand-wide-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 1.5rem;
+  }
+
+  .brand-wide-image--contained {
+    border-radius: 0;
+  }
+
+  .brand-block--split {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .mascot-image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .coin-notes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+
+  .coin-notes h4 {
+    margin: 0 0 0.3rem;
+    font-size: 1rem;
+  }
+
+  .coin-notes p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Small, calm rows — a bit bigger than the hero phones. */
+  .action-row {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 16rem);
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .action-row + .action-row {
+    margin-top: 1rem;
+  }
+
+  .action-row img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    height: auto;
+    object-fit: cover;
+    border-radius: 1.25rem;
+  }
+
+  /* Stickers are square crops. */
+  .action-row--stickers img {
+    aspect-ratio: 1;
+    width: 13rem;
+  }
+
+  .action-row--stickers {
+    grid-auto-columns: 13rem;
+  }
+
+  /* ========================================
+     SCROLL HINT (next to section headings)
+  ======================================== */
+
+  :global(.scroll-hint) {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    margin-left: 0.6rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: help;
+    font: inherit;
+    letter-spacing: normal;
+    line-height: 1;
+  }
+
+  :global(.scroll-hint__icon) {
+    display: block;
+    width: 2.2rem;
+    height: 2.2rem;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+  }
+
+  :global(.scroll-hint__text) {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  :global(.scroll-hint:hover .scroll-hint__icon),
+  :global(.scroll-hint:focus-visible .scroll-hint__icon),
+  :global(.scroll-hint.is-open .scroll-hint__icon) {
+    opacity: 0;
+  }
+
+  :global(.scroll-hint:hover .scroll-hint__text),
+  :global(.scroll-hint:focus-visible .scroll-hint__text),
+  :global(.scroll-hint.is-open .scroll-hint__text) {
+    opacity: 1;
+  }
+
+  /* ========================================
+     FIGMA / PROJECT LINK (same as the other case studies)
+  ======================================== */
+
+  .project-link-block {
+    margin: 0 clamp(1.25rem, 6vw, 6rem) clamp(5rem, 10vw, 9rem);
+    padding: clamp(1.5rem, 3vw, 2.25rem) 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.16);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+  }
+
+  .project-link-block > div {
+    max-width: 42rem;
+  }
+
+  .project-link-block h3 {
+    margin: 0.5rem 0 0;
+    font-size: clamp(1.6rem, 3vw, 2.8rem);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .project-link-block p {
+    max-width: 36rem;
+    margin: 1rem 0 0;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .project-link-block__link {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid currentColor;
+    color: #111;
+    text-decoration: none;
+    white-space: nowrap;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  @media (max-width: 800px) {
+    .project-link-block {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+
+  .quick-brand.identity-block {
+    margin-top: 5rem !important;
+  }
+
+  /* More breathing room between the blocks of the identity section. */
+  .identity-block {
+    margin-top: 0 !important;
+    margin-bottom: 8rem !important;
+  }
+
+  .identity-block:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  .small-note {
+    max-width: 46rem;
+    margin: 1.75rem 0 3rem;
+    color: var(--muted);
+    font-size: 0.9rem !important;
+    line-height: 1.55 !important;
+  }
+
+  .small-note strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .fact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .fact-card {
+    padding: 1.1rem 1.3rem;
+    border-radius: 1.2rem;
+    background: var(--accent-soft);
+    border: 1px solid rgba(16, 59, 20, 0.08);
+  }
+
+  .fact-card p {
+    margin: 0.4rem 0 0;
+  }
+
+  .outcome-list {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .is-hidden {
+    display: none !important;
+  }
+
+  @media (max-width: 1100px) {
+    .screen-row--four {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .process-index {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .fact-grid,
+    .pillars-grid,
+    .board-grid--three {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* Below desktop the scattered layout gets too tight: stack it. */
+    .color-feature {
+      aspect-ratio: auto;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.75rem 2rem;
+      margin-top: 0 !important;
+    }
+
+    .color-feature__image {
+      position: static;
+      grid-column: 1 / -1;
+      width: 100%;
+      max-width: 24rem;
+      margin: 0 auto 1rem;
+    }
+
+    .color-line {
+      display: none;
+    }
+
+    .color-note,
+    .color-note--right {
+      position: static;
+      width: auto;
+      transform: none;
+    }
+
+    .logo-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .pattern-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+  }
+
+  @media (max-width: 820px) {
+    .back-button {
+      top: 0.75rem;
+    }
+
+    .reading-mode {
+      top: 4.1rem;
+    }
+
+    .case-section {
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
+    }
+
+    .case-section > *,
+    .case-section > .section-number {
+      grid-column: 1;
+      grid-row: auto;
+    }
+
+    .section-heading,
+    .section-body {
+      margin-bottom: 1rem;
+    }
+
+    .two-col-copy,
+    .quick-grid,
+    .pillars-grid,
+    .check-grid,
+    .screen-row--two,
+    .screen-row--three,
+    .screen-row--four,
+    .process-index,
+    .case-hero__details,
+    .brand-block--split,
+    .coin-notes,
+    .logo-row,
+    .fact-grid,
+    .board-grid,
+    .board-grid--three {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-stack {
+      gap: 0.6rem;
+    }
+
+    .color-feature,
+    .font-feature {
+      grid-template-columns: 1fr;
+    }
+
+    .identity-block {
+      margin-bottom: 4.5rem !important;
+    }
+
+    .screen-row--as-three {
+      max-width: none;
+    }
+
+    .font-feature__image {
+      grid-row: 1;
+      max-width: 22rem;
+      margin: 0 auto;
+    }
+
+    .project-media--interactive {
+      height: 22rem;
+      min-height: 22rem;
+    }
+
+    .hero-stack__phone {
+      border-radius: 1.1rem;
+    }
+
+    .case-hero h1,
+    .section-heading h2 {
+      max-width: none;
+    }
+  }
+
+  /* Liquid edge on draggable images — same blurred ring as the hero
+     physics box and the primary-research cards. Draggable only. */
+  .project-media--interactive {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .project-media--interactive::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 7;
+    padding: 0.9rem;
+    border-radius: inherit;
+    pointer-events: none;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+  }
+
+  /* Draggable images with the liquid edge: square corners */
+  .project-media--interactive {
+    border-radius: 0;
+  }
+
+  /* Phone screens with a fixed bottom nav (like the Figma prototype):
+     the nav image sticks to the bottom of the phone while the screen scrolls. */
+  .phone-screen--nav .phone-nav {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    display: block;
+    width: 100%;
+    height: auto;
+    /* overlap the bottom of the screen instead of adding extra space */
+    margin-top: calc(var(--nav-ratio) * -100%);
+    pointer-events: none;
+  }
+</style>

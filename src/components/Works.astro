@@ -171,6 +171,7 @@ function getImageUrl(imageName: string) {
   .pills {
     display: flex;
     flex-wrap: wrap;
+    justify-content: flex-end;
     gap: 0.5rem;
   }
 
@@ -202,5 +203,38 @@ function getImageUrl(imageName: string) {
       width: auto;
       justify-content: flex-end;
     }
+  }
+
+  /* ========================================
+     HOVER — dim the other works, nudge the hovered title
+     (opacity goes on the row's children: the row itself
+      is used by the scroll-reveal animation)
+  ======================================== */
+
+  .work-left,
+  .work-right {
+    transition: opacity 0.35s ease;
+  }
+
+  .work-title {
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @media (hover: hover) {
+    .works-list:hover .work-row > * {
+      opacity: 0.3;
+    }
+
+    .works-list .work-row:hover > * {
+      opacity: 1;
+    }
+
+    .work-row:hover .work-title {
+      transform: translateX(0.75rem);
+    }
+  }
+
+  .work-row:focus-visible .work-title {
+    transform: translateX(0.75rem);
   }
 </style>

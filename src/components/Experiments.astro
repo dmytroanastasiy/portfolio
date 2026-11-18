@@ -36,24 +36,39 @@ const experiments = [
     image: `${base}experiments/dress-to-impress.avif`,
   },
   {
-    id: "type01",
-    label: "Type01 x Howest",
-    year: "2025",
-    title: "TYPE01 Conference",
-    summary: "Responsive website for a typography conference in London",
+    id: "le-labo",
+    label: "Le Labo × Howest",
+    year: "2026",
+    title: "Le Labo — 3D hero",
+    summary: "An animated 3D header for Le Labo’s website, modelled in Blender for desktop and mobile.",
     description:
-      "A website for the first TYPE01 typography conference in London, hosted by TYPE01 Magazine: two days of workshops and talks on type in print, motion and branding. TYPE01 are specialists in type, so ain my mind, a safe, standard layout wouldn't fit them. I treated the project as an experiment with typography, layout, colour and style in general. An expressive serif as the accent, combined with an experimentsl, clean layout and a vibrant colour scheme. I wanted the site itself to feel like part of the conference.",
-    tags: ["Web Design", "Responsive", "Figma"],
-    link: "https://www.figma.com/design/h4jrIjNWvWT4ECtgp60juE/2DEV-E_AnastasiyDmytro_Design?node-id=0-1",
-    linkLabel: "Open in Figma",
-    cover: `${base}experiments/type01-cover.avif`,
-    screens: [
-      { name: "Home", desktop: "type01-desktop-home", mobile: "type01-mobile-home" },
-      { name: "Schedule", desktop: "type01-desktop-schedule", mobile: "type01-mobile-schedule" },
-      { name: "Tickets", desktop: "type01-desktop-tickets", mobile: "type01-mobile-tickets" },
+      "A proposal for Le Labo, pitched the way a design agency would: the client had heard that 3D is the next big thing on the web and wanted it on their site as a promotional hero, with a clear visual concept, not necessarily photorealistic, and never static. Le Labo’s whole identity is the lab. Every bottle is mixed by hand in the store and labelled with the date and the city it was made in. So I turned the header into a perfumer’s workbench, a small diorama where the bottles sit among their raw materials: wood, rose petals and loose tea leaves next to Santal 33, Rose 31 and Thé Matcha 26. The animation is what brings it to life: a bottle tips over, a cap pops off and rolls across the mat, drops of oil catch the light. For mobile I built a separate vertical scene around a lab stand, so the phone gets its own hero instead of a cropped landscape one. Modelled, lit and animated in Blender, then placed into the Le Labo site to show how it would live in context.",
+    tags: ["3D", "Blender", "Motion Design", "Web Design"],
+    cardVideo: `${base}experiments/lelabo-card.mp4`,
+    cardPoster: `${base}experiments/lelabo-card.webp`,
+    films: [
+      {
+        device: "desktop",
+        name: "Desktop",
+        clips: [
+          { label: "On the website", src: "lelabo-desktop-site" },
+          { label: "Render", src: "lelabo-desktop-render" },
+        ],
+      },
+      {
+        device: "mobile",
+        name: "Mobile",
+        clips: [
+          { label: "On the website", src: "lelabo-mobile-site", phone: true },
+          { label: "Render", src: "lelabo-mobile-render" },
+        ],
+      },
     ],
   },
 ];
+
+const film = (name) => `${base}experiments/${name}.mp4`;
+const filmPoster = (name) => `${base}experiments/${name}.webp`;
 
 const shot = (name) => `${base}experiments/${name}.jpg`;
 ---
@@ -69,7 +84,18 @@ const shot = (name) => `${base}experiments/${name}.jpg`;
       <li>
         <button class="exp-card" type="button" data-exp-open={item.id} aria-haspopup="dialog">
           <div class="exp-card__media">
-            {item.video && item.image ? (
+            {item.cardVideo ? (
+              <video
+                src={item.cardVideo}
+                poster={item.cardPoster}
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                aria-hidden="true"
+              ></video>
+            ) : item.video && item.image ? (
               <img class="exp-card__cover" src={item.image} alt="" loading="lazy" />
             ) : item.screens && typeof item.cover === "string" ? (
               <img class="exp-card__cover" src={item.cover} alt="" loading="lazy" />
@@ -119,8 +145,36 @@ const shot = (name) => `${base}experiments/${name}.jpg`;
         </button>
 
         <dialog class="exp-modal" data-exp-modal={item.id} aria-label={item.title}>
-          <div class={item.screens ? "exp-modal__media exp-modal__media--screens" : "exp-modal__media"}>
-            {item.screens ? (
+          <div class={item.screens || item.films ? "exp-modal__media exp-modal__media--screens" : "exp-modal__media"}>
+            {item.films ? (
+              <div class="screens" data-screens>
+                <div class="screens__switch" role="tablist" aria-label="Device">
+                  {item.films.map((f, i) => (
+                    <button class:list={{ "is-on": i === 0 }} type="button" data-device={f.device}>{f.name}</button>
+                  ))}
+                </div>
+
+                {item.films.map((f, i) => (
+                  <div class:list={["screens__view", "films", `films--${f.device}`, { "is-on": i === 0 }]} data-view={f.device}>
+                    {f.clips.map((clip) => (
+                      <figure class:list={["films__clip", { "films__clip--phone": clip.phone }]}>
+                        <video
+                          data-film
+                          src={film(clip.src)}
+                          poster={filmPoster(clip.src)}
+                          muted
+                          loop
+                          playsinline
+                          preload="none"
+                          aria-label={`${item.title} — ${clip.label}, ${f.name.toLowerCase()}`}
+                        ></video>
+                        <figcaption>{clip.label}</figcaption>
+                      </figure>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            ) : item.screens ? (
               <div class="screens" data-screens>
                 <div class="screens__switch" role="tablist" aria-label="Device">
                   <button class="is-on" type="button" data-device="desktop">Desktop</button>
@@ -213,10 +267,16 @@ const shot = (name) => `${base}experiments/${name}.jpg`;
     const id = card.dataset.expOpen;
     const modal = document.querySelector<HTMLDialogElement>(`[data-exp-modal="${id}"]`);
     if (!modal) return;
-    const video = modal.querySelector("video");
+    const video = modal.querySelector<HTMLVideoElement>("video:not([data-film])");
+    const films = modal.querySelectorAll<HTMLVideoElement>("video[data-film]");
+
+    const pauseAll = () => {
+      video?.pause();
+      films.forEach((f) => f.pause());
+    };
 
     const close = () => {
-      video?.pause();
+      pauseAll();
       modal.close();
     };
 
@@ -227,6 +287,10 @@ const shot = (name) => `${base}experiments/${name}.jpg`;
         video.muted = false;
         video.play().catch(() => {});
       }
+      modal.querySelectorAll<HTMLVideoElement>("[data-view].is-on video[data-film]").forEach((f) => {
+        f.currentTime = 0;
+        f.play().catch(() => {});
+      });
     });
 
     modal.querySelector("[data-exp-close]")?.addEventListener("click", close);
@@ -236,7 +300,7 @@ const shot = (name) => `${base}experiments/${name}.jpg`;
       if (event.target === modal) close();
     });
 
-    modal.addEventListener("cancel", () => video?.pause());
+    modal.addEventListener("cancel", pauseAll);
   });
 
   /* Desktop / mobile screen viewer */
@@ -246,7 +310,19 @@ const shot = (name) => `${base}experiments/${name}.jpg`;
     deviceButtons.forEach((btn) =>
       btn.addEventListener("click", () => {
         deviceButtons.forEach((b) => b.classList.toggle("is-on", b === btn));
-        views.forEach((v) => v.classList.toggle("is-on", v.dataset.view === btn.dataset.device));
+        views.forEach((v) => {
+          const on = v.dataset.view === btn.dataset.device;
+          v.classList.toggle("is-on", on);
+          // Only the visible device's films play.
+          v.querySelectorAll<HTMLVideoElement>("video[data-film]").forEach((f) => {
+            if (on) {
+              f.currentTime = 0;
+              f.play().catch(() => {});
+            } else {
+              f.pause();
+            }
+          });
+        });
       })
     );
 
@@ -811,6 +887,62 @@ const shot = (name) => `${base}experiments/${name}.jpg`;
     font-size: 0.75rem;
   }
 
+  /* ---------- Film viewer (modal, video per device) ---------- */
+
+  .films.is-on {
+    display: flex;
+  }
+
+  .films--desktop {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.4rem;
+  }
+
+  .films--mobile {
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 1.5rem;
+  }
+
+  .films__clip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0;
+    color: #555;
+    font-size: 0.8rem;
+  }
+
+  .films--desktop .films__clip {
+    width: 100%;
+    max-width: 46rem;
+  }
+
+  .exp-modal__media .films__clip video {
+    display: block;
+    width: 100%;
+    aspect-ratio: auto;
+    border-radius: 0.8rem;
+    background: #000;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  }
+
+  .exp-modal__media .films--mobile .films__clip video {
+    width: auto;
+    height: min(62vh, 30rem);
+  }
+
+  /* Website recording sits in a phone frame */
+  .exp-modal__media .films__clip--phone video {
+    padding: 5px;
+    border-radius: 1.6rem;
+    background: #111;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+  }
+
   /* ---------- Responsive ---------- */
 
   @media (max-width: 1100px) {
@@ -830,6 +962,11 @@ const shot = (name) => `${base}experiments/${name}.jpg`;
 
     .screens__phone:nth-child(n + 2) {
       display: none;
+    }
+
+    .exp-modal__media .films--mobile .films__clip video {
+      width: min(100%, 17rem);
+      height: auto;
     }
   }
 </style>

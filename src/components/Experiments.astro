@@ -51,16 +51,20 @@ const experiments = [
         device: "desktop",
         name: "Desktop",
         clips: [
-          { label: "On the website", src: "lelabo-desktop-site" },
-          { label: "Render", src: "lelabo-desktop-render" },
+          { label: "On the website", src: "lelabo-desktop-site", ratio: 16 / 9 },
+          { label: "Render", src: "lelabo-desktop-render", ratio: 16 / 9 },
+          { label: "On the website", image: "lelabo-desktop-site-still", ratio: 1470 / 830 },
+          { label: "Render", image: "lelabo-desktop-render-still", ratio: 16 / 9 },
         ],
       },
       {
         device: "mobile",
         name: "Mobile",
         clips: [
-          { label: "On the website", src: "lelabo-mobile-site", phone: true },
-          { label: "Render", src: "lelabo-mobile-render" },
+          { label: "On the website", src: "lelabo-mobile-site", ratio: 584 / 1196, phone: true },
+          { label: "Render", src: "lelabo-mobile-render", ratio: 4 / 5 },
+          { label: "On the website", image: "lelabo-mobile-site-still", ratio: 414 / 847, phone: true },
+          { label: "Render", image: "lelabo-mobile-render-still", ratio: 4 / 5 },
         ],
       },
     ],
@@ -69,6 +73,7 @@ const experiments = [
 
 const film = (name) => `${base}experiments/${name}.mp4`;
 const filmPoster = (name) => `${base}experiments/${name}.webp`;
+const still = (name) => `${base}experiments/${name}.webp`;
 
 const shot = (name) => `${base}experiments/${name}.jpg`;
 ---
@@ -144,36 +149,78 @@ const shot = (name) => `${base}experiments/${name}.jpg`;
           </div>
         </button>
 
-        <dialog class="exp-modal" data-exp-modal={item.id} aria-label={item.title}>
-          <div class={item.screens || item.films ? "exp-modal__media exp-modal__media--screens" : "exp-modal__media"}>
-            {item.films ? (
-              <div class="screens" data-screens>
-                <div class="screens__switch" role="tablist" aria-label="Device">
-                  {item.films.map((f, i) => (
-                    <button class:list={{ "is-on": i === 0 }} type="button" data-device={f.device}>{f.name}</button>
-                  ))}
-                </div>
-
+        <dialog
+          class:list={["exp-modal", { "exp-modal--deck": item.films }]}
+          data-exp-modal={item.id}
+          data-screens={item.films ? "" : undefined}
+          aria-label={item.title}
+        >
+          {item.films && (
+            <div class="deck-bar">
+              <div class="screens__switch" role="tablist" aria-label="Device">
                 {item.films.map((f, i) => (
-                  <div class:list={["screens__view", "films", `films--${f.device}`, { "is-on": i === 0 }]} data-view={f.device}>
-                    {f.clips.map((clip) => (
-                      <figure class:list={["films__clip", { "films__clip--phone": clip.phone }]}>
-                        <video
-                          data-film
-                          src={film(clip.src)}
-                          poster={filmPoster(clip.src)}
-                          muted
-                          loop
-                          playsinline
-                          preload="none"
-                          aria-label={`${item.title} — ${clip.label}, ${f.name.toLowerCase()}`}
-                        ></video>
-                        <figcaption>{clip.label}</figcaption>
-                      </figure>
-                    ))}
-                  </div>
+                  <button class:list={{ "is-on": i === 0 }} type="button" data-device={f.device}>{f.name}</button>
                 ))}
               </div>
+              <button class="exp-modal__close" type="button" data-exp-close aria-label="Close">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+              </button>
+            </div>
+          )}
+
+          <div class={item.screens || item.films ? "exp-modal__media exp-modal__media--screens" : "exp-modal__media"}>
+            {item.films ? (
+              item.films.map((f, i) => (
+                <div
+                  class:list={["screens__view", "deck", `deck--${f.device}`, { "is-on": i === 0 }]}
+                  data-view={f.device}
+                  data-deck
+                  style={`--count: ${f.clips.length}`}
+                >
+                  <div class="deck__stage">
+                    <div class="deck__cards">
+                      {f.clips.map((clip, n) => (
+                        <figure
+                          class:list={["deck__card", { "deck__card--phone": clip.phone }]}
+                          data-card
+                          style={`--ratio: ${clip.ratio}; z-index: ${f.clips.length - n}`}
+                        >
+                          {clip.image ? (
+                            <img
+                              src={still(clip.image)}
+                              alt={`${item.title} — ${clip.label}, ${f.name.toLowerCase()} still`}
+                              loading="lazy"
+                            />
+                          ) : (
+                            <video
+                              data-film
+                              src={film(clip.src)}
+                              poster={filmPoster(clip.src)}
+                              muted
+                              loop
+                              playsinline
+                              preload="none"
+                              aria-label={`${item.title} — ${clip.label}, ${f.name.toLowerCase()} animation`}
+                            ></video>
+                          )}
+                          <figcaption class="deck__chip">
+                            {clip.label}
+                            <span>{clip.image ? "Still" : "Animated"}</span>
+                          </figcaption>
+                        </figure>
+                      ))}
+                    </div>
+
+                    <div class="deck__foot">
+                      <div class="deck__dots" aria-hidden="true">
+                        {f.clips.map((_, n) => <i class:list={{ "is-on": n === 0 }}></i>)}
+                      </div>
+                      <span class="deck__count" data-deck-count>1 / {f.clips.length}</span>
+                      <span class="deck__hint" data-deck-hint>Scroll to flip through</span>
+                    </div>
+                  </div>
+                </div>
+              ))
             ) : item.screens ? (
               <div class="screens" data-screens>
                 <div class="screens__switch" role="tablist" aria-label="Device">
@@ -235,9 +282,11 @@ const shot = (name) => `${base}experiments/${name}.jpg`;
                 <span class="exp-cover__note">{item.cover.note}</span>
               </div>
             )}
-            <button class="exp-modal__close" type="button" data-exp-close aria-label="Close">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
-            </button>
+            {!item.films && (
+              <button class="exp-modal__close" type="button" data-exp-close aria-label="Close">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+              </button>
+            )}
           </div>
 
           <div class="exp-modal__body">
@@ -282,6 +331,7 @@ const shot = (name) => `${base}experiments/${name}.jpg`;
 
     card.addEventListener("click", () => {
       modal.showModal();
+      modal.scrollTop = 0;
       if (video) {
         video.currentTime = 0;
         video.muted = false;
@@ -303,12 +353,68 @@ const shot = (name) => `${base}experiments/${name}.jpg`;
     modal.addEventListener("cancel", pauseAll);
   });
 
+  /* Card deck: scrolling the modal flips through the stacked cards.
+     Cards behind the front one stay rotated, scaled down and blurred
+     until scroll brings them forward. */
+  document.querySelectorAll<HTMLElement>("[data-deck]").forEach((deck) => {
+    const modal = deck.closest("dialog");
+    if (!modal) return;
+    const stage = deck.querySelector<HTMLElement>(".deck__stage")!;
+    const cards = [...deck.querySelectorAll<HTMLElement>("[data-card]")];
+    const dots = [...deck.querySelectorAll<HTMLElement>(".deck__dots i")];
+    const count = deck.querySelector("[data-deck-count]");
+    const hint = deck.querySelector<HTMLElement>("[data-deck-hint]");
+    const last = cards.length - 1;
+    const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const place = (card: HTMLElement, d: number) => {
+      let transform: string;
+      let opacity: number;
+      let blur = 0;
+      if (d < 0) {
+        // Front card leaving: slides up and tilts away.
+        const k = Math.max(d, -1);
+        transform = `translate3d(0, ${k * 115}%, 0) rotate(${-k * 7}deg)`;
+        opacity = clamp(1 + (k + 0.25) * 2.2, 0, 1);
+      } else {
+        // Waiting in the stack: offset up-left, rotated, smaller, blurred.
+        const k = Math.min(d, 3);
+        transform = `translate3d(${-k * 7}%, ${-k * 8}%, 0) rotate(${-k * 6}deg) scale(${1 - k * 0.05})`;
+        opacity = clamp(1 - k * 0.3, 0, 1);
+        blur = reduced ? 0 : Math.min(k, 2) * 6;
+      }
+      card.style.transform = transform;
+      card.style.opacity = String(opacity);
+      card.style.filter = blur > 0.2 ? `blur(${blur.toFixed(1)}px)` : "none";
+      card.classList.toggle("is-front", Math.abs(d) < 0.5);
+    };
+
+    const update = () => {
+      if (!deck.offsetParent) return; // hidden device view
+      const range = deck.offsetHeight - stage.offsetHeight;
+      const scrolled = modal.getBoundingClientRect().top - deck.getBoundingClientRect().top;
+      const progress = range > 0 ? clamp(scrolled / range, 0, 1) * last : 0;
+      cards.forEach((card, i) => place(card, i - progress));
+      const active = Math.round(progress);
+      dots.forEach((dot, i) => dot.classList.toggle("is-on", i === active));
+      if (count) count.textContent = `${active + 1} / ${cards.length}`;
+      hint?.classList.toggle("is-gone", progress > 0.15);
+    };
+
+    modal.addEventListener("scroll", () => requestAnimationFrame(update), { passive: true });
+    // Fires when the modal opens or this device view is shown.
+    new ResizeObserver(update).observe(deck);
+    update();
+  });
+
   /* Desktop / mobile screen viewer */
   document.querySelectorAll<HTMLElement>("[data-screens]").forEach((viewer) => {
     const deviceButtons = viewer.querySelectorAll<HTMLButtonElement>("[data-device]");
     const views = viewer.querySelectorAll<HTMLElement>("[data-view]");
     deviceButtons.forEach((btn) =>
       btn.addEventListener("click", () => {
+        if (viewer instanceof HTMLDialogElement) viewer.scrollTop = 0; // restart the deck
         deviceButtons.forEach((b) => b.classList.toggle("is-on", b === btn));
         views.forEach((v) => {
           const on = v.dataset.view === btn.dataset.device;
@@ -887,60 +993,161 @@ const shot = (name) => `${base}experiments/${name}.jpg`;
     font-size: 0.75rem;
   }
 
-  /* ---------- Film viewer (modal, video per device) ---------- */
+  /* ---------- Card deck (modal, scroll to flip) ---------- */
 
-  .films.is-on {
+  .exp-modal--deck {
+    --deck-h: 90vh; /* matches the modal's max-height */
+    --deck-step: 55vh; /* scroll distance per card */
+  }
+
+  /* Switch + close stay pinned while the deck scrolls */
+  .deck-bar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    height: 0;
+  }
+
+  .deck {
+    height: calc(var(--deck-h) + (var(--count) - 1) * var(--deck-step));
+  }
+
+  .deck__stage {
+    position: sticky;
+    top: 0;
     display: flex;
-  }
-
-  .films--desktop {
     flex-direction: column;
-    align-items: center;
-    gap: 1.4rem;
+    height: var(--deck-h);
+    padding: 4.4rem 1.5rem 1.1rem;
+    overflow: hidden;
   }
 
-  .films--mobile {
-    flex-wrap: wrap;
+  .deck__cards {
+    position: relative;
+    flex: 1;
+    container-type: size;
+  }
+
+  .deck__card {
+    --w: min(82cqw, 82cqh * var(--ratio));
+    position: absolute;
+    inset: 0;
+    width: var(--w);
+    height: calc(var(--w) / var(--ratio));
+    margin: auto;
+    overflow: hidden;
+    border-radius: 1.4rem;
+    background: #0b0b0b;
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+    transform-origin: 50% 60%;
+    will-change: transform, opacity, filter;
+    pointer-events: none;
+  }
+
+  .deck__card.is-front {
+    pointer-events: auto;
+  }
+
+  .deck__card--phone {
+    padding: 5px;
+    border-radius: 1.9rem;
+    background: #111;
+  }
+
+  .exp-modal__media .deck__card img,
+  .exp-modal__media .deck__card video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    object-fit: cover;
+    background: #000;
+  }
+
+  .exp-modal__media .deck__card--phone img,
+  .exp-modal__media .deck__card--phone video {
+    border-radius: 1.55rem;
+  }
+
+  .deck__chip {
+    position: absolute;
+    left: 50%;
+    bottom: 0.9rem;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.5rem 0.4rem 0.85rem;
+    border-radius: 999px;
+    background: rgba(20, 20, 20, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: #fff;
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+
+  .deck__chip span {
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
+    font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .deck__foot {
+    position: relative;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    align-items: flex-end;
-    gap: 1.5rem;
-  }
-
-  .films__clip {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.6rem;
-    margin: 0;
+    gap: 0.8rem;
+    padding-top: 0.9rem;
     color: #555;
     font-size: 0.8rem;
   }
 
-  .films--desktop .films__clip {
-    width: 100%;
-    max-width: 46rem;
+  .deck__dots {
+    display: flex;
+    gap: 0.35rem;
   }
 
-  .exp-modal__media .films__clip video {
+  .deck__dots i {
     display: block;
-    width: 100%;
-    aspect-ratio: auto;
-    border-radius: 0.8rem;
-    background: #000;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 99px;
+    background: #c9c9c9;
+    transition: width 0.2s ease, background 0.2s ease;
   }
 
-  .exp-modal__media .films--mobile .films__clip video {
-    width: auto;
-    height: min(62vh, 30rem);
-  }
-
-  /* Website recording sits in a phone frame */
-  .exp-modal__media .films__clip--phone video {
-    padding: 5px;
-    border-radius: 1.6rem;
+  .deck__dots i.is-on {
+    width: 1.2rem;
     background: #111;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+  }
+
+  .deck__count {
+    min-width: 2.6rem;
+    font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+    font-size: 0.72rem;
+  }
+
+  .deck__hint {
+    position: absolute;
+    right: 0;
+    color: #888;
+    font-size: 0.75rem;
+    transition: opacity 0.3s ease;
+  }
+
+  .deck__hint::after {
+    content: " ↓";
+  }
+
+  .deck__hint.is-gone {
+    opacity: 0;
   }
 
   /* ---------- Responsive ---------- */
@@ -964,9 +1171,12 @@ const shot = (name) => `${base}experiments/${name}.jpg`;
       display: none;
     }
 
-    .exp-modal__media .films--mobile .films__clip video {
-      width: min(100%, 17rem);
-      height: auto;
+    .deck__stage {
+      padding-inline: 1rem;
+    }
+
+    .deck__hint {
+      display: none;
     }
   }
 </style>

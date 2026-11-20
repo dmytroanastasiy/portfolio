@@ -37,7 +37,7 @@ const experiments = [
   },
   {
     id: "le-labo",
-    label: "Le Labo × Howest",
+    label: "Howest",
     year: "2026",
     title: "Le Labo — 3D hero",
     summary: "An animated 3D header for Le Labo’s website, modelled in Blender for desktop and mobile.",
@@ -203,10 +203,6 @@ const shot = (name) => `${base}experiments/${name}.jpg`;
                               aria-label={`${item.title} — ${clip.label}, ${f.name.toLowerCase()} animation`}
                             ></video>
                           )}
-                          <figcaption class="deck__chip">
-                            {clip.label}
-                            <span>{clip.image ? "Still" : "Animated"}</span>
-                          </figcaption>
                         </figure>
                       ))}
                     </div>
@@ -1067,35 +1063,6 @@ const shot = (name) => `${base}experiments/${name}.jpg`;
   .exp-modal__media .deck__card--phone img,
   .exp-modal__media .deck__card--phone video {
     border-radius: 1.55rem;
-  }
-
-  .deck__chip {
-    position: absolute;
-    left: 50%;
-    bottom: 0.9rem;
-    transform: translateX(-50%);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 0.5rem 0.4rem 0.85rem;
-    border-radius: 999px;
-    background: rgba(20, 20, 20, 0.55);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    color: #fff;
-    font-size: 0.78rem;
-    white-space: nowrap;
-  }
-
-  .deck__chip span {
-    padding: 0.15rem 0.55rem;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.16);
-    font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
   }
 
   .deck__foot {

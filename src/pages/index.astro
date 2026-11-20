@@ -79,7 +79,8 @@ const base = import.meta.env.BASE_URL;
   </span>
 
   <span class="title-line title-line--surname">
-    <span>Anastasiy</span>
+    {/* No whitespace between these spans: it would push the "A" off its edge */}
+    <span data-surname><span class="sr-only">Anastasiy</span>{"Anastasiy".split("").map((char) => <span class="surname-letter" aria-hidden="true">{char}</span>)}</span>
   </span>
 </h1>
 
@@ -462,6 +463,12 @@ const base = import.meta.env.BASE_URL;
     cubic-bezier(0.16, 1, 0.3, 1)
     0.15s
     both;
+}
+
+/* Each letter moves on its own when the cursor pushes it (see initSurnameHover) */
+.surname-letter {
+  display: inline-block;
+  will-change: transform;
 }
 
 @keyframes surname-slide {
@@ -1537,9 +1544,137 @@ const base = import.meta.env.BASE_URL;
      START
   ========================================= */
 
+  /* =========================================
+     ANASTASIY — LETTERS RUN FROM THE CURSOR
+     Hovering opens a gap at the cursor: letters only move sideways,
+     between two walls. The left wall is where "A" sits now, the right
+     wall is 4rem past the "y". The 4rem of free room is shared out
+     between the letter gaps, most of it to the gaps nearest the cursor.
+  ========================================= */
+
+  function initSurnameHover() {
+    const word = document.querySelector<HTMLElement>("[data-surname]");
+
+    if (
+      !word ||
+      word.dataset.hoverReady === "true" ||
+      !window.matchMedia("(hover: hover) and (pointer: fine)").matches ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return;
+    }
+
+    word.dataset.hoverReady = "true";
+
+    const letters = [...word.querySelectorAll<HTMLElement>(".surname-letter")];
+    const count = letters.length;
+    const offsets = new Float64Array(count);
+    const targets = new Float64Array(count);
+
+    const ROOM_REM = 4; // right wall: this far past the "y"
+    const SPREAD = 0.45; // how wide the push around the cursor is, in em
+    const EASE = 6; // higher = snappier, lower = softer
+
+    let pointer: { x: number; y: number } | null = null;
+    let frame = 0;
+    let lastTime = 0;
+
+    const remPx = () =>
+      parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+
+    function computeTargets() {
+      targets.fill(0);
+      if (!pointer) return;
+
+      const box = word!.getBoundingClientRect();
+      const origin = letters[0].offsetLeft;
+      // Resting edges of every letter, measured from the left wall
+      const edges = letters.map((l) => ({
+        left: l.offsetLeft - origin,
+        right: l.offsetLeft - origin + l.offsetWidth,
+      }));
+
+      const room = ROOM_REM * remPx();
+      const x = pointer.x - box.left;
+
+      const inside =
+        pointer.y >= box.top &&
+        pointer.y <= box.bottom &&
+        x >= 0 &&
+        x <= edges[count - 1].right + room;
+
+      if (!inside) return;
+
+      const sigma = parseFloat(getComputedStyle(word!).fontSize) * SPREAD;
+      const weights: number[] = [];
+      let total = 0;
+
+      for (let i = 0; i < count - 1; i++) {
+        const seam = (edges[i].right + edges[i + 1].left) / 2;
+        const d = (x - seam) / sigma;
+        const w = Math.exp(-d * d) + 0.015; // small base so the rest breathe too
+        weights.push(w);
+        total += w;
+      }
+
+      // Each letter sits after every gap that opened before it,
+      // so "A" never leaves the left wall and "y" never passes the right one.
+      let shift = 0;
+      for (let i = 0; i < count; i++) {
+        targets[i] = shift;
+        if (i < count - 1) shift += (room * weights[i]) / total;
+      }
+    }
+
+    function tick(time: number) {
+      const dt = Math.min(0.05, (time - lastTime) / 1000 || 1 / 60);
+      lastTime = time;
+      const k = 1 - Math.exp(-dt * EASE);
+      let moving = false;
+
+      for (let i = 0; i < count; i++) {
+        const diff = targets[i] - offsets[i];
+        offsets[i] += diff * k;
+        if (Math.abs(diff) > 0.05) moving = true;
+        else offsets[i] = targets[i];
+        letters[i].style.transform = offsets[i]
+          ? `translate3d(${offsets[i].toFixed(2)}px, 0, 0)`
+          : "";
+      }
+
+      frame = moving ? requestAnimationFrame(tick) : 0;
+    }
+
+    function update() {
+      computeTargets();
+      if (!frame) {
+        lastTime = performance.now();
+        frame = requestAnimationFrame(tick);
+      }
+    }
+
+    window.addEventListener(
+      "pointermove",
+      (event) => {
+        pointer = { x: event.clientX, y: event.clientY };
+        update();
+      },
+      { passive: true }
+    );
+
+    document.documentElement.addEventListener("pointerleave", () => {
+      pointer = null;
+      update();
+    });
+
+    // The word moves under a still cursor while scrolling
+    window.addEventListener("scroll", update, { passive: true });
+  }
+
   function initializeHero() {
     initHeroGlow();
     initDmytroPhysics();
+    initSurnameHover();
   }
 
 

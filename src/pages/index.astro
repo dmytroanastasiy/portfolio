@@ -1548,7 +1548,7 @@ const base = import.meta.env.BASE_URL;
   /* =========================================
      ANASTASIY — LETTERS RUN FROM THE CURSOR
      Hovering opens a gap at the cursor: letters only move sideways,
-     between two walls. The left wall is where "A" sits now, the right
+     between two walls. The left wall is where "A" sits at rest, the right
      wall is 10rem past the "y". The 10rem of free room is shared out
      between the letter gaps, most of it to the gaps nearest the cursor.
   ========================================= */
@@ -1581,8 +1581,8 @@ const base = import.meta.env.BASE_URL;
     const DAMPING = 13; // lower = more wobble before it settles
     // Squish: letters stretch in the direction they move and flatten
     // to keep their volume, then wobble back to shape.
-    const SQUISH = 0.0003; // stretch per px/s of speed
-    const MAX_SQUISH = 0.22; // never wider than 1 + this
+    const SQUISH = 0.00021; // stretch per px/s of speed
+    const MAX_SQUISH = 0.154; // never wider than 1 + this
     const STEP = 1 / 120; // physics step, keeps the spring stable
 
     let pointer: { x: number; y: number } | null = null;
@@ -1607,20 +1607,24 @@ const base = import.meta.env.BASE_URL;
       room = ROOM_REM * remPx();
       const x = pointer.x - box.left;
 
+      const sigma = parseFloat(getComputedStyle(word!).fontSize) * SPREAD;
+
+      // A little extra on the left so coming in from that side pushes the "A"
       const inside =
         pointer.y >= box.top &&
         pointer.y <= box.bottom &&
-        x >= 0 &&
+        x >= -sigma &&
         x <= edges[count - 1].right + room;
 
       if (!inside) return;
 
-      const sigma = parseFloat(getComputedStyle(word!).fontSize) * SPREAD;
+      // One gap in front of every letter: the first sits between the left
+      // wall and the "A", so the "A" runs right too when the cursor nears it.
       const weights: number[] = [];
       let total = 0;
 
-      for (let i = 0; i < count - 1; i++) {
-        const seam = (edges[i].right + edges[i + 1].left) / 2;
+      for (let i = 0; i < count; i++) {
+        const seam = i === 0 ? edges[0].left : (edges[i - 1].right + edges[i].left) / 2;
         const d = (x - seam) / sigma;
         const w = Math.exp(-d * d) + 0.015; // small base so the rest breathe too
         weights.push(w);
@@ -1628,11 +1632,11 @@ const base = import.meta.env.BASE_URL;
       }
 
       // Each letter sits after every gap that opened before it,
-      // so "A" never leaves the left wall and "y" never passes the right one.
+      // so nothing passes the left wall and "y" never passes the right one.
       let shift = 0;
       for (let i = 0; i < count; i++) {
+        shift += (room * weights[i]) / total;
         targets[i] = shift;
-        if (i < count - 1) shift += (room * weights[i]) / total;
       }
     }
 

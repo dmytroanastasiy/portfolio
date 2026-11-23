@@ -468,6 +468,7 @@ const base = import.meta.env.BASE_URL;
 /* Each letter moves on its own when the cursor pushes it (see initSurnameHover) */
 .surname-letter {
   display: inline-block;
+  transform-origin: 50% 85%; /* squash on the baseline */
   will-change: transform;
 }
 
@@ -1548,7 +1549,7 @@ const base = import.meta.env.BASE_URL;
      ANASTASIY — LETTERS RUN FROM THE CURSOR
      Hovering opens a gap at the cursor: letters only move sideways,
      between two walls. The left wall is where "A" sits now, the right
-     wall is 4rem past the "y". The 4rem of free room is shared out
+     wall is 10rem past the "y". The 10rem of free room is shared out
      between the letter gaps, most of it to the gaps nearest the cursor.
   ========================================= */
 
@@ -1569,11 +1570,20 @@ const base = import.meta.env.BASE_URL;
     const letters = [...word.querySelectorAll<HTMLElement>(".surname-letter")];
     const count = letters.length;
     const offsets = new Float64Array(count);
+    const velocities = new Float64Array(count);
     const targets = new Float64Array(count);
+    let room = 0;
 
-    const ROOM_REM = 4; // right wall: this far past the "y"
+    const ROOM_REM = 10; // right wall: this far past the "y"
     const SPREAD = 0.45; // how wide the push around the cursor is, in em
-    const EASE = 6; // higher = snappier, lower = softer
+    // Spring: each letter is pulled to its target and overshoots a little.
+    const STIFFNESS = 160; // higher = snappier
+    const DAMPING = 13; // lower = more wobble before it settles
+    // Squish: letters stretch in the direction they move and flatten
+    // to keep their volume, then wobble back to shape.
+    const SQUISH = 0.0003; // stretch per px/s of speed
+    const MAX_SQUISH = 0.22; // never wider than 1 + this
+    const STEP = 1 / 120; // physics step, keeps the spring stable
 
     let pointer: { x: number; y: number } | null = null;
     let frame = 0;
@@ -1594,7 +1604,7 @@ const base = import.meta.env.BASE_URL;
         right: l.offsetLeft - origin + l.offsetWidth,
       }));
 
-      const room = ROOM_REM * remPx();
+      room = ROOM_REM * remPx();
       const x = pointer.x - box.left;
 
       const inside =
@@ -1627,19 +1637,50 @@ const base = import.meta.env.BASE_URL;
     }
 
     function tick(time: number) {
-      const dt = Math.min(0.05, (time - lastTime) / 1000 || 1 / 60);
+      let dt = Math.min(0.05, (time - lastTime) / 1000 || 1 / 60);
       lastTime = time;
-      const k = 1 - Math.exp(-dt * EASE);
+      const max = room || ROOM_REM * remPx();
       let moving = false;
 
+      // Spring physics in small fixed steps
+      while (dt > 0) {
+        const h = Math.min(STEP, dt);
+        dt -= h;
+        for (let i = 0; i < count; i++) {
+          const force = STIFFNESS * (targets[i] - offsets[i]) - DAMPING * velocities[i];
+          velocities[i] += force * h;
+          offsets[i] += velocities[i] * h;
+
+          // Walls: bounce softly off them instead of passing
+          if (offsets[i] < 0) {
+            offsets[i] = 0;
+            velocities[i] *= -0.35;
+          } else if (offsets[i] > max) {
+            offsets[i] = max;
+            velocities[i] *= -0.35;
+          }
+        }
+      }
+
       for (let i = 0; i < count; i++) {
-        const diff = targets[i] - offsets[i];
-        offsets[i] += diff * k;
-        if (Math.abs(diff) > 0.05) moving = true;
-        else offsets[i] = targets[i];
-        letters[i].style.transform = offsets[i]
-          ? `translate3d(${offsets[i].toFixed(2)}px, 0, 0)`
-          : "";
+        const settled =
+          Math.abs(targets[i] - offsets[i]) < 0.05 && Math.abs(velocities[i]) < 0.5;
+
+        if (settled) {
+          offsets[i] = targets[i];
+          velocities[i] = 0;
+        } else {
+          moving = true;
+        }
+
+        const stretch = Math.min(MAX_SQUISH, Math.abs(velocities[i]) * SQUISH);
+        const sx = 1 + stretch;
+        const sy = 1 / sx; // keep the letter's volume
+
+        letters[i].style.transform =
+          offsets[i] || stretch
+            ? `translate3d(${offsets[i].toFixed(2)}px, 0, 0) scale(${sx.toFixed(3)}, ${sy.toFixed(3)})`
+            : "";
       }
 
       frame = moving ? requestAnimationFrame(tick) : 0;

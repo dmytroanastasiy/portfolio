@@ -284,9 +284,6 @@ const base = import.meta.env.BASE_URL;
 
 .title-line--physics {
   position: relative;
-  /* Falls in front of "Anastasiy" on scroll (initDmytroFall) */
-  z-index: 3;
-  will-change: transform;
   display: block;
 
   width: var(--physics-width);
@@ -880,15 +877,6 @@ const base = import.meta.env.BASE_URL;
      DMYTRO PHYSICS
   ========================================= */
 
-  /*
-    Handle on the letters' Matter world, so the falling box
-    (initDmytroFall) can make the letters inside feel its motion.
-  */
-  let dmytroWorld: {
-    setFloating: (floating: boolean) => void;
-    jolt: (impactSpeed: number) => void;
-  } | null = null;
-
   async function initDmytroPhysics() {
     const container =
       document.querySelector("#dmytro-physics");
@@ -1349,40 +1337,6 @@ const base = import.meta.env.BASE_URL;
 
 
     /*
-      What the letters feel while their box falls:
-      - floating: the box is in free fall, so the letters lose their
-        weight and drift up off the floor a little
-      - jolt: the box hits the ground and stops dead, so the letters
-        keep going down, slam into the floor, bounce and tumble
-    */
-    const NORMAL_GRAVITY = engine.gravity.y;
-
-    dmytroWorld = {
-      setFloating(floating) {
-        engine.gravity.y = floating ? -0.7 : NORMAL_GRAVITY;
-        bodies.forEach((body) => Sleeping.set(body, false));
-      },
-
-      jolt(impactSpeed) {
-        // page px/s -> Matter px per 16.7ms step, softened and capped
-        const push = Math.min(22, (impactSpeed / 60) * 0.7);
-
-        bodies.forEach((body) => {
-          Sleeping.set(body, false);
-          Body.setVelocity(body, {
-            x: body.velocity.x + (Math.random() - 0.5) * push * 0.3,
-            y: body.velocity.y + push,
-          });
-          Body.setAngularVelocity(
-            body,
-            body.angularVelocity + (Math.random() - 0.5) * push * 0.012
-          );
-        });
-      },
-    };
-
-
-    /*
       A tiny initial kick makes it immediately obvious
       that physics is alive.
 
@@ -1592,103 +1546,6 @@ const base = import.meta.env.BASE_URL;
   ========================================= */
 
   /* =========================================
-     DMYTRO BOX FALLS ON SCROLL
-     The first scroll down drops the box with plain gravity. It falls
-     in front of "Anastasiy", lands on the bottom edge of the black
-     hero, bounces a couple of times and stays there. The letters
-     inside react through dmytroWorld (see above).
-  ========================================= */
-
-  function initDmytroFall() {
-    const box = document.querySelector<HTMLElement>(".title-line--physics");
-    const hero = document.getElementById("hero-section");
-
-    if (!box || !hero || box.dataset.fallReady === "true") return;
-    box.dataset.fallReady = "true";
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const GRAVITY = 3200; // px/s²
-    const BOUNCE = 0.28; // share of speed kept on each bounce
-    const REST_SPEED = 70; // below this the box stops bouncing
-
-    let y = 0; // current drop, px
-    let speed = 0; // px/s, down is positive
-    let floor = 0; // drop at which the box touches the hero's bottom edge
-    let state: "waiting" | "falling" | "landed" = "waiting";
-    let lastTime = 0;
-    let firstImpact = true;
-
-    // Drop needed for the box's bottom to meet the hero's bottom
-    function measureFloor() {
-      const heroRect = hero!.getBoundingClientRect();
-      const boxRect = box!.getBoundingClientRect();
-      return heroRect.bottom - (boxRect.bottom - y);
-    }
-
-    function render() {
-      box!.style.transform = y ? `translate3d(0, ${y.toFixed(2)}px, 0)` : "";
-    }
-
-    function step(time: number) {
-      const dt = Math.min(0.033, (time - lastTime) / 1000);
-      lastTime = time;
-
-      speed += GRAVITY * dt;
-      y += speed * dt;
-
-      if (y >= floor) {
-        y = floor;
-        const impact = speed;
-        speed = -speed * BOUNCE;
-
-        if (firstImpact) {
-          firstImpact = false;
-          dmytroWorld?.setFloating(false);
-        }
-        dmytroWorld?.jolt(impact);
-
-        if (Math.abs(speed) < REST_SPEED) {
-          speed = 0;
-          state = "landed";
-        }
-      }
-
-      render();
-      if (state === "falling") requestAnimationFrame(step);
-    }
-
-    function drop() {
-      if (state !== "waiting") return;
-      floor = measureFloor();
-      if (floor <= 1) return;
-
-      state = "falling";
-      dmytroWorld?.setFloating(true);
-      lastTime = performance.now();
-      requestAnimationFrame(step);
-    }
-
-    window.addEventListener(
-      "scroll",
-      () => {
-        if (window.scrollY > 4) drop();
-      },
-      { passive: true }
-    );
-
-    // Page opened already scrolled down: drop straight away
-    if (window.scrollY > 4) drop();
-
-    // Keep a landed box sitting on the bottom edge if the layout changes
-    new ResizeObserver(() => {
-      if (state !== "landed") return;
-      y = measureFloor();
-      render();
-    }).observe(hero);
-  }
-
-  /* =========================================
      ANASTASIY — LETTERS RUN FROM THE CURSOR
      Hovering opens a gap at the cursor: letters only move sideways,
      between two walls. The left wall is where "A" sits at rest, the right
@@ -1862,7 +1719,6 @@ const base = import.meta.env.BASE_URL;
   function initializeHero() {
     initHeroGlow();
     initDmytroPhysics();
-    initDmytroFall();
     initSurnameHover();
   }
 
